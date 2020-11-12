@@ -5,6 +5,7 @@ android {
     buildToolsVersion "29.0.3"
     viewBinding.enabled = true
 
+
     defaultConfig {
         applicationId "com.itapp.pmb_application"
         minSdkVersion 19
