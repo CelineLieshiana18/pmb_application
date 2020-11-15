@@ -8,7 +8,7 @@
     android:gravity="center"
     android:padding="10dp"
     android:orientation="vertical"
-    tools:context=".LoginActivityDosen">
+    tools:context=".LoginActivityMahasiswaPanitia">
 
     <ImageView
         android:id="@+id/image"
@@ -22,9 +22,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Masuk Sebagai Dosen"
+        android:text="Masuk Sebagai Panitia / Mahasiswa"
         android:textColor="@android:color/black"
-        android:textSize="25sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="0dp"
@@ -34,8 +34,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtNik"
-            android:hint="NIK"
+            android:id="@+id/txtNrp"
+            android:hint="NRP"
             android:gravity="center|left"
             android:layout_width="match_parent"
             android:background="@drawable/round_bg"
@@ -72,11 +72,11 @@
         android:textColor="@android:color/white" />
 
     <Button
-        android:id="@+id/linkToLoginMhsPanitia"
+        android:id="@+id/linkToLoginDosen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
-        android:text="Masuk Sebagai Mahasiswa / Panitia ? klik disini"
+        android:text="Masuk Sebagai Dosen ? klik disini"
         android:textColor="@android:color/holo_blue_dark" />
 
 </LinearLayout>

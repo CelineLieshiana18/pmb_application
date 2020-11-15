@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:title="Home" android:id="@+id/dashboardPanitiaDosen"
-        android:icon="@drawable/ic_baseline_home_24"/>
-    <item android:title="AR" android:id="@+id/ARPanitiaDosen"
-        android:icon="@drawable/ic_baseline_camera_alt_24"/>
-</menu>

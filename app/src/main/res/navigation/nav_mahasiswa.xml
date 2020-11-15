@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_mahasiswa"
+    app:startDestination="@id/homeMhs">
+
+    <fragment
+        android:id="@+id/homeMhs"
+        android:name="com.example.pmb_application.HomeMhs"
+        android:label="fragment_home_mhs"
+        tools:layout="@layout/fragment_home_mhs" />
+    <fragment
+        android:id="@+id/augmentedRealityMhs"
+        android:name="com.example.pmb_application.AugmentedRealityMhs"
+        android:label="fragment_augmented_reality_mhs"
+        tools:layout="@layout/fragment_augmented_reality_mhs" />
+</navigation>

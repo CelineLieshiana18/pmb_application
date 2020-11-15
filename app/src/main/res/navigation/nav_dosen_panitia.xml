@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_dosen_panitia"
+    app:startDestination="@id/homeDosenPanitia">
+
+    <fragment
+        android:id="@+id/augmentedRealityDosenPanitia"
+        android:name="com.example.pmb_application.AugmentedRealityDosenPanitia"
+        android:label="fragment_augmented_reality_dosen_panitia"
+        tools:layout="@layout/fragment_augmented_reality_dosen_panitia" />
+    <fragment
+        android:id="@+id/homeDosenPanitia"
+        android:name="com.example.pmb_application.HomeDosenPanitia"
+        android:label="fragment_home_dosen_panitia"
+        tools:layout="@layout/fragment_home_dosen_panitia" />
+    <fragment
+        android:id="@+id/kelolaPenggunaDosenPanitia"
+        android:name="com.example.pmb_application.kelolaPenggunaDosenPanitia"
+        android:label="fragment_kelola_pengguna_dosen_panitia"
+        tools:layout="@layout/fragment_kelola_pengguna_dosen_panitia" />
+    <fragment
+        android:id="@+id/kelolaPengumumanDosenPanitia"
+        android:name="com.example.pmb_application.kelolaPengumumanDosenPanitia"
+        android:label="fragment_kelola_pengumuman_dosen_panitia"
+        tools:layout="@layout/fragment_kelola_pengumuman_dosen_panitia" />
+    <fragment
+        android:id="@+id/kelolaForumDosenPanitia"
+        android:name="com.example.pmb_application.kelolaForumDosenPanitia"
+        android:label="fragment_kelola_forum_dosen_panitia"
+        tools:layout="@layout/fragment_kelola_forum_dosen_panitia" />
+    <fragment
+        android:id="@+id/kelolaCTDosenPanitia"
+        android:name="com.example.pmb_application.kelolaCTDosenPanitia"
+        android:label="fragment_kelola_c_t_dosen_panitia"
+        tools:layout="@layout/fragment_kelola_c_t_dosen_panitia" />
+</navigation>
