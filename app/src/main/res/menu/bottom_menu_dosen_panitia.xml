@@ -3,7 +3,7 @@
     <item android:title="Halaman Utama" android:id="@+id/homeDosenPanitia" android:icon="@drawable/ic_baseline_home_24"/>
     <item android:title="Pengguna" android:id="@+id/kelolaPenggunaDosenPanitia" android:icon="@drawable/ic_baseline_supervised_user_circle_24"/>
     <item android:title="Pengumuman" android:id="@+id/kelolaPengumumanDosenPanitia" android:icon="@drawable/ic_baseline_info_24"/>
-    <item android:title="CT" android:id="@+id/kelolaCTDosenPanitia" android:icon="@drawable/ic_baseline_ct"/>
+<!--    <item android:title="CT" android:id="@+id/kelolaCTDosenPanitia" android:icon="@drawable/ic_baseline_ct"/>-->
     <item android:title="Forum" android:id="@+id/kelolaForumDosenPanitia" android:icon="@drawable/ic_baseline_announcement_24"/>
     <item android:title="AR" android:id="@+id/augmentedRealityDosenPanitia" android:icon="@drawable/ic_baseline_camera_alt_24"/>
 </menu>

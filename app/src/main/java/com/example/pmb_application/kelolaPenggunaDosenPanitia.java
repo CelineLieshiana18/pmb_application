@@ -1,5 +1,7 @@
 package com.example.pmb_application;
 
+import android.app.DownloadManager;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,58 +9,50 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link kelolaPenggunaDosenPanitia#newInstance} factory method to
- * create an instance of this fragment.
- */
+
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.pmb_application.databinding.ActivityMainDosenPanitiaBinding;
+import com.example.pmb_application.databinding.FragmentKelolaPenggunaDosenPanitiaBinding;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class kelolaPenggunaDosenPanitia extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private MainActivityDosenPanitia mainActivityDosenPanitia;
+    private FragmentKelolaPenggunaDosenPanitiaBinding binding;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public kelolaPenggunaDosenPanitia() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment kelolaPenggunaDosenPanitia.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static kelolaPenggunaDosenPanitia newInstance(String param1, String param2) {
-        kelolaPenggunaDosenPanitia fragment = new kelolaPenggunaDosenPanitia();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    Spinner spinner;
+    String[] jurusan = {"Teknik Informatika","Sistem Informasi"};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        setSpinnerData();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        mainActivityDosenPanitia = new MainActivityDosenPanitia();
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_kelola_pengguna_dosen_panitia, container, false);
     }
+
+    public void setSpinnerData(){
+        spinner = binding.spinJurusan;
+        ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_dropdown_item_1line, jurusan);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(aa);
+    }
+
+
 }
