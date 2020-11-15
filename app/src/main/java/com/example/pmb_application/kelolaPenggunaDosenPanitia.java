@@ -35,13 +35,13 @@ public class kelolaPenggunaDosenPanitia extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = FragmentKelolaPenggunaDosenPanitiaBinding.inflate(getLayoutInflater());
         setSpinnerData();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         mainActivityDosenPanitia = new MainActivityDosenPanitia();
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_kelola_pengguna_dosen_panitia, container, false);

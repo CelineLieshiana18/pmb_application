@@ -14,14 +14,14 @@
             android:layout_height="match_parent" >
 
             <TextView
-                android:id="@+id/tv_nrp"
+                android:id="@+id/tv_nik"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textSize="18dp"
                 android:layout_marginLeft="5dp"
                 android:padding="5dp"
-                tools:text="NRP" />
+                tools:text="NIK" />
 
             <TextView
                 android:id="@+id/tv_name"
@@ -33,13 +33,13 @@
                 tools:text="Nama" />
 
             <TextView
-                android:id="@+id/tv_jurusan"
+                android:id="@+id/tv_jabatan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center|left"
                 android:padding="5dp"
                 android:textSize="18dp"
-                tools:text="Jurusan" />
+                tools:text="Jabatan" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -47,7 +47,6 @@
                 android:id="@+id/btnUbah"
                 android:padding="5dp"
                 android:text="Ubah"/>
-
 
             <Button
                 android:layout_width="wrap_content"

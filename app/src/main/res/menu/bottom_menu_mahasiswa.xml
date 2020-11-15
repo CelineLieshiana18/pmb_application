@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+<!--    home : kegiatan dan pengumuman-->
     <item android:title="Home" android:id="@+id/homeMhs" android:icon="@drawable/ic_baseline_home_24"/>
+    <item android:title="Pengguna" android:id="@+id/daftarPenggunaMhs" android:icon="@drawable/ic_baseline_supervised_user_circle_24"/>
+    <item android:title="CT" android:id="@+id/ctMhs" android:icon="@drawable/ic_baseline_ct"/>
+    <item android:title="Forum" android:id="@+id/forumMhs" android:icon="@drawable/ic_baseline_announcement_24"/>
     <item android:title="AR" android:id="@+id/augmentedRealityMhs" android:icon="@drawable/ic_baseline_camera_alt_24"/>
 </menu>

@@ -15,4 +15,34 @@
         android:name="com.example.pmb_application.AugmentedRealityMhs"
         android:label="fragment_augmented_reality_mhs"
         tools:layout="@layout/fragment_augmented_reality_mhs" />
+    <fragment
+        android:id="@+id/ctMhs"
+        android:name="com.example.pmb_application.ctMhs"
+        android:label="fragment_ct_mhs"
+        tools:layout="@layout/fragment_ct_mhs" />
+    <fragment
+        android:id="@+id/daftarPenggunaMhs2"
+        android:name="com.example.pmb_application.daftarPenggunaMhs"
+        android:label="fragment_daftar_pengguna_mhs"
+        tools:layout="@layout/fragment_daftar_pengguna_mhs" />
+    <fragment
+        android:id="@+id/forumMhs"
+        android:name="com.example.pmb_application.forumMhs"
+        android:label="fragment_forum_mhs"
+        tools:layout="@layout/fragment_forum_mhs" />
+    <fragment
+        android:id="@+id/daftarDosenMhs"
+        android:name="com.example.pmb_application.daftarDosenMhs"
+        android:label="fragment_daftar_dosen_mhs"
+        tools:layout="@layout/fragment_daftar_dosen_mhs" />
+    <fragment
+        android:id="@+id/daftarPanitiaMhs"
+        android:name="com.example.pmb_application.daftarPanitiaMhs"
+        android:label="fragment_daftar_panitia_mhs"
+        tools:layout="@layout/fragment_daftar_panitia_mhs" />
+    <fragment
+        android:id="@+id/pengumumanMhs"
+        android:name="com.example.pmb_application.pengumumanMhs"
+        android:label="fragment_pengumuman_mhs"
+        tools:layout="@layout/fragment_pengumuman_mhs" />
 </navigation>
