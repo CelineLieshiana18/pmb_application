@@ -4,22 +4,22 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentHomeMhs">
+    tools:context=".FragmentKelolaKegiatanPengumumanForum">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayoutHomeMhs"
+        android:id="@+id/appBarLayoutKelolaKegiatanPengumumanForum"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@android:color/white">
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayoutHomeMhs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayoutKelolaKegiatanPengumumanForum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    </com.google.android.material.tabs.TabLayout>
+        </com.google.android.material.tabs.TabLayout>
     </com.google.android.material.appbar.AppBarLayout>
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPagerHomeMhs"
+        android:id="@+id/viewPagerKelolaKegiatanPengumumanForum"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

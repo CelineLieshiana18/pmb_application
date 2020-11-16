@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AugmentedRealityMhs#newInstance} factory method to
+ * Use the {@link FragmentKelolaForumDosenPanitia#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AugmentedRealityMhs extends Fragment {
+public class FragmentKelolaForumDosenPanitia extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +24,7 @@ public class AugmentedRealityMhs extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public AugmentedRealityMhs() {
+    public FragmentKelolaForumDosenPanitia() {
         // Required empty public constructor
     }
 
@@ -34,11 +34,11 @@ public class AugmentedRealityMhs extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment augmentedRealityMhs.
+     * @return A new instance of fragment kelolaForumDosenPanitia.
      */
     // TODO: Rename and change types and number of parameters
-    public static AugmentedRealityMhs newInstance(String param1, String param2) {
-        AugmentedRealityMhs fragment = new AugmentedRealityMhs();
+    public static FragmentKelolaForumDosenPanitia newInstance(String param1, String param2) {
+        FragmentKelolaForumDosenPanitia fragment = new FragmentKelolaForumDosenPanitia();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +59,6 @@ public class AugmentedRealityMhs extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_augmented_reality_mhs, container, false);
+        return inflater.inflate(R.layout.fragment_kelola_forum_dosen_panitia, container, false);
     }
 }

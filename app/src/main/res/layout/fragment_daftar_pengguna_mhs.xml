@@ -1,53 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="50dp"
-    tools:context=".daftarPenggunaMhs">
-    <LinearLayout
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".FragmentDaftarPenggunaMhs">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayoutPenggunaMhs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:orientation="vertical">
-        <LinearLayout
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/white">
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayoutPenggunaMhs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:orientation="horizontal">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnDosen"
-                android:text="Daftar Dosen"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnPanitia"
-                android:text="Daftar Panitia"
-                android:layout_marginLeft="115dp"/>
-        </LinearLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Daftar Teman Angkatan"
-            android:gravity="center"
-            android:textSize="20dp"
-            android:textStyle="bold"/>
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/sr_layout_pengguna_mhs"
-            tools:context=".MainActivity">
+            android:layout_height="wrap_content">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_data_pengguna_mhs"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+        </com.google.android.material.tabs.TabLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPagerPenggunaMhs"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-    </LinearLayout>
-</FrameLayout>
+    </androidx.viewpager.widget.ViewPager>
+
+</LinearLayout>

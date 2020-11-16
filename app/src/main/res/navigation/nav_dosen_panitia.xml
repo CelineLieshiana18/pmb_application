@@ -7,32 +7,32 @@
 
     <fragment
         android:id="@+id/augmentedRealityDosenPanitia"
-        android:name="com.example.pmb_application.AugmentedRealityDosenPanitia"
+        android:name="com.example.pmb_application.FragmentAugmentedRealityDosenPanitia"
         android:label="fragment_augmented_reality_dosen_panitia"
         tools:layout="@layout/fragment_augmented_reality_dosen_panitia" />
     <fragment
         android:id="@+id/homeDosenPanitia"
-        android:name="com.example.pmb_application.HomeDosenPanitia"
+        android:name="com.example.pmb_application.FragmentHomeDosenPanitia"
         android:label="fragment_home_dosen_panitia"
         tools:layout="@layout/fragment_home_dosen_panitia" />
     <fragment
         android:id="@+id/kelolaPenggunaDosenPanitia"
-        android:name="com.example.pmb_application.kelolaPenggunaDosenPanitia"
+        android:name="com.example.pmb_application.FragmentKelolaPenggunaDosenPanitia"
         android:label="fragment_kelola_pengguna_dosen_panitia"
         tools:layout="@layout/fragment_kelola_pengguna_dosen_panitia" />
     <fragment
         android:id="@+id/kelolaPengumumanDosenPanitia"
-        android:name="com.example.pmb_application.kelolaPengumumanDosenPanitia"
+        android:name="com.example.pmb_application.FragmentKelolaPengumumanDosenPanitia"
         android:label="fragment_kelola_pengumuman_dosen_panitia"
         tools:layout="@layout/fragment_kelola_pengumuman_dosen_panitia" />
     <fragment
         android:id="@+id/kelolaForumDosenPanitia"
-        android:name="com.example.pmb_application.kelolaForumDosenPanitia"
+        android:name="com.example.pmb_application.FragmentKelolaForumDosenPanitia"
         android:label="fragment_kelola_forum_dosen_panitia"
         tools:layout="@layout/fragment_kelola_forum_dosen_panitia" />
     <fragment
         android:id="@+id/kelolaCTDosenPanitia"
-        android:name="com.example.pmb_application.kelolaCTDosenPanitia"
+        android:name="com.example.pmb_application.FragmentKelolaCTDosenPanitia"
         android:label="fragment_kelola_c_t_dosen_panitia"
-        tools:layout="@layout/fragment_kelola_c_t_dosen_panitia" />
+        tools:layout="@layout/fragment_kelola_ct_dosen_panitia" />
 </navigation>

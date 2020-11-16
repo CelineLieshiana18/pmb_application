@@ -24,7 +24,7 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class kelolaPenggunaDosenPanitia extends Fragment {
+public class FragmentKelolaPenggunaDosenPanitia extends Fragment {
 
     private MainActivityDosenPanitia mainActivityDosenPanitia;
     private FragmentKelolaPenggunaDosenPanitiaBinding binding;
@@ -36,7 +36,7 @@ public class kelolaPenggunaDosenPanitia extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = FragmentKelolaPenggunaDosenPanitiaBinding.inflate(getLayoutInflater());
-        setSpinnerData();
+//        setSpinnerData();
     }
 
     @Override
@@ -47,12 +47,12 @@ public class kelolaPenggunaDosenPanitia extends Fragment {
         return inflater.inflate(R.layout.fragment_kelola_pengguna_dosen_panitia, container, false);
     }
 
-    public void setSpinnerData(){
-        spinner = binding.spinJurusan;
-        ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_dropdown_item_1line, jurusan);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(aa);
-    }
+//    public void setSpinnerData(){
+//        spinner = binding.spinJurusan;
+//        ArrayAdapter aa = new ArrayAdapter(getActivity(),android.R.layout.simple_dropdown_item_1line, jurusan);
+//        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinner.setAdapter(aa);
+//    }
 
 
 }
