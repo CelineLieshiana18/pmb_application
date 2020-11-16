@@ -4,7 +4,9 @@ import android.app.DownloadManager;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.pmb_application.databinding.ActivityMainDosenPanitiaBinding;
 import com.example.pmb_application.databinding.FragmentKelolaPenggunaDosenPanitiaBinding;
+import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -28,6 +31,9 @@ public class FragmentKelolaPenggunaDosenPanitia extends Fragment {
 
     private MainActivityDosenPanitia mainActivityDosenPanitia;
     private FragmentKelolaPenggunaDosenPanitiaBinding binding;
+    View myFragment;
+    ViewPager viewPager;
+    TabLayout tabLayout;
 
     Spinner spinner;
     String[] jurusan = {"Teknik Informatika","Sistem Informasi"};
@@ -37,14 +43,50 @@ public class FragmentKelolaPenggunaDosenPanitia extends Fragment {
         super.onCreate(savedInstanceState);
         binding = FragmentKelolaPenggunaDosenPanitiaBinding.inflate(getLayoutInflater());
 //        setSpinnerData();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mainActivityDosenPanitia = new MainActivityDosenPanitia();
+
+        myFragment =  inflater.inflate(R.layout.fragment_kelola_pengguna_dosen_panitia, container, false);
+        viewPager = myFragment.findViewById(R.id.viewPagerKelolaPengguna);
+        tabLayout = myFragment.findViewById(R.id.tabLayoutKelolaPengguna);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_kelola_pengguna_dosen_panitia, container, false);
+        return myFragment;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setUpViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
+
+    private void setUpViewPager(ViewPager viewPager) {
+        com.example.pmb_application.Adapter.SectionPagerAdapter sectionPagerAdapter = new com.example.pmb_application.Adapter.SectionPagerAdapter(getChildFragmentManager());
+        sectionPagerAdapter.addFragment(new FragmentKelolaMahasiswa(),"Data Mahasiswa");
+        sectionPagerAdapter.addFragment(new FragmentKelolaPanitia(),"Data Panitia");
+        sectionPagerAdapter.addFragment(new FragmentKelolaDosen(),"Data Dosen");
+        viewPager.setAdapter(sectionPagerAdapter);
     }
 
 //    public void setSpinnerData(){

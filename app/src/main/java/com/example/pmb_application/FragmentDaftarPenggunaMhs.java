@@ -28,7 +28,6 @@ public class FragmentDaftarPenggunaMhs extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         myFragment =  inflater.inflate(R.layout.fragment_daftar_pengguna_mhs, container, false);
         viewPager = myFragment.findViewById(R.id.viewPagerPenggunaMhs);
         tabLayout = myFragment.findViewById(R.id.tabLayoutPenggunaMhs);
