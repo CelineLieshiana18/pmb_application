@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -25,13 +26,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class FragmentKelolaDosen extends Fragment implements DosenAdapter.ItemClickListener{
 
 
-    @BindView(R.id.sr_layout_daftar_dosen_mhs)
+    @BindView(R.id.sr_layout_kelola_dosen)
     SwipeRefreshLayout srLayout;
-    @BindView(R.id.rv_data_daftar_dosen_mhs)
+    @BindView(R.id.rv_data_kelola_dosen)
     RecyclerView rvData;
     private DosenAdapter dosenAdapter;
 
@@ -49,8 +51,11 @@ public class FragmentKelolaDosen extends Fragment implements DosenAdapter.ItemCl
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_kelola_dosen, container, false);
+        View view = inflater.inflate(R.layout.fragment_kelola_dosen,container,false);
+        ButterKnife.bind(this,view);
+        rvData.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvData.setAdapter(getDosenAdapter());
+        return view;
     }
 
     @Override
