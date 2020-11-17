@@ -5,23 +5,45 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.pmb_application.databinding.ActivityMainMahasiswaBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivityMahasiswa extends AppCompatActivity {
     private ActivityMainMahasiswaBinding binding;
     private Toolbar toolbar;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadMhsData();
+//        getClient();
 
         binding = ActivityMainMahasiswaBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -31,6 +53,7 @@ public class MainActivityMahasiswa extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(listener);
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new FragmentHomeMhs()).commit();
+
     }
 
     @Override
@@ -82,4 +105,53 @@ public class MainActivityMahasiswa extends AppCompatActivity {
                 }
 
             };
+
+
+
+    private void loadMhsData(){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        Uri uri = Uri.parse("http://192.168.100.6:8090/api/lecturer/").buildUpon().build();
+//        System.out.println(uri);
+        StringRequest request = new StringRequest(Request.Method.GET, uri.toString(), response -> {
+            try {
+                JSONObject object = new JSONObject(response);
+//                Gson gson = new Gson();
+                System.out.println("data api:");
+                System.out.println(object);
+//                WSResponse weatherResponse = gson.fromJson(object.toString(), WSResponse.class);
+//                getArticleAdapter().changeData(weatherResponse.getArticles());
+                Toast.makeText(this, "berhasil",Toast.LENGTH_SHORT).show();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> {
+            Toast.makeText(this,"error", Toast.LENGTH_SHORT).show();
+            error.printStackTrace();
+        });
+        queue.add(request);
+    }
+
+
+    private void loginMhs(String nrp, String password){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        Uri uri = Uri.parse("http://192.168.100.6:8090/api/lecturer/").buildUpon().build();
+//        System.out.println(uri);
+        StringRequest request = new StringRequest(Request.Method.GET, uri.toString(), response -> {
+            try {
+                JSONObject object = new JSONObject(response);
+//                Gson gson = new Gson();
+                System.out.println("data api:");
+                System.out.println(object);
+//                WSResponse weatherResponse = gson.fromJson(object.toString(), WSResponse.class);
+//                getArticleAdapter().changeData(weatherResponse.getArticles());
+                Toast.makeText(this, "berhasil",Toast.LENGTH_SHORT).show();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> {
+            Toast.makeText(this,"error", Toast.LENGTH_SHORT).show();
+            error.printStackTrace();
+        });
+        queue.add(request);
+    }
 }

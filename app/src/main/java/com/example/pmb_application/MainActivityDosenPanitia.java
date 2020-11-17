@@ -22,7 +22,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.pmb_application.Adapter.DosenAdapter;
 import com.example.pmb_application.databinding.ActivityMainDosenPanitiaBinding;
+import com.example.pmb_application.entity.WSResponse;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
@@ -98,27 +100,4 @@ public class MainActivityDosenPanitia extends AppCompatActivity {
 
             };
 
-    private void loadMhsData(String q){
-        RequestQueue queue = Volley.newRequestQueue(this);
-        Uri uri = Uri.parse("https://newsapi.org/v2/everything").buildUpon()
-                .appendQueryParameter("q",q)
-                .appendQueryParameter("appKey", "20ecfca9e10f4493bb537d78e1cc4b82")
-                .build();
-        StringRequest request = new StringRequest(Request.Method.GET, uri.toString(), response -> {
-            try {
-                JSONObject object = new JSONObject(response);
-                Gson gson = new Gson();
-//                WSResponse weatherResponse = gson.fromJson(object.toString(), WSResponse.class);
-//                getArticleAdapter().changeData(weatherResponse.getArticles());
-                Toast.makeText(this, "berhasil",Toast.LENGTH_SHORT).show();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }, error -> {
-            Toast.makeText(this,"error", Toast.LENGTH_SHORT).show();
-            error.printStackTrace();
-        });
-        queue.add(request);
-    }
-
-    }
+}
