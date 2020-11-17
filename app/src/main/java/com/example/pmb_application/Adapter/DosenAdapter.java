@@ -1,4 +1,4 @@
-package com.example.pmb_application.Adapter;
+package com.example.pmb_application.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;

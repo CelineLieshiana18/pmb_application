@@ -28,6 +28,9 @@ public class Dosen  implements Parcelable {
         this.updated_at = updated_at;
     }
 
+    public Dosen() {
+    }
+
     protected Dosen(Parcel in) {
         id = in.readInt();
         nip = in.readString();

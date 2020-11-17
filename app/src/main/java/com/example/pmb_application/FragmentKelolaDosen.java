@@ -17,7 +17,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.pmb_application.Adapter.DosenAdapter;
+import com.example.pmb_application.adapter.DosenAdapter;
 import com.example.pmb_application.entity.Dosen;
 import com.example.pmb_application.entity.WSResponse;
 import com.google.gson.Gson;
@@ -36,6 +36,8 @@ public class FragmentKelolaDosen extends Fragment implements DosenAdapter.ItemCl
     @BindView(R.id.rv_data_kelola_dosen)
     RecyclerView rvData;
     private DosenAdapter dosenAdapter;
+    private VariabelGlobal variabelGlobal;
+    String URL = VariabelGlobal.link_ip + "api/lecturer/";
 
     public DosenAdapter getDosenAdapter() {
         if (dosenAdapter == null){
@@ -66,7 +68,7 @@ public class FragmentKelolaDosen extends Fragment implements DosenAdapter.ItemCl
 
     private void loadDosenData(){
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        Uri uri = Uri.parse("http://192.168.100.6:8090/api/lecturer/").buildUpon().build();
+        Uri uri = Uri.parse(URL).buildUpon().build();
         StringRequest request = new StringRequest(Request.Method.GET, uri.toString(), response -> {
             try {
                 JSONObject object = new JSONObject(response);

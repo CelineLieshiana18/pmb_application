@@ -37,13 +37,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivityMahasiswa extends AppCompatActivity {
     private ActivityMainMahasiswaBinding binding;
     private Toolbar toolbar;
+    String URL = VariabelGlobal.link_ip + "api/lecturer/";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadMhsData();
-//        getClient();
 
         binding = ActivityMainMahasiswaBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -110,7 +110,7 @@ public class MainActivityMahasiswa extends AppCompatActivity {
 
     private void loadMhsData(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        Uri uri = Uri.parse("http://192.168.100.6:8090/api/lecturer/").buildUpon().build();
+        Uri uri = Uri.parse(URL).buildUpon().build();
 //        System.out.println(uri);
         StringRequest request = new StringRequest(Request.Method.GET, uri.toString(), response -> {
             try {

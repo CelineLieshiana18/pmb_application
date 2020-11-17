@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.pmb_application.Adapter.DosenAdapter;
+import com.example.pmb_application.adapter.DosenAdapter;
 import com.example.pmb_application.entity.Dosen;
 
 public class FragmentDaftarDosenMhs extends Fragment implements DosenAdapter.ItemClickListener{

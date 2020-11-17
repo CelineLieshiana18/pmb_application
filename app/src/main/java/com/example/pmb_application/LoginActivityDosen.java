@@ -15,18 +15,20 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.pmb_application.databinding.ActivityLoginDosenBinding;
 import com.example.pmb_application.databinding.ActivityLoginMahasiswaPanitiaBinding;
+import com.example.pmb_application.entity.Dosen;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class LoginActivityDosen extends AppCompatActivity {
     private ActivityLoginDosenBinding binding;
 
-
-    public static final String LOGIN_URL = "http://192.168.100.6:8090/api/lecturer/login/";
+    String URL =  VariabelGlobal.link_ip + "api/lecturer/login/";
 
     public static final String KEY_NIP="nip";
     public static final String KEY_PASSWORD="password";
@@ -63,7 +65,7 @@ public class LoginActivityDosen extends AppCompatActivity {
         nip = binding.txtNik.getText().toString().trim();
         password = binding.txtPassword.getText().toString().trim();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, LOGIN_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -90,7 +92,8 @@ public class LoginActivityDosen extends AppCompatActivity {
                 Map<String,String> map = new HashMap<String,String>();
                 map.put(KEY_NIP,nip);
                 map.put(KEY_PASSWORD,password);
-                System.out.println(map);
+                SessionManagement sessionManagement = new SessionManagement(LoginActivityDosen.this);
+                sessionManagement.saveSession(nip);
                 return map;
             }
         };

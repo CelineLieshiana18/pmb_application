@@ -22,7 +22,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.pmb_application.Adapter.DosenAdapter;
+import com.example.pmb_application.adapter.DosenAdapter;
 import com.example.pmb_application.databinding.ActivityMainDosenPanitiaBinding;
 import com.example.pmb_application.entity.WSResponse;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -36,9 +36,11 @@ public class MainActivityDosenPanitia extends AppCompatActivity {
     private Toolbar toolbar;
     Spinner spinner;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SessionManagement sessionManagement = new SessionManagement(MainActivityDosenPanitia.this);
         binding = ActivityMainDosenPanitiaBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         toolbar = findViewById(R.id.newAppBar);
