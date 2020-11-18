@@ -19,7 +19,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.pmb_application.adapter.DosenAdapter;
 import com.example.pmb_application.entity.Dosen;
-import com.example.pmb_application.entity.WSResponse;
+import com.example.pmb_application.entity.WSResponseDosen;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -47,6 +47,7 @@ public class FragmentKelolaDosen extends Fragment implements DosenAdapter.ItemCl
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        loadDosenData();
         super.onCreate(savedInstanceState);
     }
 
@@ -56,7 +57,7 @@ public class FragmentKelolaDosen extends Fragment implements DosenAdapter.ItemCl
         View view = inflater.inflate(R.layout.fragment_kelola_dosen,container,false);
         ButterKnife.bind(this,view);
         rvData.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvData.setAdapter(getDosenAdapter());
+//        rvData.setAdapter(getDosenAdapter());
         return view;
     }
 
@@ -69,12 +70,18 @@ public class FragmentKelolaDosen extends Fragment implements DosenAdapter.ItemCl
     private void loadDosenData(){
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         Uri uri = Uri.parse(URL).buildUpon().build();
+        System.out.println(uri);
         StringRequest request = new StringRequest(Request.Method.GET, uri.toString(), response -> {
             try {
                 JSONObject object = new JSONObject(response);
                 Gson gson = new Gson();
-                WSResponse weatherResponse = gson.fromJson(object.toString(), WSResponse.class);
-                getDosenAdapter().changeData(weatherResponse.getDatas());
+                System.out.println("object");
+                System.out.println(object);
+                WSResponseDosen weatherResponse = gson.fromJson(object.toString(), WSResponseDosen.class);
+                System.out.println("object data");
+                System.out.println(weatherResponse);
+//                getDosenAdapter().changeData(weatherResponse.getData());
+//                System.out.println(getDosenAdapter());
                 Toast.makeText(getActivity(), "berhasil",Toast.LENGTH_SHORT).show();
             } catch (JSONException e) {
                 e.printStackTrace();

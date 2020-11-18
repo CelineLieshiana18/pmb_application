@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.pmb_application.Adapter.SectionPagerAdapter;
+import com.example.pmb_application.adapter.SectionPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 

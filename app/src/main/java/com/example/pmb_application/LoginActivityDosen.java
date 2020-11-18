@@ -3,6 +3,7 @@ package com.example.pmb_application;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -16,6 +17,8 @@ import com.android.volley.toolbox.Volley;
 import com.example.pmb_application.databinding.ActivityLoginDosenBinding;
 import com.example.pmb_application.databinding.ActivityLoginMahasiswaPanitiaBinding;
 import com.example.pmb_application.entity.Dosen;
+import com.example.pmb_application.entity.WSResponseDosen;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -62,6 +65,7 @@ public class LoginActivityDosen extends AppCompatActivity {
 
 
     private void userLogin() {
+        System.out.println("masuk user login");
         nip = binding.txtNik.getText().toString().trim();
         password = binding.txtPassword.getText().toString().trim();
 
@@ -71,13 +75,19 @@ public class LoginActivityDosen extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject object = new JSONObject(response);
+//                            System.out.println(object);
                             if(object.get("status").equals("Success")){
+                                Gson gson = new Gson();
+                                WSResponseDosen weatherResponse = gson.fromJson(object.toString(), WSResponseDosen.class);
+//                                System.out.println(weatherResponse.getDataDosen());
+//                                System.out.println(object);
+//                                gamau print
                                 openProfile();
                             } else{
                                 Toast.makeText(LoginActivityDosen.this,"NIK dan Nama Tidak Ditemukan",Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
-                            Toast.makeText(LoginActivityDosen.this,e.toString(),Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivityDosen.this,"masuk catch",Toast.LENGTH_LONG).show();
                         }
                     }
                 },
@@ -94,6 +104,7 @@ public class LoginActivityDosen extends AppCompatActivity {
                 map.put(KEY_PASSWORD,password);
                 SessionManagement sessionManagement = new SessionManagement(LoginActivityDosen.this);
                 sessionManagement.saveSession(nip);
+                System.out.println(sessionManagement.getSession());
                 return map;
             }
         };

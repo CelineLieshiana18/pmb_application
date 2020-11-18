@@ -1,4 +1,4 @@
-package com.example.pmb_application.Adapter;
+package com.example.pmb_application.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

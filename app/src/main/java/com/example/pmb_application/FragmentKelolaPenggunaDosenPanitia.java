@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.pmb_application.adapter.SectionPagerAdapter;
 import com.example.pmb_application.databinding.ActivityMainDosenPanitiaBinding;
 import com.example.pmb_application.databinding.FragmentKelolaPenggunaDosenPanitiaBinding;
 import com.google.android.material.tabs.TabLayout;
@@ -82,7 +83,7 @@ public class FragmentKelolaPenggunaDosenPanitia extends Fragment {
     }
 
     private void setUpViewPager(ViewPager viewPager) {
-        com.example.pmb_application.Adapter.SectionPagerAdapter sectionPagerAdapter = new com.example.pmb_application.Adapter.SectionPagerAdapter(getChildFragmentManager());
+        SectionPagerAdapter sectionPagerAdapter = new SectionPagerAdapter(getChildFragmentManager());
         sectionPagerAdapter.addFragment(new FragmentKelolaMahasiswa(),"Data Mahasiswa");
         sectionPagerAdapter.addFragment(new FragmentKelolaPanitia(),"Data Panitia");
         sectionPagerAdapter.addFragment(new FragmentKelolaDosen(),"Data Dosen");

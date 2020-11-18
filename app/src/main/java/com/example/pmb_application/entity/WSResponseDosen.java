@@ -2,10 +2,10 @@ package com.example.pmb_application.entity;
 
 import java.util.ArrayList;
 
-public class WSResponse {
+public class WSResponseDosen {
     private String status;
     private String message;
-    private ArrayList datas;
+    private ArrayList<Dosen> data;
 
     public String getStatus() {
         return status;
@@ -23,11 +23,11 @@ public class WSResponse {
         this.message = message;
     }
 
-    public ArrayList getDatas() {
-        return datas;
+    public ArrayList<Dosen> getData() {
+        return data;
     }
 
-    public void setDatas(ArrayList datas) {
-        this.datas = datas;
+    public void setData(ArrayList<Dosen> data) {
+        this.data = data;
     }
 }
