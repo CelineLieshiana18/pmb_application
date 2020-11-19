@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -33,6 +34,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,13 +43,15 @@ public class FragmentKelolaDosen extends Fragment implements DosenAdapter.ItemCl
 
     private ArrayList<String> spinList;
     private ArrayAdapter<String> spinAdapter;
+    private DosenAdapter dosenAdapter;
+    private FragmentKelolaDosenBinding binding;
+    private FragmentDetailKelolaDosen detailDosen;
     @BindView(R.id.sr_layout_kelola_dosen)
     SwipeRefreshLayout srLayout;
     @BindView(R.id.rv_data_kelola_dosen)
     RecyclerView rvData;
-    private DosenAdapter dosenAdapter;
-    private FragmentKelolaDosenBinding binding;
     String URL = VariabelGlobal.link_ip + "api/lecturer/";
+
 
 
     public ArrayList<String> getSpinList() {
@@ -66,6 +70,13 @@ public class FragmentKelolaDosen extends Fragment implements DosenAdapter.ItemCl
             spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         }
         return spinAdapter;
+    }
+
+    public FragmentDetailKelolaDosen getDetailDosen() {
+        if(detailDosen == null){
+            detailDosen= new FragmentDetailKelolaDosen();
+        }
+        return detailDosen;
     }
 
     public DosenAdapter getDosenAdapter() {
@@ -90,7 +101,14 @@ public class FragmentKelolaDosen extends Fragment implements DosenAdapter.ItemCl
 
     @Override
     public void itemClicked(Dosen dosen) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("Dosen",dosen);
+        getDetailDosen().setArguments(bundle);
 
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout_dosen_panitia,getDetailDosen());
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
 
@@ -164,6 +182,7 @@ public class FragmentKelolaDosen extends Fragment implements DosenAdapter.ItemCl
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         requestQueue.add(stringRequest);
     }
+
     private void  initComponents(){
         binding.spinJabatan.setAdapter(getSpinAdapter());
         binding.btnTambahDosen.setOnClickListener(v -> addDosen());

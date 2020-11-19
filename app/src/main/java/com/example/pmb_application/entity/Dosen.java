@@ -11,25 +11,28 @@ public class Dosen  implements Parcelable {
     private String name;
     private String email;
     private int status;
-    private String genre;
+    private String gender;
+    private String password;
     private String jabatan;
     private String created_at;
     private String updated_at;
 
-    public Dosen(int id, String nip, String name, String email, int status, String genre, String jabatan, String created_at, String updated_at) {
+    public Dosen() {
+    }
+
+    public Dosen(int id, String nip, String name, String email, int status, String gender, String password, String jabatan, String created_at, String updated_at) {
         this.id = id;
         this.nip = nip;
         this.name = name;
         this.email = email;
         this.status = status;
-        this.genre = genre;
+        this.gender = gender;
+        this.password = password;
         this.jabatan = jabatan;
         this.created_at = created_at;
         this.updated_at = updated_at;
     }
 
-    public Dosen() {
-    }
 
     protected Dosen(Parcel in) {
         id = in.readInt();
@@ -37,7 +40,8 @@ public class Dosen  implements Parcelable {
         name = in.readString();
         email = in.readString();
         status = in.readInt();
-        genre = in.readString();
+        gender = in.readString();
+        password = in.readString();
         jabatan = in.readString();
         created_at = in.readString();
         updated_at = in.readString();
@@ -54,24 +58,6 @@ public class Dosen  implements Parcelable {
             return new Dosen[size];
         }
     };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(nip);
-        dest.writeString(name);
-        dest.writeString(email);
-        dest.writeInt(status);
-        dest.writeString(genre);
-        dest.writeString(jabatan);
-        dest.writeString(created_at);
-        dest.writeString(updated_at);
-    }
 
     public int getId() {
         return id;
@@ -113,12 +99,12 @@ public class Dosen  implements Parcelable {
         this.status = status;
     }
 
-    public String getGenre() {
-        return genre;
+    public String getGender() {
+        return gender;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getJabatan() {
@@ -143,5 +129,32 @@ public class Dosen  implements Parcelable {
 
     public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(nip);
+        dest.writeString(name);
+        dest.writeString(email);
+        dest.writeInt(status);
+        dest.writeString(gender);
+        dest.writeString(password);
+        dest.writeString(jabatan);
+        dest.writeString(created_at);
+        dest.writeString(updated_at);
     }
 }
