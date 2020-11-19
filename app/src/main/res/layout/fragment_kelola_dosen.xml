@@ -117,6 +117,10 @@
                         android:layout_height="wrap_content"
                         android:text="Jabatan              "
                         android:padding="10dp"/>
+<!--                    <com.google.android.material.textfield.TextInputEditText-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:id="@+id/txtJabatan"-->
+<!--                        android:layout_height="wrap_content"/>-->
                     <Spinner
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -125,7 +129,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/btnTambah"
+                    android:id="@+id/btnTambahDosen"
                     android:layout_gravity="center"
                     android:text="Tambahkan"
                     android:layout_margin="10dp"/>
@@ -137,6 +141,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/sr_layout_kelola_dosen"
             tools:context=".MainActivity">
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_data_kelola_dosen"

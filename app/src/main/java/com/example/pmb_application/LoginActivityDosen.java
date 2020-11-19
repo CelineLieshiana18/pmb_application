@@ -65,7 +65,6 @@ public class LoginActivityDosen extends AppCompatActivity {
 
 
     private void userLogin() {
-        System.out.println("masuk user login");
         nip = binding.txtNik.getText().toString().trim();
         password = binding.txtPassword.getText().toString().trim();
 
@@ -75,7 +74,7 @@ public class LoginActivityDosen extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject object = new JSONObject(response);
-//                            System.out.println(object);
+                            System.out.println(object.get("status"));
                             if(object.get("status").equals("Success")){
                                 Gson gson = new Gson();
                                 WSResponseDosen weatherResponse = gson.fromJson(object.toString(), WSResponseDosen.class);

@@ -23,6 +23,7 @@ public class DosenAdapter extends RecyclerView.Adapter<DosenAdapter.DosenViewHol
 
     public DosenAdapter(ItemClickListener clickListener) {
         this.clickListener = clickListener;
+        dosens = new ArrayList<>();
     }
 
     public void setDosens(ArrayList<Dosen> dosens) {
@@ -44,6 +45,8 @@ public class DosenAdapter extends RecyclerView.Adapter<DosenAdapter.DosenViewHol
     @Override
     public void onBindViewHolder(@NonNull DosenViewHolder holder, int position) {
         final Dosen dosen = dosens.get(position);
+        System.out.println("dosen");
+        System.out.println(dosen.getName());
         holder.txtNik.setText(dosen.getNip());
         holder.txtName.setText(dosen.getName());
         holder.txtJabatan.setText(dosen.getJabatan());
@@ -74,6 +77,7 @@ public class DosenAdapter extends RecyclerView.Adapter<DosenAdapter.DosenViewHol
 
         public DosenViewHolder(@NonNull View itemView) {
             super(itemView);
+            ButterKnife.bind(this,itemView);
         }
     }
 
