@@ -3,6 +3,7 @@ package com.example.pmb_application;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +34,7 @@ import java.util.Map;
 
 public class FragmentDetailKelolaDosen extends Fragment {
 
+    private FragmentKelolaPenggunaDosenPanitia kelolaDosen;
     private FragmentDetailKelolaDosenBinding binding;
     private ArrayList<String> spinList;
     private ArrayAdapter<String> spinAdapter;
@@ -40,6 +42,13 @@ public class FragmentDetailKelolaDosen extends Fragment {
     int id;
     String URL = VariabelGlobal.link_ip + "api/lecturer/";
     String gender="";
+
+    public FragmentKelolaPenggunaDosenPanitia getKelolaDosen() {
+        if(kelolaDosen == null){
+            kelolaDosen = new FragmentKelolaPenggunaDosenPanitia();
+        }
+        return kelolaDosen;
+    }
 
     public ArrayList<String> getSpinList() {
         if(spinList == null){
@@ -119,9 +128,11 @@ public class FragmentDetailKelolaDosen extends Fragment {
                         try {
                             JSONObject object = new JSONObject(response);
                             if(object.get("status").equals("Success")){
-                                System.out.println("object");
-                                System.out.println(object);
-                                Toast.makeText(getActivity(),"Dosen Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(),"Dosen Berhasil Diubah",Toast.LENGTH_LONG).show();
+                                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                                transaction.replace(R.id.frame_layout_dosen_panitia,getKelolaDosen());
+                                transaction.addToBackStack(null);
+                                transaction.commit();
                             } else{
                                 Toast.makeText(getActivity(),"Tidak Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
                             }

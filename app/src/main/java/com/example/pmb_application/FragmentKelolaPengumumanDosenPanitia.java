@@ -1,64 +1,153 @@
 package com.example.pmb_application;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentKelolaPengumumanDosenPanitia#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class FragmentKelolaPengumumanDosenPanitia extends Fragment {
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.pmb_application.adapter.PengumumanAdapter;
+import com.example.pmb_application.databinding.FragmentKelolaPengumumanDosenPanitiaBinding;
+import com.example.pmb_application.entity.Pengumuman;
+import com.example.pmb_application.entity.WSResponseDosen;
+import com.example.pmb_application.entity.WSResponsePengumuman;
+import com.google.gson.Gson;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import org.json.JSONException;
+import org.json.JSONObject;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-    public FragmentKelolaPengumumanDosenPanitia() {
-        // Required empty public constructor
-    }
+public class FragmentKelolaPengumumanDosenPanitia extends Fragment implements PengumumanAdapter.ItemClickListener{
+    private FragmentKelolaPengumumanDosenPanitiaBinding binding;
+    private PengumumanAdapter pengumumanAdapter;
+    String URL = VariabelGlobal.link_ip + "api/announcement/";
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment kelolaPengumumanDosenPanitia.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FragmentKelolaPengumumanDosenPanitia newInstance(String param1, String param2) {
-        FragmentKelolaPengumumanDosenPanitia fragment = new FragmentKelolaPengumumanDosenPanitia();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public PengumumanAdapter getPengumumanAdapter() {
+        if(pengumumanAdapter == null){
+            pengumumanAdapter = new PengumumanAdapter(this);
+        }
+        return pengumumanAdapter;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        loadPengumumanData();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        binding = FragmentKelolaPengumumanDosenPanitiaBinding.inflate(inflater, container, false);
+        initComponents();
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_kelola_pengumuman_dosen_panitia, container, false);
+        return binding.getRoot();
+    }
+
+    private void  initComponents(){
+        binding.btnTambahPengumuman.setOnClickListener(v -> addPengumuman());
+        binding.rvDataPengumuman.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvDataPengumuman.setAdapter(getPengumumanAdapter());
+        binding.srLayoutPengumuman.setOnRefreshListener(()->{
+            binding.srLayoutPengumuman.setRefreshing(false);
+            loadPengumumanData();
+        });
+    }
+
+    private void loadPengumumanData() {
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        Uri uri = Uri.parse(URL).buildUpon().build();
+        StringRequest request = new StringRequest(Request.Method.GET, uri.toString(), response -> {
+            try {
+                JSONObject object = new JSONObject(response);
+                Gson gson = new Gson();
+                WSResponsePengumuman weatherResponse = gson.fromJson(object.toString(), WSResponsePengumuman.class);
+                getPengumumanAdapter().changeData(weatherResponse.getData());
+                Toast.makeText(getActivity(), "berhasil",Toast.LENGTH_SHORT).show();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> {
+            Toast.makeText(getActivity(),"error", Toast.LENGTH_SHORT).show();
+            error.printStackTrace();
+        });
+        queue.add(request);
+    }
+
+    private void addPengumuman() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject object = new JSONObject(response);
+                            if(object.get("status").equals("Success")){
+                                clearField();
+                                Toast.makeText(getActivity(),"Pengumuman Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
+                                loadPengumumanData();
+                            } else{
+                                Toast.makeText(getActivity(),"Pengumuman Gagal Ditambahkan",Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            Toast.makeText(getActivity(),"masuk catch",Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(),"Gagal Ditambahkan",Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> map = new HashMap<String,String>();
+                map.put("date",binding.txtTanggalPengumuman.getText().toString().trim());
+                map.put("description",binding.txtIsiPengumuman.getText().toString().trim());
+                SessionManagement sessionManagement = new SessionManagement(getActivity().getBaseContext());
+                map.put("students_id","1");
+                System.out.println(map);
+//                map.put("students_id",sessionManagement.getId());
+                return map;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        requestQueue.add(stringRequest);
+    }
+
+
+    private void clearField() {
+        binding.txtIsiPengumuman.setText("");
+        binding.txtTanggalPengumuman.setText("");
+    }
+
+    @Override
+    public void itemClicked(Pengumuman pengumuman) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("Pengumuman",pengumuman);
+//        getDetailDosen().setArguments(bundle);
+
+//        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.frame_layout_dosen_panitia,getDetailDosen());
+//        transaction.addToBackStack(null);
+//        transaction.commit();
     }
 }

@@ -14,6 +14,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.pmb_application.databinding.ActivityLoginMahasiswaPanitiaBinding;
+import com.example.pmb_application.entity.WSResponseDosen;
+import com.example.pmb_application.entity.WSResponseMhs;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +28,7 @@ public class LoginActivityMahasiswaPanitia extends AppCompatActivity {
     private ActivityLoginMahasiswaPanitiaBinding binding;
 
 
-    public static final String LOGIN_URL = "http://192.168.100.6:8090/login/";
+    String URL =  VariabelGlobal.link_ip + "student/login/";
 
     public static final String KEY_NRP="nrp";
     public static final String KEY_PASSWORD="password";
@@ -58,21 +64,32 @@ public class LoginActivityMahasiswaPanitia extends AppCompatActivity {
         nrp = binding.txtNrp.getText().toString().trim();
         password = binding.txtPassword.getText().toString().trim();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, LOGIN_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if(response.trim().equals("success")){
-                            openProfile();
-                        }else{
-                            Toast.makeText(LoginActivityMahasiswaPanitia.this,response,Toast.LENGTH_LONG).show();
+                        try {
+                            JSONObject object = new JSONObject(response);
+                            System.out.println(object.get("status"));
+                            if(object.get("status").equals("Success")){
+                                Gson gson = new Gson();
+                                WSResponseMhs weatherResponse = gson.fromJson(object.toString(), WSResponseMhs.class);
+                                System.out.println(object.get("data"));
+//                                System.out.println(object);
+//                                gamau print
+                                openProfile();
+                            } else{
+                                Toast.makeText(LoginActivityMahasiswaPanitia.this,"NIK dan Nama Tidak Ditemukan",Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            Toast.makeText(LoginActivityMahasiswaPanitia.this,"masuk catch",Toast.LENGTH_LONG).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(LoginActivityMahasiswaPanitia.this,error.toString(),Toast.LENGTH_LONG ).show();
+                        Toast.makeText(LoginActivityMahasiswaPanitia.this,"NIK dan Nama Tidak Ditemukan",Toast.LENGTH_LONG).show();
                     }
                 }){
             @Override
@@ -80,6 +97,9 @@ public class LoginActivityMahasiswaPanitia extends AppCompatActivity {
                 Map<String,String> map = new HashMap<String,String>();
                 map.put(KEY_NRP,nrp);
                 map.put(KEY_PASSWORD,password);
+//                SessionManagement sessionManagement = new SessionManagement(LoginActivityMahasiswaPanitia.this);
+//                sessionManagement.saveSession(nrp);
+//                System.out.println(sessionManagement.getSession());
                 return map;
             }
         };
@@ -89,7 +109,7 @@ public class LoginActivityMahasiswaPanitia extends AppCompatActivity {
 
 
     private void openProfile(){
-        Intent intent = new Intent(this, MainActivityMahasiswa.class);
+        Intent intent = new Intent(this, MainActivityDosenPanitia.class);
 //        intent.putExtra(K, username);
         startActivity(intent);
     }

@@ -74,13 +74,13 @@ public class LoginActivityDosen extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject object = new JSONObject(response);
-                            System.out.println(object.get("status"));
                             if(object.get("status").equals("Success")){
                                 Gson gson = new Gson();
                                 WSResponseDosen weatherResponse = gson.fromJson(object.toString(), WSResponseDosen.class);
-//                                System.out.println(weatherResponse.getDataDosen());
-//                                System.out.println(object);
-//                                gamau print
+                                Dosen dosen = new Dosen(weatherResponse.getData().get(0));
+                                SessionManagement sessionManagement = new SessionManagement(LoginActivityDosen.this);
+                                sessionManagement.saveSession(dosen.getNip(),String.valueOf(dosen.getId()),dosen.getName());
+                                System.out.println(sessionManagement.getSession());
                                 openProfile();
                             } else{
                                 Toast.makeText(LoginActivityDosen.this,"NIK dan Nama Tidak Ditemukan",Toast.LENGTH_LONG).show();
@@ -101,9 +101,9 @@ public class LoginActivityDosen extends AppCompatActivity {
                 Map<String,String> map = new HashMap<String,String>();
                 map.put(KEY_NIP,nip);
                 map.put(KEY_PASSWORD,password);
-                SessionManagement sessionManagement = new SessionManagement(LoginActivityDosen.this);
-                sessionManagement.saveSession(nip);
-                System.out.println(sessionManagement.getSession());
+//                SessionManagement sessionManagement = new SessionManagement(LoginActivityDosen.this);
+//                sessionManagement.saveSession(nip);
+//                System.out.println(sessionManagement.getSession());
                 return map;
             }
         };

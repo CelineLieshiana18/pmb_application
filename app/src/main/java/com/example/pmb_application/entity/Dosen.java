@@ -20,6 +20,19 @@ public class Dosen  implements Parcelable {
     public Dosen() {
     }
 
+    public Dosen(Dosen dosen){
+        this.id = dosen.id;
+        this.nip = dosen.nip;
+        this.name = dosen.name;
+        this.email = dosen.email;
+        this.status = dosen.status;
+        this.gender = dosen.gender;
+        this.password = dosen.password;
+        this.jabatan = dosen.jabatan;
+        this.created_at = dosen.created_at;
+        this.updated_at = dosen.updated_at;
+    }
+
     public Dosen(int id, String nip, String name, String email, int status, String gender, String password, String jabatan, String created_at, String updated_at) {
         this.id = id;
         this.nip = nip;

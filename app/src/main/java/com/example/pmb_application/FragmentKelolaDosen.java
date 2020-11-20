@@ -142,8 +142,6 @@ public class FragmentKelolaDosen extends Fragment implements DosenAdapter.ItemCl
                         try {
                             JSONObject object = new JSONObject(response);
                             if(object.get("status").equals("Success")){
-                                System.out.println("object");
-                                System.out.println(object);
                                 clearField();
                                 Toast.makeText(getActivity(),"Dosen Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
                                 loadDosenData();
