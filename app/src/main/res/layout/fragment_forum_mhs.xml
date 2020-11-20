@@ -23,11 +23,11 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/sr_layout_daftar_panitia_mhs"
+            android:id="@+id/sr_layout_daftar_forum_mhs"
             tools:context=".MainActivity">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_data_daftar_panitia_mhs"
+                android:id="@+id/rv_data_daftar_forum_mhs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 

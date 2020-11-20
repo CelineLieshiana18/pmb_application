@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
                 <TextView
-                    android:id="@+id/tv_judul_ct"
+                    android:id="@+id/tv_judul_forum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
@@ -26,6 +26,7 @@
                     android:text="Nama"/>
 
                 <TextView
+                    android:id="@+id/tv_tanggal_forum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="17sp"
@@ -33,7 +34,7 @@
                     android:text="Tanggal Bulan Tahun"/>
 
                 <TextView
-                    android:id="@+id/tv_deskripsi_ct"
+                    android:id="@+id/tv_deskripsi_forum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="3dp"

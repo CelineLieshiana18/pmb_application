@@ -21,6 +21,9 @@ public class PengumumanAdapter extends RecyclerView.Adapter<PengumumanAdapter.Pe
     private ArrayList<Pengumuman> pengumumans;
     private ItemClickListener clickListener;
 
+    public PengumumanAdapter() {
+    }
+
     public PengumumanAdapter(ItemClickListener clickListener) {
         this.clickListener = clickListener;
         pengumumans = new ArrayList<>();

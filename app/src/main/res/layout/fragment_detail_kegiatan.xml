@@ -3,18 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentKelolaKegiatan">
+    tools:context=".FragmentDetailKegiatan">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
+        android:layout_gravity="center"
         android:layout_marginTop="5dp"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tambah Kegiatan"
+            android:text="Ubah Kegiatan"
+            android:layout_marginBottom="30dp"
             android:gravity="center"
             android:textSize="20dp"
             android:textStyle="bold"/>
@@ -112,25 +115,12 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/btnTambahKegiatan"
+                    android:id="@+id/btnUbahKegiatan"
                     android:layout_gravity="center"
-                    android:text="Tambahkan"
+                    android:text="Ubah"
                     android:layout_margin="10dp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/sr_layout_kegiatan"
-            tools:context=".MainActivity">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_data_kegiatan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
 
 </FrameLayout>

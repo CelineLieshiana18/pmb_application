@@ -43,13 +43,15 @@ public class LoginActivityMahasiswaPanitia extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.btnMasuk.setOnClickListener(view -> {
-            if (binding.txtNrp.getText().toString().isEmpty() || binding.txtPassword.getText().toString().isEmpty())
-            {
-                Toast.makeText(LoginActivityMahasiswaPanitia.this,R.string.field_kosong_mhs_messsage, Toast.LENGTH_SHORT).show();
-            }
-            else {
-                userLogin();
-            }
+//            if (binding.txtNrp.getText().toString().isEmpty() || binding.txtPassword.getText().toString().isEmpty())
+//            {
+//                Toast.makeText(LoginActivityMahasiswaPanitia.this,R.string.field_kosong_mhs_messsage, Toast.LENGTH_SHORT).show();
+//            }
+//            else {
+//                userLogin();
+//            }
+
+            openProfile();
         });
 
         binding.linkToLoginDosen.setOnClickListener(view -> {
@@ -109,7 +111,7 @@ public class LoginActivityMahasiswaPanitia extends AppCompatActivity {
 
 
     private void openProfile(){
-        Intent intent = new Intent(this, MainActivityDosenPanitia.class);
+        Intent intent = new Intent(this, MainActivityMahasiswa.class);
 //        intent.putExtra(K, username);
         startActivity(intent);
     }

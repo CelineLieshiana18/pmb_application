@@ -21,6 +21,9 @@ public class DosenAdapter extends RecyclerView.Adapter<DosenAdapter.DosenViewHol
     private ArrayList<Dosen> dosens;
     private ItemClickListener clickListener;
 
+    public DosenAdapter() {
+    }
+
     public DosenAdapter(ItemClickListener clickListener) {
         this.clickListener = clickListener;
         dosens = new ArrayList<>();

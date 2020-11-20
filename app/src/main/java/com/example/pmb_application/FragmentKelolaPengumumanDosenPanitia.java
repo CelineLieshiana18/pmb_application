@@ -37,7 +37,15 @@ import java.util.Map;
 public class FragmentKelolaPengumumanDosenPanitia extends Fragment implements PengumumanAdapter.ItemClickListener{
     private FragmentKelolaPengumumanDosenPanitiaBinding binding;
     private PengumumanAdapter pengumumanAdapter;
+    private FragmentDetailPengumumanDosenPanitia detailPengumuman;
     String URL = VariabelGlobal.link_ip + "api/announcement/";
+
+    public FragmentDetailPengumumanDosenPanitia getDetailPengumuman() {
+        if(detailPengumuman == null){
+            detailPengumuman = new FragmentDetailPengumumanDosenPanitia();
+        }
+        return detailPengumuman;
+    }
 
     public PengumumanAdapter getPengumumanAdapter() {
         if(pengumumanAdapter == null){
@@ -143,11 +151,11 @@ public class FragmentKelolaPengumumanDosenPanitia extends Fragment implements Pe
     public void itemClicked(Pengumuman pengumuman) {
         Bundle bundle = new Bundle();
         bundle.putParcelable("Pengumuman",pengumuman);
-//        getDetailDosen().setArguments(bundle);
+        getDetailPengumuman().setArguments(bundle);
 
-//        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.frame_layout_dosen_panitia,getDetailDosen());
-//        transaction.addToBackStack(null);
-//        transaction.commit();
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout_dosen_panitia,getDetailPengumuman());
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
