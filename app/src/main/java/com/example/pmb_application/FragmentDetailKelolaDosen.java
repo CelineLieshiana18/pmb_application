@@ -40,7 +40,7 @@ public class FragmentDetailKelolaDosen extends Fragment {
     private ArrayAdapter<String> spinAdapter;
 
     int id;
-    String URL = VariabelGlobal.link_ip + "api/lecturer/";
+    String URL = VariabelGlobal.link_ip + "api/lecturers/";
     String gender="";
 
     public FragmentKelolaPenggunaDosenPanitia getKelolaDosen() {

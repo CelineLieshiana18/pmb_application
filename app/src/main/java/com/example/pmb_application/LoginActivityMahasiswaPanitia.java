@@ -28,7 +28,7 @@ public class LoginActivityMahasiswaPanitia extends AppCompatActivity {
     private ActivityLoginMahasiswaPanitiaBinding binding;
 
 
-    String URL =  VariabelGlobal.link_ip + "student/login/";
+    String URL =  VariabelGlobal.link_ip + "api/students/login/";
 
     public static final String KEY_NRP="nrp";
     public static final String KEY_PASSWORD="password";

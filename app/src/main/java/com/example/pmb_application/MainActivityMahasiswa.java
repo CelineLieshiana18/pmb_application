@@ -37,7 +37,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivityMahasiswa extends AppCompatActivity {
     private ActivityMainMahasiswaBinding binding;
     private Toolbar toolbar;
-    String URL = VariabelGlobal.link_ip + "api/lecturer/";
+    String URL = VariabelGlobal.link_ip + "api/lecturers/";
 
 
     @Override

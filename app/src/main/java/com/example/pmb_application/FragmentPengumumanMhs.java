@@ -29,7 +29,7 @@ public class FragmentPengumumanMhs extends Fragment implements PengumumanAdapter
 
     private FragmentPengumumanMhsBinding binding;
     private PengumumanAdapter pengumumanAdapter;
-    String URL = VariabelGlobal.link_ip + "api/announcement/";
+    String URL = VariabelGlobal.link_ip + "api/announcements/";
 
     public PengumumanAdapter getPengumumanAdapter() {
         if(pengumumanAdapter == null){

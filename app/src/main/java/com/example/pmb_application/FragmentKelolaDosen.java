@@ -46,11 +46,7 @@ public class FragmentKelolaDosen extends Fragment implements DosenAdapter.ItemCl
     private DosenAdapter dosenAdapter;
     private FragmentKelolaDosenBinding binding;
     private FragmentDetailKelolaDosen detailDosen;
-    @BindView(R.id.sr_layout_kelola_dosen)
-    SwipeRefreshLayout srLayout;
-    @BindView(R.id.rv_data_kelola_dosen)
-    RecyclerView rvData;
-    String URL = VariabelGlobal.link_ip + "api/lecturer/";
+    String URL = VariabelGlobal.link_ip + "api/lecturers/";
 
 
 

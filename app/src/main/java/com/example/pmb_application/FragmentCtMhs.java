@@ -1,64 +1,90 @@
 package com.example.pmb_application;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentCtMhs#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class FragmentCtMhs extends Fragment {
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.pmb_application.adapter.CTAdapterDosenPanitia;
+import com.example.pmb_application.adapter.CTAdapterMhs;
+import com.example.pmb_application.databinding.FragmentCtMhsBinding;
+import com.example.pmb_application.entity.CT;
+import com.example.pmb_application.entity.WSResponseCT;
+import com.google.gson.Gson;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import org.json.JSONException;
+import org.json.JSONObject;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class FragmentCtMhs extends Fragment implements CTAdapterMhs.ItemClickListener{
+    private FragmentCtMhsBinding binding;
 
-    public FragmentCtMhs() {
-        // Required empty public constructor
-    }
+    String URL = VariabelGlobal.link_ip + "api/cts/";
+    private CTAdapterMhs ctAdapter;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ctMhs.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FragmentCtMhs newInstance(String param1, String param2) {
-        FragmentCtMhs fragment = new FragmentCtMhs();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public CTAdapterMhs getCtAdapter() {
+        if(ctAdapter == null){
+            ctAdapter = new CTAdapterMhs(this);
+        }
+        return ctAdapter;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        loadCTData();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ct_mhs, container, false);
+        binding = FragmentCtMhsBinding.inflate(inflater,container,false);
+        initComponents();
+        return binding.getRoot();
+    }
+
+
+    private void  initComponents(){
+        binding.rvDataDaftarPanitiaMhs.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvDataDaftarPanitiaMhs.setAdapter(getCtAdapter());
+        binding.srLayoutDaftarPanitiaMhs.setOnRefreshListener(()->{
+            binding.srLayoutDaftarPanitiaMhs.setRefreshing(false);
+            loadCTData();
+        });
+    }
+
+    private void loadCTData() {
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        Uri uri = Uri.parse(URL).buildUpon().build();
+        System.out.println(uri);
+        StringRequest request = new StringRequest(Request.Method.GET, uri.toString(), response -> {
+            try {
+                JSONObject object = new JSONObject(response);
+                Gson gson = new Gson();
+                WSResponseCT weatherResponse = gson.fromJson(object.toString(), WSResponseCT.class);
+                getCtAdapter().changeData(weatherResponse.getData());
+                Toast.makeText(getActivity(), "berhasil",Toast.LENGTH_SHORT).show();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> {
+            Toast.makeText(getActivity(),"error", Toast.LENGTH_SHORT).show();
+            error.printStackTrace();
+        });
+        queue.add(request);
+    }
+
+    @Override
+    public void itemClicked(CT ct) {
+        Toast.makeText(getActivity(), "berhasil id CT : "+ct.getId(),Toast.LENGTH_SHORT).show();
     }
 }

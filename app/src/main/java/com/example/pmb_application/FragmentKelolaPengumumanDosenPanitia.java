@@ -38,7 +38,7 @@ public class FragmentKelolaPengumumanDosenPanitia extends Fragment implements Pe
     private FragmentKelolaPengumumanDosenPanitiaBinding binding;
     private PengumumanAdapter pengumumanAdapter;
     private FragmentDetailPengumumanDosenPanitia detailPengumuman;
-    String URL = VariabelGlobal.link_ip + "api/announcement/";
+    String URL = VariabelGlobal.link_ip + "api/announcements/";
 
     public FragmentDetailPengumumanDosenPanitia getDetailPengumuman() {
         if(detailPengumuman == null){

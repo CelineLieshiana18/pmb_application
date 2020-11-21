@@ -28,7 +28,7 @@ public class FragmentDaftarDosenMhs extends Fragment implements DosenAdapter.Ite
 
     private FragmentDaftarDosenMhsBinding binding;
 
-    String URL = VariabelGlobal.link_ip + "api/lecturer/";
+    String URL = VariabelGlobal.link_ip + "api/lecturers/";
     private DosenAdapter dosenAdapter;
 
 
