@@ -1,63 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
+    android:layout_marginTop="5dp"
     android:layout_height="wrap_content">
-
-    <TableLayout
+    <LinearLayout
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
             <TextView
-                android:id="@+id/tv_nrp"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_nrp_mhs_item"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textSize="18dp"
+                android:textSize="15dp"
                 android:layout_marginLeft="5dp"
                 android:padding="5dp"
-                tools:text="NRP" />
+                tools:text="NIK" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_name_mhs_item"
+                android:layout_width="300dp"
                 android:layout_height="match_parent"
                 android:gravity="center|left"
-                android:padding="5dp"
-                android:textSize="18dp"
+                android:padding="7dp"
+                android:textSize="15dp"
                 tools:text="Nama" />
+        </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_jurusan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center|left"
-                android:padding="5dp"
-                android:textSize="18dp"
-                tools:text="Jurusan" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnUbah"
-                android:padding="5dp"
-                android:text="Ubah"/>
-
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnHapus"
-                android:padding="5dp"
-                android:text="Hapus"/>
-
-        </TableRow>
-
-    </TableLayout>
-
-</LinearLayout>
+<!--        <LinearLayout-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical">-->
+<!--            <TextView-->
+<!--                android:id="@+id/tv_jabatan_dosen_item"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center|left"-->
+<!--                android:padding="5dp"-->
+<!--                android:textSize="15dp"-->
+<!--                tools:text="Jabatan" />-->
+<!--        </LinearLayout>-->
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

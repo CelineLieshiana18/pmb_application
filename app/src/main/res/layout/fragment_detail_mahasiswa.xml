@@ -3,20 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentKelolaMahasiswa">
+    tools:context=".FragmentDetailMahasiswa">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
+        android:layout_gravity="center"
         android:layout_marginTop="5dp"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tambah Mahasiswa Baru"
+            android:text="Ubah Mahasiswa Baru"
             android:gravity="center"
             android:textSize="20dp"
+            android:layout_marginBottom="30dp"
             android:textStyle="bold"/>
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -50,7 +52,7 @@
                         android:padding="10dp"/>
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
-                        android:id="@+id/txtNama"
+                        android:id="@+id/txtNamaDetailMhs"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <LinearLayout
@@ -64,7 +66,7 @@
                         android:padding="10dp"/>
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
-                        android:id="@+id/txtPassword"
+                        android:id="@+id/txtPasswordDetailMhs"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <LinearLayout
@@ -78,7 +80,7 @@
                         android:padding="10dp"/>
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
-                        android:id="@+id/txtEmail"
+                        android:id="@+id/txtEmailDetailMhs"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <LinearLayout
@@ -98,52 +100,39 @@
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/rbPerempuan"
+                            android:id="@+id/rbPerempuanDetailMhs"
                             android:text="Perempuan  "/>
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/rbLakiLaki"
+                            android:id="@+id/rbLakiLakiDetailMhs"
                             android:text="Laki-Laki"/>
                     </RadioGroup>
                 </LinearLayout>
 
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:orientation="horizontal">-->
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="Jurusan              "-->
-<!--                        android:padding="10dp"/>-->
-<!--                    <Spinner-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:id="@+id/spinJurusan"/>-->
-<!--                </LinearLayout>-->
+                <!--                <LinearLayout-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="match_parent"-->
+                <!--                    android:orientation="horizontal">-->
+                <!--                    <TextView-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:text="Jurusan              "-->
+                <!--                        android:padding="10dp"/>-->
+                <!--                    <Spinner-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="match_parent"-->
+                <!--                        android:id="@+id/spinJurusan"/>-->
+                <!--                </LinearLayout>-->
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/btnTambah"
+                    android:id="@+id/btnUbahDetailMhs"
                     android:layout_gravity="center"
-                    android:text="Tambahkan"
+                    android:text="Ubah"
                     android:layout_margin="10dp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/sr_layout_kelola_mahasiswa"
-            tools:context=".MainActivity">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_data_kelola_mahasiswa"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
 
 </FrameLayout>

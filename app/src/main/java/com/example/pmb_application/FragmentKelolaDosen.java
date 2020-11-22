@@ -107,7 +107,6 @@ public class FragmentKelolaDosen extends Fragment implements DosenAdapter.ItemCl
         transaction.commit();
     }
 
-
     private void loadDosenData(){
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         Uri uri = Uri.parse(URL).buildUpon().build();

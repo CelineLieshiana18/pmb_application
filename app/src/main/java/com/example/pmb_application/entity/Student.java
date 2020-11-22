@@ -3,38 +3,47 @@ package com.example.pmb_application.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Mahasiswa implements Parcelable {
+public class Student implements Parcelable {
     private int id;
     private String nrp;
     private String name;
     private String password;
     private String gender;
     private String email;
-    private int years_id;
+    private String roles_name;
 
-    public Mahasiswa() {
+    public Student() {
     }
 
+    public Student(int id, String nrp, String name, String password, String gender, String email, String roles_name) {
+        this.id = id;
+        this.nrp = nrp;
+        this.name = name;
+        this.password = password;
+        this.gender = gender;
+        this.email = email;
+        this.roles_name = roles_name;
+    }
 
-    protected Mahasiswa(Parcel in) {
+    protected Student(Parcel in) {
         id = in.readInt();
         nrp = in.readString();
         name = in.readString();
         password = in.readString();
         gender = in.readString();
         email = in.readString();
-        years_id = in.readInt();
+        roles_name = in.readString();
     }
 
-    public static final Creator<Mahasiswa> CREATOR = new Creator<Mahasiswa>() {
+    public static final Creator<Student> CREATOR = new Creator<Student>() {
         @Override
-        public Mahasiswa createFromParcel(Parcel in) {
-            return new Mahasiswa(in);
+        public Student createFromParcel(Parcel in) {
+            return new Student(in);
         }
 
         @Override
-        public Mahasiswa[] newArray(int size) {
-            return new Mahasiswa[size];
+        public Student[] newArray(int size) {
+            return new Student[size];
         }
     };
 
@@ -51,7 +60,7 @@ public class Mahasiswa implements Parcelable {
         dest.writeString(password);
         dest.writeString(gender);
         dest.writeString(email);
-        dest.writeInt(years_id);
+        dest.writeString(roles_name);
     }
 
     public int getId() {
@@ -102,11 +111,11 @@ public class Mahasiswa implements Parcelable {
         this.email = email;
     }
 
-    public int getYears_id() {
-        return years_id;
+    public String getRoles_name() {
+        return roles_name;
     }
 
-    public void setYears_id(int years_id) {
-        this.years_id = years_id;
+    public void setRoles_name(String roles_name) {
+        this.roles_name = roles_name;
     }
 }

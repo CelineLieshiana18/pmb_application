@@ -2,7 +2,7 @@ package com.example.pmb_application.entity;
 
 import java.util.ArrayList;
 
-public class WSResponseMhs {
+public class WSResponseLoginStudent {
     private String status;
     private String message;
     private ArrayList<Student> data;

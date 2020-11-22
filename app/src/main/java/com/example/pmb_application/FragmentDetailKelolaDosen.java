@@ -28,6 +28,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +44,7 @@ public class FragmentDetailKelolaDosen extends Fragment {
     int id;
     String URL = VariabelGlobal.link_ip + "api/lecturers/";
     String gender="";
+    String pwd="";
 
     public FragmentKelolaPenggunaDosenPanitia getKelolaDosen() {
         if(kelolaDosen == null){
@@ -78,6 +81,14 @@ public class FragmentDetailKelolaDosen extends Fragment {
                 binding.txtNIPUbahDosen.setText(dosen.getNip());
                 binding.txtNamaUbahDosen.setText(dosen.getName());
                 binding.txtPasswordUbahDosen.setText(dosen.getPassword());
+                pwd = dosen.getPassword();
+                MessageDigest messageDigest;
+                try {
+                    messageDigest = MessageDigest.getInstance("MD5");
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+
                 binding.txtEmailUbahDosen.setText(dosen.getEmail());
                 binding.JabatanSebelumnya.setText(dosen.getJabatan());
                 gender = dosen.getGender();
@@ -162,6 +173,12 @@ public class FragmentDetailKelolaDosen extends Fragment {
                 map.put("nip",binding.txtNIPUbahDosen.getText().toString().trim());
                 map.put("name",binding.txtNamaUbahDosen.getText().toString().trim());
                 map.put("password",binding.txtPasswordUbahDosen.getText().toString().trim());
+
+                if(!binding.txtPasswordUbahDosen.equals(pwd)){
+                    map.put("password",binding.txtPasswordUbahDosen.getText().toString().trim());
+                }else{
+                    map.put("password","-1");
+                }
                 map.put("email",binding.txtEmailUbahDosen.getText().toString().trim());
                 map.put("status",stat);
                 map.put("gender",gender);

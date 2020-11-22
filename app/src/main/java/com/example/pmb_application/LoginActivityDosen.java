@@ -31,7 +31,7 @@ import java.util.Map;
 public class LoginActivityDosen extends AppCompatActivity {
     private ActivityLoginDosenBinding binding;
 
-    String URL =  VariabelGlobal.link_ip + "api/lecturer/login/";
+    String URL =  VariabelGlobal.link_ip + "api/lecturers/login/";
 
     public static final String KEY_NIP="nip";
     public static final String KEY_PASSWORD="password";

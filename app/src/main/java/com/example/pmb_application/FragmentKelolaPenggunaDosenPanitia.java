@@ -87,7 +87,7 @@ public class FragmentKelolaPenggunaDosenPanitia extends Fragment {
         sectionPagerAdapter.addFragment(new FragmentKelolaMahasiswa(),"Data Mahasiswa");
         sectionPagerAdapter.addFragment(new FragmentKelolaPanitia(),"Data Panitia");
         sectionPagerAdapter.addFragment(new FragmentKelolaDosen(),"Data Dosen");
-        sectionPagerAdapter.addFragment(new FragmentRolePanitiaMahasiswa(),"Role Panitia Mahasiswa");
+        sectionPagerAdapter.addFragment(new FragmentRolePanitiaMahasiswa(),"Tambah Kepanitiaan");
         viewPager.setAdapter(sectionPagerAdapter);
     }
 

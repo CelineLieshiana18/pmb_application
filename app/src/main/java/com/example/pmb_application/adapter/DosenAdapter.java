@@ -71,7 +71,7 @@ public class DosenAdapter extends RecyclerView.Adapter<DosenAdapter.DosenViewHol
     }
 
     public class DosenViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_nik_dosen_item)
+        @BindView(R.id.tv_nrp_dosen_item)
         TextView txtNik;
         @BindView(R.id.tv_name_dosen_item)
         TextView txtName;
