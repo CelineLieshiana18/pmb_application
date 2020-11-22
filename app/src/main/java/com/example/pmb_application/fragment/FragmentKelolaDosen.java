@@ -1,4 +1,4 @@
-package com.example.pmb_application;
+package com.example.pmb_application.fragment;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -19,76 +20,99 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.pmb_application.adapter.MhsAdapter;
-import com.example.pmb_application.adapter.PanitiaAdapter;
-import com.example.pmb_application.databinding.FragmentKelolaMahasiswaBinding;
-import com.example.pmb_application.databinding.FragmentKelolaPanitiaBinding;
-import com.example.pmb_application.entity.Student;
+import com.example.pmb_application.R;
+import com.example.pmb_application.VariabelGlobal;
+import com.example.pmb_application.adapter.DosenAdapter;
+import com.example.pmb_application.databinding.FragmentKelolaDosenBinding;
+import com.example.pmb_application.entity.Dosen;
 import com.example.pmb_application.entity.WSResponseDosen;
-import com.example.pmb_application.entity.WSResponseMhs;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FragmentKelolaPanitia extends Fragment implements PanitiaAdapter.ItemClickListener{
-    private FragmentKelolaPanitiaBinding binding;
-    private FragmentDetailPanitia detailPanitia;
-    private PanitiaAdapter panitiaAdapter;
-    String URLGET = VariabelGlobal.link_ip + "api/students/getPanitia/";
-    String URLADD = VariabelGlobal.link_ip + "api/students/addPanitia/";
+public class FragmentKelolaDosen extends Fragment implements DosenAdapter.ItemClickListener{
 
-    public FragmentDetailPanitia getDetailPanitia() {
-        if (detailPanitia == null){
-            detailPanitia = new FragmentDetailPanitia();
+    private ArrayList<String> spinList;
+    private ArrayAdapter<String> spinAdapter;
+    private DosenAdapter dosenAdapter;
+    private FragmentKelolaDosenBinding binding;
+    private FragmentDetailKelolaDosen detailDosen;
+    String URL = VariabelGlobal.link_ip + "api/lecturers/";
+
+
+
+    public ArrayList<String> getSpinList() {
+        if(spinList == null){
+            spinList = new ArrayList<>();
+            spinList.add("Dekan");
+            spinList.add("Wakil Dekan");
+            spinList.add("Dosen");
         }
-        return detailPanitia;
+        return spinList;
     }
 
-    public PanitiaAdapter getPanitiaAdapter() {
-        if (panitiaAdapter == null){
-            panitiaAdapter = new PanitiaAdapter(this);
+    public ArrayAdapter<String> getSpinAdapter() {
+        if(spinAdapter == null){
+            spinAdapter = new ArrayAdapter<String>(getActivity().getBaseContext(),android.R.layout.simple_spinner_item, getSpinList());
+            spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         }
-        return panitiaAdapter;
+        return spinAdapter;
     }
 
+    public FragmentDetailKelolaDosen getDetailDosen() {
+        if(detailDosen == null){
+            detailDosen= new FragmentDetailKelolaDosen();
+        }
+        return detailDosen;
+    }
+
+    public DosenAdapter getDosenAdapter() {
+        if (dosenAdapter == null){
+            dosenAdapter = new DosenAdapter(this);
+        }
+        return dosenAdapter;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        loadDosenData();
         super.onCreate(savedInstanceState);
-        loadPanitiaData();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentKelolaPanitiaBinding.inflate(inflater,container,false);
+        binding = FragmentKelolaDosenBinding.inflate(inflater,container,false);
         initComponents();
         return binding.getRoot();
     }
 
-    private void  initComponents(){
-        binding.btnTambah.setOnClickListener(v -> addPanitia());
-        binding.rvDataKelolaPanitia.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.rvDataKelolaPanitia.setAdapter(getPanitiaAdapter());
-        binding.srLayoutKelolaPanitia.setOnRefreshListener(()->{
-            binding.srLayoutKelolaPanitia.setRefreshing(false);
-            loadPanitiaData();
-        });
+    @Override
+    public void itemClicked(Dosen dosen) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("Dosen",dosen);
+        getDetailDosen().setArguments(bundle);
+
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout_dosen_panitia,getDetailDosen());
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
-    private void loadPanitiaData() {
+    private void loadDosenData(){
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        Uri uri = Uri.parse(URLGET).buildUpon().build();
+        Uri uri = Uri.parse(URL).buildUpon().build();
         System.out.println(uri);
         StringRequest request = new StringRequest(Request.Method.GET, uri.toString(), response -> {
             try {
                 JSONObject object = new JSONObject(response);
                 Gson gson = new Gson();
-                WSResponseMhs weatherResponse = gson.fromJson(object.toString(), WSResponseMhs.class);
-                getPanitiaAdapter().changeData(weatherResponse.getData());
+                WSResponseDosen weatherResponse = gson.fromJson(object.toString(), WSResponseDosen.class);
+                getDosenAdapter().changeData(weatherResponse.getData());
                 Toast.makeText(getActivity(), "berhasil",Toast.LENGTH_SHORT).show();
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -100,8 +124,9 @@ public class FragmentKelolaPanitia extends Fragment implements PanitiaAdapter.It
         queue.add(request);
     }
 
-    private void addPanitia() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLADD,
+
+    private void addDosen() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -109,10 +134,10 @@ public class FragmentKelolaPanitia extends Fragment implements PanitiaAdapter.It
                             JSONObject object = new JSONObject(response);
                             if(object.get("status").equals("Success")){
                                 clearField();
-                                Toast.makeText(getActivity(),"Panitia Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
-                                loadPanitiaData();
+                                Toast.makeText(getActivity(),"Dosen Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
+                                loadDosenData();
                             } else{
-                                Toast.makeText(getActivity(),"Panitia Gagal Ditambahkan",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(),"Tidak Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
                             Toast.makeText(getActivity(),"masuk catch",Toast.LENGTH_LONG).show();
@@ -133,13 +158,13 @@ public class FragmentKelolaPanitia extends Fragment implements PanitiaAdapter.It
                     gender = "Perempuan";
                 }
                 Map<String,String> map = new HashMap<String,String>();
-                map.put("nrp",binding.txtNrp.getText().toString().trim());
+                map.put("nip",binding.txtNik.getText().toString().trim());
                 map.put("name",binding.txtNama.getText().toString().trim());
                 map.put("password",binding.txtPassword.getText().toString().trim());
                 map.put("email",binding.txtEmail.getText().toString().trim());
-                map.put("gender",gender);
-                System.out.println("MAP Add Panitia: ");
-                System.out.println(map);
+                map.put("status","1");
+                map.put("genre",gender);
+                map.put("jabatan",binding.spinJabatan.getSelectedItem().toString());
                 return map;
             }
         };
@@ -147,26 +172,24 @@ public class FragmentKelolaPanitia extends Fragment implements PanitiaAdapter.It
         requestQueue.add(stringRequest);
     }
 
+    private void  initComponents(){
+        binding.spinJabatan.setAdapter(getSpinAdapter());
+        binding.btnTambahDosen.setOnClickListener(v -> addDosen());
+        binding.rvDataKelolaDosen.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvDataKelolaDosen.setAdapter(getDosenAdapter());
+        binding.srLayoutKelolaDosen.setOnRefreshListener(()->{
+            binding.srLayoutKelolaDosen.setRefreshing(false);
+            loadDosenData();
+        });
+    }
+
     private void clearField() {
         binding.txtEmail.setText("");
         binding.txtPassword.setText("");
         binding.txtNama.setText("");
-        binding.txtNrp.setText("");
+        binding.txtNik.setText("");
+        binding.spinJabatan.setSelection(0);
         binding.rbPerempuan.setChecked(false);
         binding.rbLakiLaki.setChecked(false);
     }
-
-    @Override
-    public void itemClicked(Student student) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("Panitia",student);
-        getDetailPanitia().setArguments(bundle);
-
-        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout_dosen_panitia,getDetailPanitia());
-        transaction.addToBackStack(null);
-        transaction.commit();
-
-    }
-
 }

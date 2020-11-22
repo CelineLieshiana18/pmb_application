@@ -1,4 +1,4 @@
-package com.example.pmb_application;
+package com.example.pmb_application.fragment;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,11 +15,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.pmb_application.VariabelGlobal;
 import com.example.pmb_application.adapter.ForumAdapter;
 import com.example.pmb_application.databinding.FragmentForumMhsBinding;
 import com.example.pmb_application.entity.Forum;
 import com.example.pmb_application.entity.WSResponseForum;
-import com.example.pmb_application.entity.WSResponsePengumuman;
 import com.google.gson.Gson;
 
 import org.json.JSONException;

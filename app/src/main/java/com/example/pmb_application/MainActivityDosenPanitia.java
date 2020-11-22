@@ -12,6 +12,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Spinner;
 
+import com.example.pmb_application.fragment.FragmentAugmentedRealityDosenPanitia;
+import com.example.pmb_application.fragment.FragmentHomeDosenPanitia;
+import com.example.pmb_application.fragment.FragmentKelolaCTDosenPanitia;
+import com.example.pmb_application.fragment.FragmentKelolaKegiatanPengumumanForum;
+import com.example.pmb_application.fragment.FragmentKelolaPenggunaDosenPanitia;
 import com.example.pmb_application.databinding.ActivityMainDosenPanitiaBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

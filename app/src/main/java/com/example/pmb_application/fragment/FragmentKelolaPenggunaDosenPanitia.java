@@ -1,7 +1,5 @@
-package com.example.pmb_application;
+package com.example.pmb_application.fragment;
 
-import android.app.DownloadManager;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -11,22 +9,14 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.example.pmb_application.MainActivityDosenPanitia;
+import com.example.pmb_application.R;
 import com.example.pmb_application.adapter.SectionPagerAdapter;
-import com.example.pmb_application.databinding.ActivityMainDosenPanitiaBinding;
 import com.example.pmb_application.databinding.FragmentKelolaPenggunaDosenPanitiaBinding;
 import com.google.android.material.tabs.TabLayout;
-import com.google.gson.Gson;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class FragmentKelolaPenggunaDosenPanitia extends Fragment {
 

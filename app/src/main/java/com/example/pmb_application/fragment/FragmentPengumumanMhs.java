@@ -1,4 +1,4 @@
-package com.example.pmb_application;
+package com.example.pmb_application.fragment;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,8 +15,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.pmb_application.VariabelGlobal;
 import com.example.pmb_application.adapter.PengumumanAdapter;
-import com.example.pmb_application.databinding.FragmentKelolaPengumumanDosenPanitiaBinding;
 import com.example.pmb_application.databinding.FragmentPengumumanMhsBinding;
 import com.example.pmb_application.entity.Pengumuman;
 import com.example.pmb_application.entity.WSResponsePengumuman;

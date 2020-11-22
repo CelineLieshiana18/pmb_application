@@ -1,4 +1,4 @@
-package com.example.pmb_application;
+package com.example.pmb_application.fragment;
 
 import android.os.Bundle;
 
@@ -17,8 +17,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.pmb_application.R;
+import com.example.pmb_application.VariabelGlobal;
 import com.example.pmb_application.databinding.FragmentDetailMahasiswaBinding;
-import com.example.pmb_application.entity.Dosen;
 import com.example.pmb_application.entity.Student;
 
 import org.json.JSONException;
@@ -28,7 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FragmentDetailMahasiswa extends Fragment {
-    private FragmentKelolaMahasiswa kelolaMahasiswa;
+    private FragmentKelolaPenggunaDosenPanitia kelolaMahasiswa;
     private FragmentDetailMahasiswaBinding binding;
 
     int id;
@@ -36,9 +37,9 @@ public class FragmentDetailMahasiswa extends Fragment {
     String gender="";
     String pwd;
 
-    public FragmentKelolaMahasiswa getKelolaMahasiswa() {
+    public FragmentKelolaPenggunaDosenPanitia getKelolaMahasiswa() {
         if(kelolaMahasiswa == null){
-            kelolaMahasiswa = new FragmentKelolaMahasiswa();
+            kelolaMahasiswa = new FragmentKelolaPenggunaDosenPanitia();
         }
         return kelolaMahasiswa;
     }

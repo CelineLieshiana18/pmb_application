@@ -1,4 +1,4 @@
-package com.example.pmb_application;
+package com.example.pmb_application.fragment;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,11 +19,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.pmb_application.adapter.KegiatanAdapter;
-import com.example.pmb_application.databinding.FragmentKelolaKegiatanBinding;
-import com.example.pmb_application.entity.Kegiatan;
-import com.example.pmb_application.entity.WSResponseKegiatan;
-import com.example.pmb_application.entity.WSResponsePengumuman;
+import com.example.pmb_application.R;
+import com.example.pmb_application.VariabelGlobal;
+import com.example.pmb_application.adapter.ForumAdapter;
+import com.example.pmb_application.databinding.FragmentKelolaForumDosenPanitiaBinding;
+import com.example.pmb_application.entity.Forum;
+import com.example.pmb_application.entity.WSResponseForum;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -32,68 +33,65 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FragmentKelolaKegiatan extends Fragment implements KegiatanAdapter.ItemClickListener{
-    private FragmentKelolaKegiatanBinding binding;
-    private KegiatanAdapter kegiatanAdapter;
-    private FragmentDetailKegiatan detailKegiatan;
-    String URL = VariabelGlobal.link_ip + "api/activities/";
+public class FragmentKelolaForumDosenPanitia extends Fragment implements ForumAdapter.ItemClickListener{
+    private FragmentKelolaForumDosenPanitiaBinding binding;
+    private ForumAdapter forumAdapter;
+    private FragmentDetailForum detailForum;
+    String URL = VariabelGlobal.link_ip + "api/forums/";
 
-    public FragmentDetailKegiatan getDetailKegiatan() {
-        if(detailKegiatan == null){
-            detailKegiatan = new FragmentDetailKegiatan();
+    public FragmentDetailForum getDetailForum() {
+        if(detailForum == null){
+            detailForum = new FragmentDetailForum();
         }
-        return detailKegiatan;
+        return detailForum;
     }
 
-    public KegiatanAdapter getKegiatanAdapter() {
-        if(kegiatanAdapter == null){
-            kegiatanAdapter = new KegiatanAdapter(this);
+    public ForumAdapter getForumAdapter() {
+        if(forumAdapter == null){
+            forumAdapter = new ForumAdapter(this);
         }
-        return kegiatanAdapter;
+        return forumAdapter;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        loadKegiatanData();
         super.onCreate(savedInstanceState);
+        loadForumData();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentKelolaKegiatanBinding.inflate(inflater, container, false);
+        binding = FragmentKelolaForumDosenPanitiaBinding.inflate(inflater,container,false);
         initComponents();
         return binding.getRoot();
     }
 
     private void clearField() {
-        binding.txtIsiKegiatan.setText("");
-        binding.txtJamAkhirKegiatan.setText("");
-        binding.txtJamMulaiKegiatan.setText("");
-        binding.txtTanggalKegiatan.setText("");
-        binding.txtPICKegiatan.setText("");
-        binding.txtTempatKegiatan.setText("");
+        binding.txtIsiForum.setText("");
+        binding.txtNamaForum.setText("");
+        binding.txtTanggalForum.setText("");
     }
 
     private void  initComponents(){
-        binding.btnTambahKegiatan.setOnClickListener(v -> addKegiatan());
-        binding.rvDataKegiatan.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.rvDataKegiatan.setAdapter(getKegiatanAdapter());
-        binding.srLayoutKegiatan.setOnRefreshListener(()->{
-            binding.srLayoutKegiatan.setRefreshing(false);
-            loadKegiatanData();
+        binding.btnTambahForum.setOnClickListener(v -> addForum());
+        binding.rvDataForum.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvDataForum.setAdapter(getForumAdapter());
+        binding.srLayoutForum.setOnRefreshListener(()->{
+            binding.srLayoutForum.setRefreshing(false);
+            loadForumData();
         });
     }
 
-    private void loadKegiatanData() {
+    private void loadForumData() {
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         Uri uri = Uri.parse(URL).buildUpon().build();
         StringRequest request = new StringRequest(Request.Method.GET, uri.toString(), response -> {
             try {
                 JSONObject object = new JSONObject(response);
                 Gson gson = new Gson();
-                WSResponseKegiatan weatherResponse = gson.fromJson(object.toString(), WSResponseKegiatan.class);
-                getKegiatanAdapter().changeData(weatherResponse.getData());
+                WSResponseForum weatherResponse = gson.fromJson(object.toString(), WSResponseForum.class);
+                getForumAdapter().changeData(weatherResponse.getData());
                 Toast.makeText(getActivity(), "berhasil",Toast.LENGTH_SHORT).show();
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -105,7 +103,7 @@ public class FragmentKelolaKegiatan extends Fragment implements KegiatanAdapter.
         queue.add(request);
     }
 
-    private void addKegiatan() {
+    private void addForum() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                 new Response.Listener<String>() {
                     @Override
@@ -114,10 +112,10 @@ public class FragmentKelolaKegiatan extends Fragment implements KegiatanAdapter.
                             JSONObject object = new JSONObject(response);
                             if(object.get("status").equals("Success")){
                                 clearField();
-                                Toast.makeText(getActivity(),"Pengumuman Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
-                                loadKegiatanData();
+                                Toast.makeText(getActivity(),"Forum Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
+                                loadForumData();
                             } else{
-                                Toast.makeText(getActivity(),"Pengumuman Gagal Ditambahkan",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(),"Forum Gagal Ditambahkan",Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
                             Toast.makeText(getActivity(),"masuk catch",Toast.LENGTH_LONG).show();
@@ -134,29 +132,26 @@ public class FragmentKelolaKegiatan extends Fragment implements KegiatanAdapter.
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> map = new HashMap<String,String>();
-                map.put("date",binding.txtTanggalKegiatan.getText().toString().trim());
-                map.put("start",binding.txtJamMulaiKegiatan.getText().toString().trim());
-                map.put("end",binding.txtJamAkhirKegiatan.getText().toString().trim());
-                map.put("description",binding.txtIsiKegiatan.getText().toString().trim());
-                map.put("place",binding.txtTempatKegiatan.getText().toString().trim());
-                map.put("pic",binding.txtPICKegiatan.getText().toString().trim());
-                map.put("years_id","1");//harusnya nantidi backend aja
+                map.put("date",binding.txtTanggalForum.getText().toString().trim());
+                map.put("name",binding.txtNamaForum.getText().toString().trim());
+                map.put("description",binding.txtIsiForum.getText().toString().trim());
                 System.out.println(map);
                 return map;
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         requestQueue.add(stringRequest);
+
     }
 
     @Override
-    public void itemClicked(Kegiatan kegiatan) {
+    public void itemClicked(Forum forum) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable("Kegiatan",kegiatan);
-        getDetailKegiatan().setArguments(bundle);
+        bundle.putParcelable("Forum",forum);
+        getDetailForum().setArguments(bundle);
 
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout_dosen_panitia,getDetailKegiatan());
+        transaction.replace(R.id.frame_layout_dosen_panitia,getDetailForum());
         transaction.addToBackStack(null);
         transaction.commit();
     }

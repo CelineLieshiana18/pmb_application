@@ -1,4 +1,4 @@
-package com.example.pmb_application;
+package com.example.pmb_application.fragment;
 
 import android.os.Bundle;
 
@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.pmb_application.R;
+import com.example.pmb_application.SessionManagement;
 import com.example.pmb_application.databinding.FragmentHomeDosenPanitiaBinding;
 
 public class FragmentHomeDosenPanitia extends Fragment {

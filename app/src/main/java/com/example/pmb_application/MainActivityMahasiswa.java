@@ -7,32 +7,27 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.pmb_application.fragment.FragmentAugmentedRealityMhs;
+import com.example.pmb_application.fragment.FragmentCtMhs;
+import com.example.pmb_application.fragment.FragmentDaftarPenggunaMhs;
+import com.example.pmb_application.fragment.FragmentForumMhs;
+import com.example.pmb_application.fragment.FragmentHomeMhs;
 import com.example.pmb_application.databinding.ActivityMainMahasiswaBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivityMahasiswa extends AppCompatActivity {
     private ActivityMainMahasiswaBinding binding;

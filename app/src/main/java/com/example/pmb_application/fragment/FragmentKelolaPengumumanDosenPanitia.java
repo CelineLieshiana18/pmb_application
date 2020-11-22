@@ -1,4 +1,4 @@
-package com.example.pmb_application;
+package com.example.pmb_application.fragment;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,10 +19,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.pmb_application.adapter.CTAdapterDosenPanitia;
-import com.example.pmb_application.databinding.FragmentKelolaCtDosenPanitiaBinding;
-import com.example.pmb_application.entity.CT;
-import com.example.pmb_application.entity.WSResponseCT;
+import com.example.pmb_application.R;
+import com.example.pmb_application.SessionManagement;
+import com.example.pmb_application.VariabelGlobal;
+import com.example.pmb_application.adapter.PengumumanAdapter;
+import com.example.pmb_application.databinding.FragmentKelolaPengumumanDosenPanitiaBinding;
+import com.example.pmb_application.entity.Pengumuman;
+import com.example.pmb_application.entity.WSResponsePengumuman;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -31,85 +34,60 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FragmentKelolaCTDosenPanitia extends Fragment implements CTAdapterDosenPanitia.ItemClickListener{
-    private FragmentKelolaCtDosenPanitiaBinding binding;
-    private CTAdapterDosenPanitia ctAdapter;
-    private FragmentDetailCT detailCT;
-    String URL = VariabelGlobal.link_ip + "api/cts/";
+public class FragmentKelolaPengumumanDosenPanitia extends Fragment implements PengumumanAdapter.ItemClickListener{
+    private FragmentKelolaPengumumanDosenPanitiaBinding binding;
+    private PengumumanAdapter pengumumanAdapter;
+    private FragmentDetailPengumumanDosenPanitia detailPengumuman;
+    String URL = VariabelGlobal.link_ip + "api/announcements/";
 
-    public FragmentDetailCT getDetailCT() {
-        if (detailCT ==null){
-            detailCT = new FragmentDetailCT();
+    public FragmentDetailPengumumanDosenPanitia getDetailPengumuman() {
+        if(detailPengumuman == null){
+            detailPengumuman = new FragmentDetailPengumumanDosenPanitia();
         }
-        return detailCT;
+        return detailPengumuman;
     }
 
-    public CTAdapterDosenPanitia getCtAdapter() {
-        if(ctAdapter == null){
-            ctAdapter = new CTAdapterDosenPanitia(this);
+    public PengumumanAdapter getPengumumanAdapter() {
+        if(pengumumanAdapter == null){
+            pengumumanAdapter = new PengumumanAdapter(this);
         }
-        return ctAdapter;
+        return pengumumanAdapter;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadCTData();
+        loadPengumumanData();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentKelolaCtDosenPanitiaBinding.inflate(inflater,container,false);
+        binding = FragmentKelolaPengumumanDosenPanitiaBinding.inflate(inflater, container, false);
         initComponents();
         // Inflate the layout for this fragment
         return binding.getRoot();
     }
 
-
-    @Override
-    public void itemClicked(CT ct) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("CT",ct);
-        getDetailCT().setArguments(bundle);
-
-        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout_dosen_panitia,getDetailCT());
-        transaction.addToBackStack(null);
-        transaction.commit();
-
-    }
-
-
     private void  initComponents(){
-        binding.btnTambahCT.setOnClickListener(v -> addCT());
-        binding.rvDataKelolaCt.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.rvDataKelolaCt.setAdapter(getCtAdapter());
-        binding.srLayoutKelolaCt.setOnRefreshListener(()->{
-            binding.srLayoutKelolaCt.setRefreshing(false);
-            loadCTData();
+        binding.btnTambahPengumuman.setOnClickListener(v -> addPengumuman());
+        binding.rvDataPengumuman.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvDataPengumuman.setAdapter(getPengumumanAdapter());
+        binding.srLayoutPengumuman.setOnRefreshListener(()->{
+            binding.srLayoutPengumuman.setRefreshing(false);
+            loadPengumumanData();
         });
     }
 
-    private void clearField() {
-        binding.txtDeskripsi.setText("");
-        binding.txtDurasi.setText("");
-        binding.txtJamMulaiCT.setText("");
-        binding.txtJamSelesaiCT.setText("");
-        binding.txtNamaCT.setText("");
-        binding.txtTanggalCT.setText("");
-    }
-
-    private void loadCTData() {
+    private void loadPengumumanData() {
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         Uri uri = Uri.parse(URL).buildUpon().build();
-        System.out.println(uri);
         StringRequest request = new StringRequest(Request.Method.GET, uri.toString(), response -> {
             try {
                 JSONObject object = new JSONObject(response);
                 Gson gson = new Gson();
-                WSResponseCT weatherResponse = gson.fromJson(object.toString(), WSResponseCT.class);
-                getCtAdapter().changeData(weatherResponse.getData());
+                WSResponsePengumuman weatherResponse = gson.fromJson(object.toString(), WSResponsePengumuman.class);
+                getPengumumanAdapter().changeData(weatherResponse.getData());
                 Toast.makeText(getActivity(), "berhasil",Toast.LENGTH_SHORT).show();
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -121,7 +99,7 @@ public class FragmentKelolaCTDosenPanitia extends Fragment implements CTAdapterD
         queue.add(request);
     }
 
-    private void addCT() {
+    private void addPengumuman() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                 new Response.Listener<String>() {
                     @Override
@@ -130,10 +108,10 @@ public class FragmentKelolaCTDosenPanitia extends Fragment implements CTAdapterD
                             JSONObject object = new JSONObject(response);
                             if(object.get("status").equals("Success")){
                                 clearField();
-                                Toast.makeText(getActivity(),"Computational Thinking Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
-                                loadCTData();
+                                Toast.makeText(getActivity(),"Pengumuman Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
+                                loadPengumumanData();
                             } else{
-                                Toast.makeText(getActivity(),"Computational Thinking Gagal Ditambahkan",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(),"Pengumuman Gagal Ditambahkan",Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
                             Toast.makeText(getActivity(),"masuk catch",Toast.LENGTH_LONG).show();
@@ -150,13 +128,12 @@ public class FragmentKelolaCTDosenPanitia extends Fragment implements CTAdapterD
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> map = new HashMap<String,String>();
-                map.put("description",binding.txtDeskripsi.getText().toString().trim());
-                map.put("date",binding.txtTanggalCT.getText().toString().trim());
-                map.put("start",binding.txtJamMulaiCT.getText().toString().trim());
-                map.put("end",binding.txtJamSelesaiCT.getText().toString().trim());
-                map.put("duration",binding.txtDurasi.getText().toString().trim());
-                map.put("name",binding.txtNamaCT.getText().toString().trim());
+                map.put("date",binding.txtTanggalPengumuman.getText().toString().trim());
+                map.put("description",binding.txtIsiPengumuman.getText().toString().trim());
+                SessionManagement sessionManagement = new SessionManagement(getActivity().getBaseContext());
+                map.put("students_id","1");
                 System.out.println(map);
+//                map.put("students_id",sessionManagement.getId());
                 return map;
             }
         };
@@ -164,4 +141,21 @@ public class FragmentKelolaCTDosenPanitia extends Fragment implements CTAdapterD
         requestQueue.add(stringRequest);
     }
 
+
+    private void clearField() {
+        binding.txtIsiPengumuman.setText("");
+        binding.txtTanggalPengumuman.setText("");
+    }
+
+    @Override
+    public void itemClicked(Pengumuman pengumuman) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("Pengumuman",pengumuman);
+        getDetailPengumuman().setArguments(bundle);
+
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout_dosen_panitia,getDetailPengumuman());
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 }

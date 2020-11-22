@@ -1,4 +1,4 @@
-package com.example.pmb_application;
+package com.example.pmb_application.fragment;
 
 import android.os.Bundle;
 
@@ -17,6 +17,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.pmb_application.R;
+import com.example.pmb_application.VariabelGlobal;
 import com.example.pmb_application.databinding.FragmentDetailPanitiaBinding;
 import com.example.pmb_application.entity.Student;
 
@@ -28,7 +30,7 @@ import java.util.Map;
 
 public class FragmentDetailPanitia extends Fragment {
     private FragmentDetailPanitiaBinding binding;
-    private FragmentKelolaPanitia kelolaPanitia;
+    private FragmentKelolaPenggunaDosenPanitia kelolaPanitia;
     String URL = VariabelGlobal.link_ip + "api/students/";
     String pwd;
     String gender;
@@ -61,9 +63,9 @@ public class FragmentDetailPanitia extends Fragment {
     }
 
 
-    public FragmentKelolaPanitia getKelolaPanitia() {
+    public FragmentKelolaPenggunaDosenPanitia getKelolaPanitia() {
         if(kelolaPanitia == null){
-            kelolaPanitia = new FragmentKelolaPanitia();
+            kelolaPanitia = new FragmentKelolaPenggunaDosenPanitia();
         }
         return kelolaPanitia;
     }

@@ -1,4 +1,4 @@
-package com.example.pmb_application;
+package com.example.pmb_application.fragment;
 
 import android.os.Bundle;
 
@@ -10,30 +10,40 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.pmb_application.R;
 import com.example.pmb_application.adapter.SectionPagerAdapter;
+import com.example.pmb_application.databinding.FragmentHomeMhsBinding;
 import com.google.android.material.tabs.TabLayout;
 
-public class FragmentDaftarPenggunaMhs extends Fragment {
+public class FragmentHomeMhs extends Fragment {
+    private FragmentHomeMhsBinding binding;
+    private FragmentPengumumanMhs FragmentPengumumanMhs;
     View myFragment;
     ViewPager viewPager;
     TabLayout tabLayout;
 
+    public FragmentPengumumanMhs getFragmentPengumumanMhs() {
+        if (FragmentPengumumanMhs == null){
+            FragmentPengumumanMhs = new FragmentPengumumanMhs();
+        }
+        return FragmentPengumumanMhs;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        binding = FragmentHomeMhsBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        myFragment =  inflater.inflate(R.layout.fragment_daftar_pengguna_mhs, container, false);
-        viewPager = myFragment.findViewById(R.id.viewPagerPenggunaMhs);
-        tabLayout = myFragment.findViewById(R.id.tabLayoutPenggunaMhs);
+        myFragment =  inflater.inflate(R.layout.fragment_home_mhs, container, false);
+        viewPager = myFragment.findViewById(R.id.viewPagerHomeMhs);
+        tabLayout = myFragment.findViewById(R.id.tabLayoutHomeMhs);
         return myFragment;
     }
-
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -60,9 +70,10 @@ public class FragmentDaftarPenggunaMhs extends Fragment {
 
     private void setUpViewPager(ViewPager viewPager) {
         SectionPagerAdapter sectionPagerAdapter = new SectionPagerAdapter(getChildFragmentManager());
-        sectionPagerAdapter.addFragment(new FragmentDaftarTemanMhs(),"Data Teman Angkatan");
-        sectionPagerAdapter.addFragment(new FragmentDaftarPanitiaMhs(),"Data Panitia");
-        sectionPagerAdapter.addFragment(new FragmentDaftarDosenMhs(),"Data Dosen");
+
+        sectionPagerAdapter.addFragment(new FragmentKegiatanMhs(),"Data Kegiatan");
+        sectionPagerAdapter.addFragment(new FragmentPengumumanMhs(),"Data Pengumuman");
+
         viewPager.setAdapter(sectionPagerAdapter);
     }
 }

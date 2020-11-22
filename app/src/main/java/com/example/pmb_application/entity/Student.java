@@ -15,14 +15,15 @@ public class Student implements Parcelable {
     public Student() {
     }
 
-    public Student(int id, String nrp, String name, String password, String gender, String email, String roles_name) {
-        this.id = id;
-        this.nrp = nrp;
-        this.name = name;
-        this.password = password;
-        this.gender = gender;
-        this.email = email;
-        this.roles_name = roles_name;
+
+    public Student(Student student) {
+        this.id = student.id;
+        this.nrp = student.nrp;
+        this.name = student.name;
+        this.password = student.password;
+        this.gender = student.gender;
+        this.email = student.email;
+        this.roles_name = student.roles_name;
     }
 
     protected Student(Parcel in) {

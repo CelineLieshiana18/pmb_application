@@ -14,7 +14,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.pmb_application.databinding.ActivityLoginMahasiswaPanitiaBinding;
+import com.example.pmb_application.entity.Student;
 import com.example.pmb_application.entity.WSResponseDosen;
+import com.example.pmb_application.entity.WSResponseLoginStudent;
 import com.example.pmb_application.entity.WSResponseMhs;
 import com.google.gson.Gson;
 
@@ -43,15 +45,13 @@ public class LoginActivityMahasiswaPanitia extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.btnMasuk.setOnClickListener(view -> {
-//            if (binding.txtNrp.getText().toString().isEmpty() || binding.txtPassword.getText().toString().isEmpty())
-//            {
-//                Toast.makeText(LoginActivityMahasiswaPanitia.this,R.string.field_kosong_mhs_messsage, Toast.LENGTH_SHORT).show();
-//            }
-//            else {
-//                userLogin();
-//            }
-
-            openProfile();
+            if (binding.txtNrp.getText().toString().isEmpty() || binding.txtPassword.getText().toString().isEmpty())
+            {
+                Toast.makeText(LoginActivityMahasiswaPanitia.this,R.string.field_kosong_mhs_messsage, Toast.LENGTH_SHORT).show();
+            }
+            else {
+                userLogin();
+            }
         });
 
         binding.linkToLoginDosen.setOnClickListener(view -> {
@@ -75,11 +75,20 @@ public class LoginActivityMahasiswaPanitia extends AppCompatActivity {
                             System.out.println(object.get("status"));
                             if(object.get("status").equals("Success")){
                                 Gson gson = new Gson();
-                                WSResponseMhs weatherResponse = gson.fromJson(object.toString(), WSResponseMhs.class);
+                                WSResponseLoginStudent weatherResponse = gson.fromJson(object.toString(), WSResponseLoginStudent.class);
+                                Student student = new Student(weatherResponse.getData().get(0));
+                                System.out.println("data login student");
+                                System.out.println(student.getRoles_name());
+                                if(student.getRoles_name().equals("Panitia")){
+                                    openProfilePanitia();
+                                }else{
+                                    openProfileMhs();
+                                }
+                                SessionManagement sessionManagement = new SessionManagement(LoginActivityMahasiswaPanitia.this);
+                                sessionManagement.saveSession(student.getNrp(),String.valueOf(student.getId()),student.getName());
+                                System.out.println(sessionManagement.getSession());
+
                                 System.out.println(object.get("data"));
-//                                System.out.println(object);
-//                                gamau print
-                                openProfile();
                             } else{
                                 Toast.makeText(LoginActivityMahasiswaPanitia.this,"NIK dan Nama Tidak Ditemukan",Toast.LENGTH_LONG).show();
                             }
@@ -99,9 +108,6 @@ public class LoginActivityMahasiswaPanitia extends AppCompatActivity {
                 Map<String,String> map = new HashMap<String,String>();
                 map.put(KEY_NRP,nrp);
                 map.put(KEY_PASSWORD,password);
-//                SessionManagement sessionManagement = new SessionManagement(LoginActivityMahasiswaPanitia.this);
-//                sessionManagement.saveSession(nrp);
-//                System.out.println(sessionManagement.getSession());
                 return map;
             }
         };
@@ -110,8 +116,13 @@ public class LoginActivityMahasiswaPanitia extends AppCompatActivity {
     }
 
 
-    private void openProfile(){
+    private void openProfileMhs(){
         Intent intent = new Intent(this, MainActivityMahasiswa.class);
+//        intent.putExtra(K, username);
+        startActivity(intent);
+    }
+    private void openProfilePanitia(){
+        Intent intent = new Intent(this, MainActivityDosenPanitia.class);
 //        intent.putExtra(K, username);
         startActivity(intent);
     }

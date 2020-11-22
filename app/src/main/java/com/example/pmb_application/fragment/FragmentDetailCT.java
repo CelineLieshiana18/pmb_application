@@ -1,4 +1,4 @@
-package com.example.pmb_application;
+package com.example.pmb_application.fragment;
 
 import android.os.Bundle;
 
@@ -17,11 +17,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.pmb_application.R;
+import com.example.pmb_application.VariabelGlobal;
 import com.example.pmb_application.databinding.FragmentDetailCtBinding;
-import com.example.pmb_application.databinding.FragmentDetailForumBinding;
-import com.example.pmb_application.databinding.FragmentKelolaCtDosenPanitiaBinding;
 import com.example.pmb_application.entity.CT;
-import com.example.pmb_application.entity.Forum;
 
 import org.json.JSONException;
 import org.json.JSONObject;

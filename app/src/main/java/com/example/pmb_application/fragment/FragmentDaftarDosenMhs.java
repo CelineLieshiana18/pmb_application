@@ -1,4 +1,4 @@
-package com.example.pmb_application;
+package com.example.pmb_application.fragment;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +15,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.pmb_application.VariabelGlobal;
 import com.example.pmb_application.adapter.DosenAdapter;
 import com.example.pmb_application.databinding.FragmentDaftarDosenMhsBinding;
 import com.example.pmb_application.entity.Dosen;

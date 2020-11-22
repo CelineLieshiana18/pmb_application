@@ -1,4 +1,4 @@
-package com.example.pmb_application;
+package com.example.pmb_application.fragment;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -6,13 +6,10 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -22,101 +19,76 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.pmb_application.adapter.DosenAdapter;
-import com.example.pmb_application.databinding.FragmentKelolaDosenBinding;
-import com.example.pmb_application.entity.Dosen;
-import com.example.pmb_application.entity.WSResponseDosen;
+import com.example.pmb_application.R;
+import com.example.pmb_application.VariabelGlobal;
+import com.example.pmb_application.adapter.MhsAdapter;
+import com.example.pmb_application.databinding.FragmentKelolaMahasiswaBinding;
+import com.example.pmb_application.entity.Student;
+import com.example.pmb_application.entity.WSResponseLoginStudent;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+public class FragmentKelolaMahasiswa extends Fragment implements MhsAdapter.ItemClickListener{
+    private FragmentKelolaMahasiswaBinding binding;
+    private FragmentDetailMahasiswa detailMahasiswa;
+    private MhsAdapter mahasiswaAdapter;
+    String URLGET = VariabelGlobal.link_ip + "api/students/getMahasiswa/";
+    String URL = VariabelGlobal.link_ip + "api/students/";
 
-public class FragmentKelolaDosen extends Fragment implements DosenAdapter.ItemClickListener{
-
-    private ArrayList<String> spinList;
-    private ArrayAdapter<String> spinAdapter;
-    private DosenAdapter dosenAdapter;
-    private FragmentKelolaDosenBinding binding;
-    private FragmentDetailKelolaDosen detailDosen;
-    String URL = VariabelGlobal.link_ip + "api/lecturers/";
-
-
-
-    public ArrayList<String> getSpinList() {
-        if(spinList == null){
-            spinList = new ArrayList<>();
-            spinList.add("Dekan");
-            spinList.add("Wakil Dekan");
-            spinList.add("Dosen");
+    public FragmentDetailMahasiswa getDetailPanitia() {
+        if (detailMahasiswa == null){
+            detailMahasiswa = new FragmentDetailMahasiswa();
         }
-        return spinList;
+        return detailMahasiswa;
     }
 
-    public ArrayAdapter<String> getSpinAdapter() {
-        if(spinAdapter == null){
-            spinAdapter = new ArrayAdapter<String>(getActivity().getBaseContext(),android.R.layout.simple_spinner_item, getSpinList());
-            spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    public MhsAdapter getMahasiswaAdapter() {
+        if(mahasiswaAdapter == null){
+            mahasiswaAdapter = new MhsAdapter(this);
         }
-        return spinAdapter;
+        return mahasiswaAdapter;
     }
 
-    public FragmentDetailKelolaDosen getDetailDosen() {
-        if(detailDosen == null){
-            detailDosen= new FragmentDetailKelolaDosen();
-        }
-        return detailDosen;
-    }
-
-    public DosenAdapter getDosenAdapter() {
-        if (dosenAdapter == null){
-            dosenAdapter = new DosenAdapter(this);
-        }
-        return dosenAdapter;
-    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        loadDosenData();
         super.onCreate(savedInstanceState);
+        loadMhsData();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentKelolaDosenBinding.inflate(inflater,container,false);
+        // Inflate the layout for this fragment
+        binding = FragmentKelolaMahasiswaBinding.inflate(inflater,container,false);
         initComponents();
         return binding.getRoot();
     }
 
-    @Override
-    public void itemClicked(Dosen dosen) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("Dosen",dosen);
-        getDetailDosen().setArguments(bundle);
-
-        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout_dosen_panitia,getDetailDosen());
-        transaction.addToBackStack(null);
-        transaction.commit();
+    private void  initComponents(){
+        binding.btnTambah.setOnClickListener(v -> addMhs());
+        binding.rvDataKelolaMahasiswa.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvDataKelolaMahasiswa.setAdapter(getMahasiswaAdapter());
+        binding.srLayoutKelolaMahasiswa.setOnRefreshListener(()->{
+            binding.srLayoutKelolaMahasiswa.setRefreshing(false);
+            loadMhsData();
+        });
     }
 
-    private void loadDosenData(){
+    private void loadMhsData() {
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        Uri uri = Uri.parse(URL).buildUpon().build();
+        Uri uri = Uri.parse(URLGET).buildUpon().build();
         System.out.println(uri);
         StringRequest request = new StringRequest(Request.Method.GET, uri.toString(), response -> {
             try {
                 JSONObject object = new JSONObject(response);
                 Gson gson = new Gson();
-                WSResponseDosen weatherResponse = gson.fromJson(object.toString(), WSResponseDosen.class);
-                getDosenAdapter().changeData(weatherResponse.getData());
+                WSResponseLoginStudent weatherResponse = gson.fromJson(object.toString(), WSResponseLoginStudent.class);
+                getMahasiswaAdapter().changeData(weatherResponse.getData());
                 Toast.makeText(getActivity(), "berhasil",Toast.LENGTH_SHORT).show();
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -128,8 +100,7 @@ public class FragmentKelolaDosen extends Fragment implements DosenAdapter.ItemCl
         queue.add(request);
     }
 
-
-    private void addDosen() {
+    private void addMhs() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                 new Response.Listener<String>() {
                     @Override
@@ -138,10 +109,10 @@ public class FragmentKelolaDosen extends Fragment implements DosenAdapter.ItemCl
                             JSONObject object = new JSONObject(response);
                             if(object.get("status").equals("Success")){
                                 clearField();
-                                Toast.makeText(getActivity(),"Dosen Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
-                                loadDosenData();
+                                Toast.makeText(getActivity(),"Mahasiswa Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
+                                loadMhsData();
                             } else{
-                                Toast.makeText(getActivity(),"Tidak Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(),"Mahasiswa Gagal Ditambahkan",Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
                             Toast.makeText(getActivity(),"masuk catch",Toast.LENGTH_LONG).show();
@@ -162,13 +133,13 @@ public class FragmentKelolaDosen extends Fragment implements DosenAdapter.ItemCl
                     gender = "Perempuan";
                 }
                 Map<String,String> map = new HashMap<String,String>();
-                map.put("nip",binding.txtNik.getText().toString().trim());
+                map.put("nrp",binding.txtNrp.getText().toString().trim());
                 map.put("name",binding.txtNama.getText().toString().trim());
                 map.put("password",binding.txtPassword.getText().toString().trim());
                 map.put("email",binding.txtEmail.getText().toString().trim());
-                map.put("status","1");
-                map.put("genre",gender);
-                map.put("jabatan",binding.spinJabatan.getSelectedItem().toString());
+                map.put("gender",gender);
+                System.out.println("MAP Add Student: ");
+                System.out.println(map);
                 return map;
             }
         };
@@ -176,24 +147,25 @@ public class FragmentKelolaDosen extends Fragment implements DosenAdapter.ItemCl
         requestQueue.add(stringRequest);
     }
 
-    private void  initComponents(){
-        binding.spinJabatan.setAdapter(getSpinAdapter());
-        binding.btnTambahDosen.setOnClickListener(v -> addDosen());
-        binding.rvDataKelolaDosen.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.rvDataKelolaDosen.setAdapter(getDosenAdapter());
-        binding.srLayoutKelolaDosen.setOnRefreshListener(()->{
-            binding.srLayoutKelolaDosen.setRefreshing(false);
-            loadDosenData();
-        });
-    }
-
     private void clearField() {
         binding.txtEmail.setText("");
         binding.txtPassword.setText("");
         binding.txtNama.setText("");
-        binding.txtNik.setText("");
-        binding.spinJabatan.setSelection(0);
+        binding.txtNrp.setText("");
         binding.rbPerempuan.setChecked(false);
         binding.rbLakiLaki.setChecked(false);
+    }
+
+    @Override
+    public void itemClicked(Student student) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("Mahasiswa",student);
+        getDetailPanitia().setArguments(bundle);
+
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout_dosen_panitia,getDetailPanitia());
+        transaction.addToBackStack(null);
+        transaction.commit();
+
     }
 }

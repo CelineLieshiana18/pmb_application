@@ -1,4 +1,4 @@
-package com.example.pmb_application;
+package com.example.pmb_application.fragment;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,10 +19,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.pmb_application.adapter.MhsAdapter;
-import com.example.pmb_application.databinding.FragmentKelolaMahasiswaBinding;
+import com.example.pmb_application.R;
+import com.example.pmb_application.VariabelGlobal;
+import com.example.pmb_application.adapter.PanitiaAdapter;
+import com.example.pmb_application.databinding.FragmentKelolaPanitiaBinding;
 import com.example.pmb_application.entity.Student;
-import com.example.pmb_application.entity.WSResponseLoginStudent;
 import com.example.pmb_application.entity.WSResponseMhs;
 import com.google.gson.Gson;
 
@@ -32,12 +33,12 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FragmentKelolaMahasiswa extends Fragment implements MhsAdapter.ItemClickListener{
-    private FragmentKelolaMahasiswaBinding binding;
+public class FragmentKelolaPanitia extends Fragment implements PanitiaAdapter.ItemClickListener{
+    private FragmentKelolaPanitiaBinding binding;
     private FragmentDetailPanitia detailPanitia;
-    private MhsAdapter mahasiswaAdapter;
-    String URLGET = VariabelGlobal.link_ip + "api/students/getMahasiswa/";
-    String URL = VariabelGlobal.link_ip + "api/students/";
+    private PanitiaAdapter panitiaAdapter;
+    String URLGET = VariabelGlobal.link_ip + "api/students/getPanitia/";
+    String URLADD = VariabelGlobal.link_ip + "api/students/addPanitia/";
 
     public FragmentDetailPanitia getDetailPanitia() {
         if (detailPanitia == null){
@@ -46,39 +47,38 @@ public class FragmentKelolaMahasiswa extends Fragment implements MhsAdapter.Item
         return detailPanitia;
     }
 
-    public MhsAdapter getMahasiswaAdapter() {
-        if(mahasiswaAdapter == null){
-            mahasiswaAdapter = new MhsAdapter(this);
+    public PanitiaAdapter getPanitiaAdapter() {
+        if (panitiaAdapter == null){
+            panitiaAdapter = new PanitiaAdapter(this);
         }
-        return mahasiswaAdapter;
+        return panitiaAdapter;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadMhsData();
+        loadPanitiaData();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        binding = FragmentKelolaMahasiswaBinding.inflate(inflater,container,false);
+        binding = FragmentKelolaPanitiaBinding.inflate(inflater,container,false);
         initComponents();
         return binding.getRoot();
     }
 
     private void  initComponents(){
-        binding.btnTambah.setOnClickListener(v -> addMhs());
-        binding.rvDataKelolaMahasiswa.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.rvDataKelolaMahasiswa.setAdapter(getMahasiswaAdapter());
-        binding.srLayoutKelolaMahasiswa.setOnRefreshListener(()->{
-            binding.srLayoutKelolaMahasiswa.setRefreshing(false);
-            loadMhsData();
+        binding.btnTambah.setOnClickListener(v -> addPanitia());
+        binding.rvDataKelolaPanitia.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvDataKelolaPanitia.setAdapter(getPanitiaAdapter());
+        binding.srLayoutKelolaPanitia.setOnRefreshListener(()->{
+            binding.srLayoutKelolaPanitia.setRefreshing(false);
+            loadPanitiaData();
         });
     }
 
-    private void loadMhsData() {
+    private void loadPanitiaData() {
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         Uri uri = Uri.parse(URLGET).buildUpon().build();
         System.out.println(uri);
@@ -86,8 +86,8 @@ public class FragmentKelolaMahasiswa extends Fragment implements MhsAdapter.Item
             try {
                 JSONObject object = new JSONObject(response);
                 Gson gson = new Gson();
-                WSResponseLoginStudent weatherResponse = gson.fromJson(object.toString(), WSResponseLoginStudent.class);
-                getMahasiswaAdapter().changeData(weatherResponse.getData());
+                WSResponseMhs weatherResponse = gson.fromJson(object.toString(), WSResponseMhs.class);
+                getPanitiaAdapter().changeData(weatherResponse.getData());
                 Toast.makeText(getActivity(), "berhasil",Toast.LENGTH_SHORT).show();
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -99,8 +99,8 @@ public class FragmentKelolaMahasiswa extends Fragment implements MhsAdapter.Item
         queue.add(request);
     }
 
-    private void addMhs() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+    private void addPanitia() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLADD,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -108,10 +108,10 @@ public class FragmentKelolaMahasiswa extends Fragment implements MhsAdapter.Item
                             JSONObject object = new JSONObject(response);
                             if(object.get("status").equals("Success")){
                                 clearField();
-                                Toast.makeText(getActivity(),"Mahasiswa Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
-                                loadMhsData();
+                                Toast.makeText(getActivity(),"Panitia Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
+                                loadPanitiaData();
                             } else{
-                                Toast.makeText(getActivity(),"Mahasiswa Gagal Ditambahkan",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(),"Panitia Gagal Ditambahkan",Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
                             Toast.makeText(getActivity(),"masuk catch",Toast.LENGTH_LONG).show();
@@ -137,7 +137,7 @@ public class FragmentKelolaMahasiswa extends Fragment implements MhsAdapter.Item
                 map.put("password",binding.txtPassword.getText().toString().trim());
                 map.put("email",binding.txtEmail.getText().toString().trim());
                 map.put("gender",gender);
-                System.out.println("MAP Add Student: ");
+                System.out.println("MAP Add Panitia: ");
                 System.out.println(map);
                 return map;
             }
@@ -158,7 +158,7 @@ public class FragmentKelolaMahasiswa extends Fragment implements MhsAdapter.Item
     @Override
     public void itemClicked(Student student) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable("Mahasiswa",student);
+        bundle.putParcelable("Panitia",student);
         getDetailPanitia().setArguments(bundle);
 
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
@@ -167,4 +167,5 @@ public class FragmentKelolaMahasiswa extends Fragment implements MhsAdapter.Item
         transaction.commit();
 
     }
+
 }

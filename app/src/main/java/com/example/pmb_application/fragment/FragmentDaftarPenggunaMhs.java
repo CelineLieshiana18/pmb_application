@@ -1,4 +1,4 @@
-package com.example.pmb_application;
+package com.example.pmb_application.fragment;
 
 import android.os.Bundle;
 
@@ -10,29 +10,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.pmb_application.R;
 import com.example.pmb_application.adapter.SectionPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
-
-public class FragmentKelolaKegiatanPengumumanForum extends Fragment {
+public class FragmentDaftarPenggunaMhs extends Fragment {
     View myFragment;
     ViewPager viewPager;
     TabLayout tabLayout;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        myFragment =  inflater.inflate(R.layout.fragment_kelola_kegiatan_pengumuman_forum, container, false);
-        viewPager = myFragment.findViewById(R.id.viewPagerKelolaKegiatanPengumumanForum);
-        tabLayout = myFragment.findViewById(R.id.tabLayoutKelolaKegiatanPengumumanForum);
+        myFragment =  inflater.inflate(R.layout.fragment_daftar_pengguna_mhs, container, false);
+        viewPager = myFragment.findViewById(R.id.viewPagerPenggunaMhs);
+        tabLayout = myFragment.findViewById(R.id.tabLayoutPenggunaMhs);
         return myFragment;
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -59,11 +61,9 @@ public class FragmentKelolaKegiatanPengumumanForum extends Fragment {
 
     private void setUpViewPager(ViewPager viewPager) {
         SectionPagerAdapter sectionPagerAdapter = new SectionPagerAdapter(getChildFragmentManager());
-
-        sectionPagerAdapter.addFragment(new FragmentKelolaKegiatan(),"Data Kegiatan");
-        sectionPagerAdapter.addFragment(new FragmentKelolaPengumumanDosenPanitia(),"Data Pengumuman");
-        sectionPagerAdapter.addFragment(new FragmentKelolaForumDosenPanitia(),"Data Forum");
-
+        sectionPagerAdapter.addFragment(new FragmentDaftarTemanMhs(),"Data Teman Angkatan");
+        sectionPagerAdapter.addFragment(new FragmentDaftarPanitiaMhs(),"Data Panitia");
+        sectionPagerAdapter.addFragment(new FragmentDaftarDosenMhs(),"Data Dosen");
         viewPager.setAdapter(sectionPagerAdapter);
     }
 }
