@@ -10,33 +10,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.pmb_application.LoginActivityMahasiswaPanitia;
 import com.example.pmb_application.R;
-import com.example.pmb_application.SessionManagement;
 import com.example.pmb_application.adapter.SectionPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
-public class FragmentDaftarPenggunaMhs extends Fragment {
+public class FragmentKegiatanPengumumanForumDosen extends Fragment {
     View myFragment;
     ViewPager viewPager;
     TabLayout tabLayout;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        myFragment =  inflater.inflate(R.layout.fragment_daftar_pengguna_mhs, container, false);
-        viewPager = myFragment.findViewById(R.id.viewPagerPenggunaMhs);
-        tabLayout = myFragment.findViewById(R.id.tabLayoutPenggunaMhs);
+
+        myFragment =  inflater.inflate(R.layout.fragment_kegiatan_pengumuman_forum_dosen, container, false);
+        viewPager = myFragment.findViewById(R.id.viewPagerKelolaKegiatanPengumumanForumDosen);
+        tabLayout = myFragment.findViewById(R.id.tabLayoutKelolaKegiatanPengumumanForumDosen);
         return myFragment;
     }
-
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -63,16 +59,12 @@ public class FragmentDaftarPenggunaMhs extends Fragment {
 
     private void setUpViewPager(ViewPager viewPager) {
         SectionPagerAdapter sectionPagerAdapter = new SectionPagerAdapter(getChildFragmentManager());
-        SessionManagement sessionManagement = new SessionManagement(getActivity().getApplicationContext());
-        System.out.println("name : "+ sessionManagement.getName());
-        System.out.println("Jabatan : "+ sessionManagement.getJabatan());
-        if(sessionManagement.getJabatan().equals("dosen")){
-            sectionPagerAdapter.addFragment(new FragmentDaftarTemanMhs(),"Data Mahasiswa Baru");
-        } else{
-            sectionPagerAdapter.addFragment(new FragmentDaftarTemanMhs(),"Data Teman Angkatan");
-        }
-        sectionPagerAdapter.addFragment(new FragmentDaftarPanitiaMhs(),"Data Panitia");
-        sectionPagerAdapter.addFragment(new FragmentDaftarDosenMhs(),"Data Dosen");
+
+        System.out.println("masuk fragment dosen");
+        sectionPagerAdapter.addFragment(new FragmentKegiatanDosen(),"Data Kegiatan");
+        sectionPagerAdapter.addFragment(new FragmentPengumumanMhs(),"Data Pengumuman");
+        sectionPagerAdapter.addFragment(new FragmentForumDosen(),"Data Forum");
+
         viewPager.setAdapter(sectionPagerAdapter);
     }
 }

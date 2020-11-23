@@ -79,7 +79,8 @@ public class LoginActivityDosen extends AppCompatActivity {
                                 WSResponseDosen weatherResponse = gson.fromJson(object.toString(), WSResponseDosen.class);
                                 Dosen dosen = new Dosen(weatherResponse.getData().get(0));
                                 SessionManagement sessionManagement = new SessionManagement(LoginActivityDosen.this);
-                                sessionManagement.saveSession(dosen.getNip(),String.valueOf(dosen.getId()),dosen.getName());
+                                System.out.println("nama user : "+ sessionManagement.getName() + sessionManagement.getJabatan()+ sessionManagement.getSession()+ sessionManagement.getId());
+                                sessionManagement.saveSession(dosen.getNip(),String.valueOf(dosen.getId()),dosen.getName(), dosen.getJabatan());
                                 System.out.println(sessionManagement.getSession());
                                 openProfile();
                             } else{

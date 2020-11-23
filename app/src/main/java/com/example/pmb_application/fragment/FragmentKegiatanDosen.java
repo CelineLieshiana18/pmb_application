@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -17,6 +16,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.pmb_application.VariabelGlobal;
 import com.example.pmb_application.adapter.KegiatanAdapter;
+import com.example.pmb_application.databinding.FragmentKegiatanDosenBinding;
 import com.example.pmb_application.databinding.FragmentKegiatanMhsBinding;
 import com.example.pmb_application.entity.Kegiatan;
 import com.example.pmb_application.entity.WSResponseKegiatan;
@@ -25,9 +25,8 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class FragmentKegiatanMhs extends Fragment implements KegiatanAdapter.ItemClickListener{
-    private FragmentKegiatanMhsBinding binding;
-
+public class FragmentKegiatanDosen extends Fragment implements KegiatanAdapter.ItemClickListener{
+    private FragmentKegiatanDosenBinding binding;
 
     String URL = VariabelGlobal.link_ip + "api/activities/";
     private KegiatanAdapter kegiatanAdapter;
@@ -49,7 +48,7 @@ public class FragmentKegiatanMhs extends Fragment implements KegiatanAdapter.Ite
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentKegiatanMhsBinding.inflate(inflater, container, false);
+        binding = FragmentKegiatanDosenBinding.inflate(inflater, container, false);
         initComponents();
         return binding.getRoot();
     }
@@ -77,10 +76,10 @@ public class FragmentKegiatanMhs extends Fragment implements KegiatanAdapter.Ite
     }
 
     private void  initComponents(){
-        binding.rvDataHomeMhs.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.rvDataHomeMhs.setAdapter(getKegiatanAdapter());
-        binding.srLayoutHomeMhs.setOnRefreshListener(()->{
-            binding.srLayoutHomeMhs.setRefreshing(false);
+        binding.rvDataHomeDosen.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvDataHomeDosen.setAdapter(getKegiatanAdapter());
+        binding.srLayoutHomeDosen.setOnRefreshListener(()->{
+            binding.srLayoutHomeDosen.setRefreshing(false);
             loadKegiatanData();
         });
     }

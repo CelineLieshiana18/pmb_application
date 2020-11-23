@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginBottom="10dp"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:text="Detail Dosen   "/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="120dp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:text="NIK   "/>
+
+        <TextView
+            android:id="@+id/tv_nik_dosen"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="NIK Dosen"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="120dp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:text="Nama   "/>
+
+        <TextView
+            android:id="@+id/tv_nama_dosen"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Nama Dosen"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="120dp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:text="Email  "/>
+
+        <TextView
+            android:id="@+id/tv_gender_dosen"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Gender Dosen"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="120dp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:text="Jenis Kelamin  "/>
+
+        <TextView
+            android:id="@+id/tv_email_dosen"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Email Dosen"/>
+    </LinearLayout>
+</LinearLayout>

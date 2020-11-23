@@ -13,7 +13,9 @@ import android.view.MenuItem;
 import android.widget.Spinner;
 
 import com.example.pmb_application.fragment.FragmentAugmentedRealityDosenPanitia;
+import com.example.pmb_application.fragment.FragmentDaftarPenggunaMhs;
 import com.example.pmb_application.fragment.FragmentHomeDosenPanitia;
+import com.example.pmb_application.fragment.FragmentKegiatanPengumumanForumDosen;
 import com.example.pmb_application.fragment.FragmentKelolaCTDosenPanitia;
 import com.example.pmb_application.fragment.FragmentKelolaKegiatanPengumumanForum;
 import com.example.pmb_application.fragment.FragmentKelolaPenggunaDosenPanitia;
@@ -66,23 +68,31 @@ public class MainActivityDosenPanitia extends AppCompatActivity {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     Fragment selected = null;
+                    SessionManagement sessionManagement = new SessionManagement(MainActivityDosenPanitia.this);
                     switch (item.getItemId()){
                         case R.id.nav_homeDosenPanitia:
                             selected = new FragmentHomeDosenPanitia();
                             break;
                         case R.id.nav_kelolaPenggunaDosenPanitia:
-                            selected = new FragmentKelolaPenggunaDosenPanitia();
+                            if(sessionManagement.getJabatan().equals("Panitia")){
+                                selected = new FragmentKelolaPenggunaDosenPanitia();
+                            } else{
+                                selected = new FragmentDaftarPenggunaMhs();
+                            }
                             break;
                         case R.id.nav_kelolaCTDosenPanitia:
                             selected = new FragmentKelolaCTDosenPanitia();
                             break;
                         case R.id.nav_kelolaForumPengumumanKegiatanDosenPanitia:
-                            selected = new FragmentKelolaKegiatanPengumumanForum();
+                            if(sessionManagement.getJabatan().equals("Panitia")){
+                                selected = new FragmentKelolaKegiatanPengumumanForum();
+                            }else{
+                                selected = new FragmentKegiatanPengumumanForumDosen();
+                            }
                             break;
                         case R.id.nav_augmentedRealityDosenPanitia:
                             selected = new FragmentAugmentedRealityDosenPanitia();
                             break;
-
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout_dosen_panitia,
                             selected).commit();

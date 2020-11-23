@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -16,55 +15,51 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.pmb_application.VariabelGlobal;
-import com.example.pmb_application.adapter.KegiatanAdapter;
-import com.example.pmb_application.databinding.FragmentKegiatanMhsBinding;
-import com.example.pmb_application.entity.Kegiatan;
-import com.example.pmb_application.entity.WSResponseKegiatan;
+import com.example.pmb_application.adapter.ForumAdapter;
+import com.example.pmb_application.databinding.FragmentForumDosenBinding;
+import com.example.pmb_application.databinding.FragmentForumMhsBinding;
+import com.example.pmb_application.entity.Forum;
+import com.example.pmb_application.entity.WSResponseForum;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class FragmentKegiatanMhs extends Fragment implements KegiatanAdapter.ItemClickListener{
-    private FragmentKegiatanMhsBinding binding;
+public class FragmentForumDosen extends Fragment implements ForumAdapter.ItemClickListener{
+    private FragmentForumDosenBinding binding;
+    private ForumAdapter forumAdapter;
+    String URL = VariabelGlobal.link_ip + "api/forums/";
 
-
-    String URL = VariabelGlobal.link_ip + "api/activities/";
-    private KegiatanAdapter kegiatanAdapter;
-
-
-    public KegiatanAdapter getKegiatanAdapter() {
-        if(kegiatanAdapter == null){
-            kegiatanAdapter = new KegiatanAdapter(this);
+    public ForumAdapter getForumAdapter() {
+        if(forumAdapter == null){
+            forumAdapter = new ForumAdapter(this);
         }
-        return kegiatanAdapter;
+        return forumAdapter;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadKegiatanData();
+        loadForumData();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentKegiatanMhsBinding.inflate(inflater, container, false);
+        binding = FragmentForumDosenBinding.inflate(inflater, container, false);
         initComponents();
         return binding.getRoot();
     }
 
-    private void loadKegiatanData() {
+    private void loadForumData() {
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         Uri uri = Uri.parse(URL).buildUpon().build();
         StringRequest request = new StringRequest(Request.Method.GET, uri.toString(), response -> {
             try {
                 JSONObject object = new JSONObject(response);
                 Gson gson = new Gson();
-                System.out.println("kegiatan");
-                System.out.println(object);
-                WSResponseKegiatan weatherResponse = gson.fromJson(object.toString(), WSResponseKegiatan.class);
-                getKegiatanAdapter().changeData(weatherResponse.getData());
+                WSResponseForum weatherResponse = gson.fromJson(object.toString(), WSResponseForum.class);
+                getForumAdapter().changeData(weatherResponse.getData());
                 Toast.makeText(getActivity(), "berhasil",Toast.LENGTH_SHORT).show();
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -76,17 +71,18 @@ public class FragmentKegiatanMhs extends Fragment implements KegiatanAdapter.Ite
         queue.add(request);
     }
 
-    private void  initComponents(){
-        binding.rvDataHomeMhs.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.rvDataHomeMhs.setAdapter(getKegiatanAdapter());
-        binding.srLayoutHomeMhs.setOnRefreshListener(()->{
-            binding.srLayoutHomeMhs.setRefreshing(false);
-            loadKegiatanData();
-        });
+    @Override
+    public void itemClicked(Forum forum) {
+
     }
 
-    @Override
-    public void itemClicked(Kegiatan kegiatan) {
 
+    private void  initComponents(){
+        binding.rvDataDaftarForumDosen.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvDataDaftarForumDosen.setAdapter(getForumAdapter());
+        binding.srLayoutDaftarForumDosen.setOnRefreshListener(()->{
+            binding.srLayoutDaftarForumDosen.setRefreshing(false);
+            loadForumData();
+        });
     }
 }

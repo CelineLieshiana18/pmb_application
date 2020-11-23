@@ -1,5 +1,7 @@
 package com.example.pmb_application.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -9,14 +11,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.pmb_application.R;
 import com.example.pmb_application.VariabelGlobal;
 import com.example.pmb_application.adapter.DosenAdapter;
+import com.example.pmb_application.databinding.AlertDialogBinding;
 import com.example.pmb_application.databinding.FragmentDaftarDosenMhsBinding;
 import com.example.pmb_application.entity.Dosen;
 import com.example.pmb_application.entity.WSResponseDosen;
@@ -28,6 +33,7 @@ import org.json.JSONObject;
 public class FragmentDaftarDosenMhs extends Fragment implements DosenAdapter.ItemClickListener{
 
     private FragmentDaftarDosenMhsBinding binding;
+    private AlertDialogBinding binding2;
 
     String URL = VariabelGlobal.link_ip + "api/lecturers/";
     private DosenAdapter dosenAdapter;
@@ -78,7 +84,20 @@ public class FragmentDaftarDosenMhs extends Fragment implements DosenAdapter.Ite
 
     @Override
     public void itemClicked(Dosen dosen) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        binding2 = AlertDialogBinding.inflate(getLayoutInflater());
+        binding2.tvNamaDosen.setText(dosen.getName());
+        binding2.tvNikDosen.setText(dosen.getNip());
+        binding2.tvEmailDosen.setText(dosen.getEmail());
+        binding2.tvGenderDosen.setText(dosen.getGender());
+        builder.setView(binding2.getRoot()).setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
+            }
+        });
+        builder.create();
+        builder.show();
     }
 
 

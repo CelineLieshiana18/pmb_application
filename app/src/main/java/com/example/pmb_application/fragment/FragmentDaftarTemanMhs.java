@@ -16,6 +16,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.pmb_application.R;
+import com.example.pmb_application.SessionManagement;
 import com.example.pmb_application.VariabelGlobal;
 import com.example.pmb_application.adapter.MhsAdapter;
 import com.example.pmb_application.databinding.FragmentDaftarTemanMhsBinding;
@@ -55,6 +56,10 @@ public class FragmentDaftarTemanMhs extends Fragment implements MhsAdapter.ItemC
 
 
     private void  initComponents(){
+        SessionManagement sessionManagement = new SessionManagement(getActivity().getApplicationContext());
+        if(sessionManagement.getJabatan().equals("dosen")){
+            binding.tvJudulDaftarTeman.setText("Daftar Mahasiswa Baru");
+        }
         binding.rvDataDaftarTemanMhs.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvDataDaftarTemanMhs.setAdapter(getMahasiswaAdapter());
         binding.srLayoutDaftarTemanMhs.setOnRefreshListener(()->{
