@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-<!--    home : kegiatan dan pengumuman-->
+    <!--    home : kegiatan dan pengumuman-->
     <item android:title="Home" android:id="@+id/nav_homeMhs" android:icon="@drawable/ic_baseline_home_24"/>
     <item android:title="Pengguna" android:id="@+id/nav_daftarPenggunaMhs" android:icon="@drawable/ic_baseline_supervised_user_circle_24"/>
     <item android:title="CT" android:id="@+id/nav_ctMhs" android:icon="@drawable/ic_baseline_ct"/>

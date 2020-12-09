@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.FragmentDetailKegiatan">
+    tools:context=".fragment.FragmentGetOneSoalIsian">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,8 +16,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ubah Kegiatan"
-            android:layout_marginBottom="30dp"
+            android:text="Ubah CT Isian"
             android:gravity="center"
             android:textSize="20dp"
             android:textStyle="bold"/>
@@ -35,11 +34,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Tanggal               "
+                        android:text="Nomor     "
                         android:padding="10dp"/>
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
-                        android:id="@+id/txtTanggalKegiatan"
+                        android:id="@+id/txtNomor"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <LinearLayout
@@ -49,13 +48,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Jam Mulai          "
+                        android:text="Soal         "
                         android:padding="10dp"/>
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
-                        android:id="@+id/txtJamMulaiKegiatan"
+                        android:id="@+id/txtSoal"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -63,71 +63,30 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Jam Akhir           "
+                        android:text="Score       "
                         android:padding="10dp"/>
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
-                        android:id="@+id/txtJamAkhirKegiatan"
+                        android:id="@+id/txtScore"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="PIC                       "
-                        android:padding="10dp"/>
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:id="@+id/txtPICKegiatan"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="Tempat                "
-                        android:padding="10dp"/>
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:id="@+id/txtTempatKegiatan"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="Detail Kegiatan  "
-                        android:padding="10dp"/>
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:id="@+id/txtIsiKegiatan"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
                     android:gravity="center"
+                    android:layout_height="match_parent"
                     android:orientation="horizontal">
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/btnUbahKegiatan"
+                        android:id="@+id/btnUbahCTIsian"
                         android:layout_gravity="center"
                         android:text="Ubah"
                         android:layout_margin="10dp"/>
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/btnHapusKegiatan"
+                        android:id="@+id/btnHapusCTIsian"
                         android:layout_gravity="center"
                         android:text="Hapus"
                         android:layout_margin="10dp"/>
@@ -135,5 +94,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>
+
 
 </FrameLayout>

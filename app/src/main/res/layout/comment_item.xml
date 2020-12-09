@@ -23,24 +23,25 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/tv_judul_ct"
+                    android:id="@+id/tv_nama_user_comment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     android:text="Nama"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     android:text="  --  "/>
 
                 <TextView
+                    android:id="@+id/tv_tanggal_comment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     android:text="Tanggal Bulan Tahun, Jam"/>
             </LinearLayout>

@@ -3,21 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.FragmentDetailKegiatan">
+    tools:context=".fragment.FragmentKelolaCtPilihanGanda">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_gravity="center"
         android:layout_marginTop="5dp"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ubah Kegiatan"
-            android:layout_marginBottom="30dp"
+            android:text="Tambah CT Pilihan Ganda"
             android:gravity="center"
             android:textSize="20dp"
             android:textStyle="bold"/>
@@ -35,11 +33,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Tanggal               "
+                        android:text="Nomor                "
                         android:padding="10dp"/>
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
-                        android:id="@+id/txtTanggalKegiatan"
+                        android:id="@+id/txtNomor"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <LinearLayout
@@ -49,11 +47,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Jam Mulai          "
+                        android:text="Soal                     "
                         android:padding="10dp"/>
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
-                        android:id="@+id/txtJamMulaiKegiatan"
+                        android:id="@+id/txtSoal"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <LinearLayout
@@ -63,11 +61,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Jam Akhir           "
+                        android:text="Pilihan A             "
                         android:padding="10dp"/>
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
-                        android:id="@+id/txtJamAkhirKegiatan"
+                        android:id="@+id/txtPilihanA"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <LinearLayout
@@ -77,11 +75,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="PIC                       "
+                        android:text="Pilihan B              "
                         android:padding="10dp"/>
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
-                        android:id="@+id/txtPICKegiatan"
+                        android:id="@+id/txtPilihanB"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <LinearLayout
@@ -91,11 +89,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Tempat                "
+                        android:text="Pilihan C              "
                         android:padding="10dp"/>
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
-                        android:id="@+id/txtTempatKegiatan"
+                        android:id="@+id/txtPilihanC"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <LinearLayout
@@ -105,35 +103,99 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Detail Kegiatan  "
+                        android:text="Pilihan D             "
                         android:padding="10dp"/>
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
-                        android:id="@+id/txtIsiKegiatan"
+                        android:id="@+id/txtPilihanD"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Pilihan E              "
+                        android:padding="10dp"/>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:id="@+id/txtPilihanE"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Kunci Jawaban     "
+                        android:padding="10dp"/>
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center|left"
+                        android:id="@+id/rg_key"
+                        android:orientation="horizontal">
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/rbKunciA"
+                            android:text="A  "/>
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/rbKunciB"
+                            android:text="B"/>
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/rbKunciC"
+                            android:text="C  "/>
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/rbKunciD"
+                            android:text="D"/>
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/rbKunciE"
+                            android:text="E"/>
+                    </RadioGroup>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/btnUbahKegiatan"
+                        android:id="@+id/btnTambahSoalPG"
                         android:layout_gravity="center"
-                        android:text="Ubah"
-                        android:layout_margin="10dp"/>
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/btnHapusKegiatan"
-                        android:layout_gravity="center"
-                        android:text="Hapus"
+                        android:text="Tambahkan"
                         android:layout_margin="10dp"/>
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sr_layout_kelola_ct_pg"
+            tools:context=".MainActivity">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_data_kelola_ct_pg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
 
 </FrameLayout>

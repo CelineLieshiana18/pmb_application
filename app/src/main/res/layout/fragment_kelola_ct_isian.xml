@@ -3,20 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.FragmentDetailPengumumanDosenPanitia">
+    tools:context=".fragment.FragmentKelolaCtIsian">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ubah Pengumuman"
+            android:text="Tambah CT Isian"
             android:gravity="center"
-            android:layout_marginBottom="30dp"
             android:textSize="20dp"
             android:textStyle="bold"/>
         <androidx.cardview.widget.CardView
@@ -33,12 +32,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Tanggal       "
+                        android:text="Nomor     "
                         android:padding="10dp"/>
                     <com.google.android.material.textfield.TextInputEditText
-                        android:inputType="date"
                         android:layout_width="match_parent"
-                        android:id="@+id/txtTanggalPengumuman"
+                        android:id="@+id/txtNomor"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <LinearLayout
@@ -48,35 +46,51 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Isi                 "
+                        android:text="Soal         "
                         android:padding="10dp"/>
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
-                        android:id="@+id/txtIsiPengumuman"
+                        android:id="@+id/txtSoal"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:orientation="horizontal">
-                    <Button
+                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/btnUbahPengumuman"
-                        android:layout_gravity="center"
-                        android:text="Ubah"
-                        android:layout_margin="10dp"/>
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/btnHapusPengumuman"
-                        android:layout_gravity="center"
-                        android:text="Hapus"
-                        android:layout_margin="10dp"/>
+                        android:layout_height="match_parent"
+                        android:text="Score       "
+                        android:padding="10dp"/>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:id="@+id/txtScore"
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnTambahCTIsian"
+                    android:layout_gravity="center"
+                    android:text="Tambahkan"
+                    android:layout_margin="10dp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sr_layout_kelola_ct_isian"
+            tools:context=".MainActivity">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_data_kelola_ct_isian"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
 
 </FrameLayout>
