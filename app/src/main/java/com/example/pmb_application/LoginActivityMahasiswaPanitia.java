@@ -85,7 +85,7 @@ public class LoginActivityMahasiswaPanitia extends AppCompatActivity {
                                     openProfileMhs();
                                 }
                                 SessionManagement sessionManagement = new SessionManagement(LoginActivityMahasiswaPanitia.this);
-                                sessionManagement.saveSession(student.getNrp(),String.valueOf(student.getId()),student.getName(), student.getName());
+                                sessionManagement.saveSession(student.getNrp(),String.valueOf(student.getId()),student.getName(), student.getRoles_name());
 //                                System.out.println("nama user : "+ sessionManagement.getName() + sessionManagement.getJabatan());
 
                                 System.out.println(object.get("data"));

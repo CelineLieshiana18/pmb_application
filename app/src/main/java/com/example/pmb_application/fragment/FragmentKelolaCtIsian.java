@@ -58,6 +58,7 @@ public class FragmentKelolaCtIsian extends Fragment implements SoalCTIsianAdapte
     public void onStart() {
         super.onStart();
         Bundle bundle = this.getArguments();
+        System.out.println("send idCT : "+bundle.getInt("idCT"));
         id = bundle.getInt("idCT");
         URLGET = URLGET + id;
         loadSoalData();

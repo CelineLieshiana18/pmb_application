@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.pmb_application.R;
 import com.example.pmb_application.VariabelGlobal;
 import com.example.pmb_application.adapter.ForumAdapter;
 import com.example.pmb_application.databinding.FragmentForumMhsBinding;
@@ -29,6 +31,14 @@ public class FragmentForumMhs extends Fragment implements ForumAdapter.ItemClick
     private FragmentForumMhsBinding binding;
     private ForumAdapter forumAdapter;
     String URL = VariabelGlobal.link_ip + "api/forums/";
+    private FragmentDetailComment detailComment;
+
+    public FragmentDetailComment getDetailComment() {
+        if(detailComment == null){
+            detailComment = new FragmentDetailComment();
+        }
+        return detailComment;
+    }
 
     public ForumAdapter getForumAdapter() {
         if(forumAdapter == null){
@@ -73,6 +83,14 @@ public class FragmentForumMhs extends Fragment implements ForumAdapter.ItemClick
 
     @Override
     public void itemClicked(Forum forum) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("Forum",forum);
+        getDetailComment().setArguments(bundle);
+
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout,getDetailComment());
+        transaction.addToBackStack(null);
+        transaction.commit();
 
     }
 

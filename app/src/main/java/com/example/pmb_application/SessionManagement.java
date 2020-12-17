@@ -24,6 +24,9 @@ public class SessionManagement {
     String SOAL_PG = "soal_pg";
     String NO_PG = "no_pg";
     String NO_ISIAN = "no_isian";
+    String KETERANGAN_SOAL = "keterangan_soal";
+    String JUMLAH_SOAL_ISIAN = "jumlah_soal_isian";
+    String JUMLAH_SOAL_PG = "jumlah_soal_pg";
 
     public SessionManagement(Context context) {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
@@ -65,9 +68,27 @@ public class SessionManagement {
         editor.putString(SOAL_PG,jsonString).commit();
         editor.putInt(NO_PG,1).commit();
     }
+    public Integer getJumlahSoalPg(){return sharedPreferences.getInt(JUMLAH_SOAL_PG,-1);}
+    public Integer getJumlahSoalIsian(){return sharedPreferences.getInt(JUMLAH_SOAL_ISIAN,-1);}
+    public void setJumlahSoalPg(Integer jml){
+        editor.putInt(JUMLAH_SOAL_PG,jml).commit();
+    }
+    public void setJumlahSoalIsian(Integer jml){
+        editor.putInt(JUMLAH_SOAL_ISIAN,jml).commit();
+    }
+    public void setNoIsian(Integer jml){
+        editor.putInt(NO_ISIAN,jml).commit();
+    }
+    public void setNoPg(Integer jml){
+        editor.putInt(NO_PG,jml).commit();
+    }
 
     public Integer getNoPg(){return sharedPreferences.getInt(NO_PG,-1);}
     public Integer getNoIsian(){return sharedPreferences.getInt(NO_ISIAN,-1);}
+    public String getKeteranganSoal(){return sharedPreferences.getString(KETERANGAN_SOAL,"");}
+    public void setKeteranganSoal(String ket){
+        editor.putString(KETERANGAN_SOAL,ket).commit();
+    }
 
     // CT
     public void backPg(){

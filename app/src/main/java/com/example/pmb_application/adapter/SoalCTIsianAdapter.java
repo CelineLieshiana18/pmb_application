@@ -50,7 +50,7 @@ public class SoalCTIsianAdapter extends RecyclerView.Adapter<SoalCTIsianAdapter.
     public void onBindViewHolder(@NonNull SoalCTIsianViewHolder holder, int position) {
         final SoalCTIsian soalCTIsian = soalCTIsians.get(position);
         holder.txtSoal.setText(soalCTIsian.getQuestion());
-        holder.txtNoSoal.setText(soalCTIsian.getNumber());
+        holder.txtNoSoal.setText(String.valueOf(soalCTIsian.getNumber()));
         holder.txtScore.setText(soalCTIsian.getScore());
 
         holder.itemView.setOnClickListener(v -> {

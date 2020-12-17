@@ -31,8 +31,25 @@ import java.util.Map;
 public class FragmentDetailCT extends Fragment {
     private FragmentDetailCtBinding binding;
     private FragmentKelolaCTDosenPanitia kelolaCT;
+    private FragmentKelolaCtIsian ctIsian;
+    private FragmentKelolaCtPilihanGanda ctPilihanGanda;
+    Bundle bundle;
     String URL = VariabelGlobal.link_ip + "api/cts/";
     int id;
+
+    public FragmentKelolaCtIsian getCtIsian() {
+        if(ctIsian == null){
+            ctIsian = new FragmentKelolaCtIsian();
+        }
+        return ctIsian;
+    }
+
+    public FragmentKelolaCtPilihanGanda getCtPilihanGanda() {
+        if(ctPilihanGanda == null){
+            ctPilihanGanda = new FragmentKelolaCtPilihanGanda();
+        }
+        return ctPilihanGanda;
+    }
 
     public FragmentKelolaCTDosenPanitia getKelolaCT() {
         if (kelolaCT == null){
@@ -54,7 +71,24 @@ public class FragmentDetailCT extends Fragment {
                 binding.txtDurasi.setText(ct.getDuration());
                 binding.txtDeskripsi.setText(ct.getDescription());
                 id = ct.getId();
+                System.out.println("sending idCT : "+id);
                 URL = VariabelGlobal.link_ip + "api/cts/"+id;
+                Bundle bundle = new Bundle();
+                bundle.putInt("idCT",id);
+                binding.btnTambahSoalIsian.setOnClickListener(v -> {
+                    getCtIsian().setArguments(bundle);
+                    FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.frame_layout_dosen_panitia,getCtIsian());
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                });
+                binding.btnTambahSoalPG.setOnClickListener(v -> {
+                    getCtPilihanGanda().setArguments(bundle);
+                    FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.frame_layout_dosen_panitia,getCtPilihanGanda());
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                });
             }
         }
     }

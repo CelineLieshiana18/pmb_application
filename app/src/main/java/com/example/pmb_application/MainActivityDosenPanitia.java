@@ -84,6 +84,7 @@ public class MainActivityDosenPanitia extends AppCompatActivity {
                             selected = new FragmentKelolaCTDosenPanitia();
                             break;
                         case R.id.nav_kelolaForumPengumumanKegiatanDosenPanitia:
+                            System.out.println("role name"+sessionManagement.getJabatan());
                             if(sessionManagement.getJabatan().equals("Panitia")){
                                 selected = new FragmentKelolaKegiatanPengumumanForum();
                             }else{

@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.pmb_application.R;
 import com.example.pmb_application.VariabelGlobal;
 import com.example.pmb_application.adapter.CTAdapterMhs;
 import com.example.pmb_application.databinding.FragmentCtMhsBinding;
@@ -27,9 +29,17 @@ import org.json.JSONObject;
 
 public class FragmentCtMhs extends Fragment implements CTAdapterMhs.ItemClickListener{
     private FragmentCtMhsBinding binding;
+    private FragmentIkutiCTPgMhs ikutiCT;
 
     String URL = VariabelGlobal.link_ip + "api/cts/";
     private CTAdapterMhs ctAdapter;
+
+    public FragmentIkutiCTPgMhs getIkutiCT() {
+        if(ikutiCT == null){
+            ikutiCT = new FragmentIkutiCTPgMhs();
+        }
+        return ikutiCT;
+    }
 
     public CTAdapterMhs getCtAdapter() {
         if(ctAdapter == null){
@@ -37,6 +47,8 @@ public class FragmentCtMhs extends Fragment implements CTAdapterMhs.ItemClickLis
         }
         return ctAdapter;
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,6 +97,13 @@ public class FragmentCtMhs extends Fragment implements CTAdapterMhs.ItemClickLis
 
     @Override
     public void itemClicked(CT ct) {
-        Toast.makeText(getActivity(), "berhasil id CT : "+ct.getId(),Toast.LENGTH_SHORT).show();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("CT",ct);
+        getIkutiCT().setArguments(bundle);
+
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout,getIkutiCT());
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

@@ -31,8 +31,17 @@ import java.util.Map;
 public class FragmentDetailForum extends Fragment {
     private FragmentDetailForumBinding binding;
     private FragmentKelolaKegiatanPengumumanForum kelolaForum;
+    private FragmentDetailComment detailComment;
+    private Forum forum;
     String URL = VariabelGlobal.link_ip + "api/forums/";
     int id;
+
+    public FragmentDetailComment getDetailComment() {
+        if(detailComment == null){
+            detailComment = new FragmentDetailComment();
+        }
+        return detailComment;
+    }
 
     public FragmentKelolaKegiatanPengumumanForum getKelolaForum() {
         if(kelolaForum == null){
@@ -104,13 +113,23 @@ public class FragmentDetailForum extends Fragment {
     public void onStart() {
         super.onStart();
         if(getArguments() != null && getArguments().containsKey("Forum")){
-            Forum forum = getArguments().getParcelable("Forum");
+            forum = getArguments().getParcelable("Forum");
             if (forum!=null){
                 binding.txtIsiForum.setText(forum.getDescription());
                 binding.txtNamaForum.setText(forum.getName());
                 binding.txtTanggalForum.setText(forum.getDate());
                 id = forum.getId();
                 URL = VariabelGlobal.link_ip + "api/forums/"+id;
+                binding.btnToKomentar.setOnClickListener(v -> {
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("Forum",forum);
+                    getDetailComment().setArguments(bundle);
+
+                    FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.frame_layout_dosen_panitia,getDetailComment());
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                });
             }
         }
     }
