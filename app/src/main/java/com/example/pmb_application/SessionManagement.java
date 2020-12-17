@@ -65,6 +65,7 @@ public class SessionManagement {
     public void setSoalPg(ArrayList<SoalCTPilihanGanda> soalPg){
         Gson gson = new Gson();
         String jsonString = gson.toJson(soalPg);
+        System.out.println("masuk set soal pg ");
         editor.putString(SOAL_PG,jsonString).commit();
         editor.putInt(NO_PG,1).commit();
     }
@@ -111,21 +112,23 @@ public class SessionManagement {
         editor.putInt(NO_ISIAN,newnumber).commit();
     }
 
-    public SoalCTIsian getSoalCTIsian(){
+    public List<SoalCTIsian> getSoalCTIsian(){
         String jsonString = sharedPreferences.getString(SOAL_ISIAN,"");
 
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<SoalCTIsian>>() {}.getType();
         List<SoalCTIsian> list = gson.fromJson(jsonString,type);
-        return list.get(sharedPreferences.getInt(NO_ISIAN,-1));
+        return list;
     }
 
-    public SoalCTPilihanGanda getSoalCTPg(){
+    public List<SoalCTPilihanGanda> getSoalCTPg(){
         String jsonString = sharedPreferences.getString(SOAL_PG,"");
 
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<SoalCTPilihanGanda>>() {}.getType();
         List<SoalCTPilihanGanda> list = gson.fromJson(jsonString,type);
-        return list.get(sharedPreferences.getInt(NO_PG,-1));
+        int no_pg = sharedPreferences.getInt(NO_PG,-1);
+        System.out.println("no pg : "+no_pg);
+        return list;
     }
 }

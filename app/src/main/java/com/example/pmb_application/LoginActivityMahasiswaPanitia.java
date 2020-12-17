@@ -63,6 +63,7 @@ public class LoginActivityMahasiswaPanitia extends AppCompatActivity {
     }
 
     private void userLogin() {
+        System.out.println("URL : "+URL);
         nrp = binding.txtNrp.getText().toString().trim();
         password = binding.txtPassword.getText().toString().trim();
 

@@ -90,8 +90,10 @@ public class FragmentHomeDosenPanitia extends Fragment {
                 JSONObject object = new JSONObject(response);
                 Gson gson = new Gson();
                 WSResponseMhs weatherResponse = gson.fromJson(object.toString(), WSResponseMhs.class);
+
                 ArrayList<Student> students = new ArrayList<Student>(weatherResponse.getData());
                 binding.tvNumberPanitia.setText(String.valueOf(students.size()));
+
                 Toast.makeText(getActivity(), "berhasil",Toast.LENGTH_SHORT).show();
             } catch (JSONException e) {
                 e.printStackTrace();

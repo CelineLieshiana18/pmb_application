@@ -91,15 +91,17 @@ public class FragmentIkutiCTPgMhs extends Fragment {
             }else{
                 int currnumber = sessionManagement.getNoIsian();
                 sessionManagement.setNoPg(currnumber+1);
-                SoalCTPilihanGanda soalPG = new SoalCTPilihanGanda(sessionManagement.getSoalCTPg());
-                binding.tvNoSoalPg.setText(soalPG.getNumber());
-                binding.tvSoalCtPgMhs.setText(soalPG.getQuestion());
-                binding.rbPilihanA.setText(soalPG.getA());
-                binding.rbPilihanB.setText(soalPG.getB());
-                binding.rbPilihanC.setText(soalPG.getC());
-                binding.rbPilihanD.setText(soalPG.getD());
-                binding.rbPilihanE.setText(soalPG.getE());
-                // kalo soal terakhir dan isian ada
+
+                ArrayList<SoalCTPilihanGanda> pilihanGandas = new ArrayList<SoalCTPilihanGanda>(sessionManagement.getSoalCTPg());
+                SoalCTPilihanGanda soalCTPilihanGanda = new SoalCTPilihanGanda(pilihanGandas.get(sessionManagement.getNoPg()-1));
+                binding.tvNoSoalPg.setText(String.valueOf(soalCTPilihanGanda.getNumber()));
+                binding.tvSoalCtPgMhs.setText(soalCTPilihanGanda.getQuestion());
+                binding.rbPilihanA.setText(soalCTPilihanGanda.getA());
+                binding.rbPilihanB.setText(soalCTPilihanGanda.getB());
+                binding.rbPilihanC.setText(soalCTPilihanGanda.getC());
+                binding.rbPilihanD.setText(soalCTPilihanGanda.getD());
+                binding.rbPilihanE.setText(soalCTPilihanGanda.getE());
+
                 if(sessionManagement.getJumlahSoalIsian() > 0 && sessionManagement.getNoPg().equals(sessionManagement.getJumlahSoalPg())){
                     binding.btnNext.setText("Soal Isian >");
                 }
@@ -119,15 +121,16 @@ public class FragmentIkutiCTPgMhs extends Fragment {
             if(sessionManagement.getNoPg().equals(1)){
                 binding.btnBack.setEnabled(false);
             }
-            SoalCTPilihanGanda soalPG = new SoalCTPilihanGanda(sessionManagement.getSoalCTPg());
-            binding.tvNoSoalPg.setText(soalPG.getNumber());
-            binding.tvSoalCtPgMhs.setText(soalPG.getQuestion());
-            binding.rbPilihanA.setText(soalPG.getA());
-            binding.rbPilihanB.setText(soalPG.getB());
-            binding.rbPilihanC.setText(soalPG.getC());
-            binding.rbPilihanD.setText(soalPG.getD());
-            binding.rbPilihanE.setText(soalPG.getE());
-//            }
+
+            ArrayList<SoalCTPilihanGanda> pilihanGandas = new ArrayList<SoalCTPilihanGanda>(sessionManagement.getSoalCTPg());
+            SoalCTPilihanGanda soalCTPilihanGanda = new SoalCTPilihanGanda(pilihanGandas.get(sessionManagement.getNoPg()-1));
+            binding.tvNoSoalPg.setText(String.valueOf(soalCTPilihanGanda.getNumber()));
+            binding.tvSoalCtPgMhs.setText(soalCTPilihanGanda.getQuestion());
+            binding.rbPilihanA.setText(soalCTPilihanGanda.getA());
+            binding.rbPilihanB.setText(soalCTPilihanGanda.getB());
+            binding.rbPilihanC.setText(soalCTPilihanGanda.getC());
+            binding.rbPilihanD.setText(soalCTPilihanGanda.getD());
+            binding.rbPilihanE.setText(soalCTPilihanGanda.getE());
         });
         binding.btnSubmit.setOnClickListener(v -> {
 //            if(binding.txtNomor.getText() == null || binding.txtSoal.getText() == null || binding.txtScore.getText() == null){
@@ -139,21 +142,24 @@ public class FragmentIkutiCTPgMhs extends Fragment {
     }
 
     private void loadSoalDataPG() {
+        System.out.println("URL PG : "+ URLGETPg);
         RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         Uri uri = Uri.parse(URLGETPg).buildUpon().build();
         StringRequest request = new StringRequest(Request.Method.GET, uri.toString(), response -> {
             try {
                 JSONObject object = new JSONObject(response);
                 Gson gson = new Gson();
-//                System.out.println("kegiatan");
-//                System.out.println(object);
                 WSResponseSoalCTPilihanGanda weatherResponse = gson.fromJson(object.toString(), WSResponseSoalCTPilihanGanda.class);
+
+                System.out.println("objek"+ weatherResponse);
 
                 //simpen di session
                 ArrayList<SoalCTPilihanGanda> pilihanGandas = new ArrayList<SoalCTPilihanGanda>(weatherResponse.getData());
                 sessionManagement.setSoalPg(pilihanGandas);
+                System.out.println("masuk load soal data");
                 //end
-                if(pilihanGandas == null){
+
+                if(pilihanGandas.size() == 0){
                     soalpg =0;
                 } else{
                     int jml = pilihanGandas.size();
@@ -165,6 +171,7 @@ public class FragmentIkutiCTPgMhs extends Fragment {
             }
         }, error -> {
             Toast.makeText(getActivity(),"error", Toast.LENGTH_SHORT).show();
+            System.out.println("error nii");
             error.printStackTrace();
         });
         queue.add(request);
@@ -187,7 +194,7 @@ public class FragmentIkutiCTPgMhs extends Fragment {
                 sessionManagement.setSoalIsian(isians);
                 //end
 
-                if(isians == null){
+                if(isians.size() == 0){
                     soalisian = 0;
                 }else{
                     int jml = isians.size();
@@ -237,17 +244,44 @@ public class FragmentIkutiCTPgMhs extends Fragment {
                 } else{
                     // soal pg ada
                     sessionManagement.setKeteranganSoal("pilihanganda");
-                    SoalCTPilihanGanda soalPG = new SoalCTPilihanGanda(sessionManagement.getSoalCTPg());
-                    binding.tvNoSoalPg.setText(soalPG.getNumber());
-                    binding.tvSoalCtPgMhs.setText(soalPG.getQuestion());
-                    binding.rbPilihanA.setText(soalPG.getA());
-                    binding.rbPilihanB.setText(soalPG.getB());
-                    binding.rbPilihanC.setText(soalPG.getC());
-                    binding.rbPilihanD.setText(soalPG.getD());
-                    binding.rbPilihanE.setText(soalPG.getE());
+                    System.out.println("no pg : "+sessionManagement.getNoPg());
+
+                    ArrayList<SoalCTPilihanGanda> pilihanGandas = new ArrayList<SoalCTPilihanGanda>(sessionManagement.getSoalCTPg());
+                    SoalCTPilihanGanda soalCTPilihanGanda = new SoalCTPilihanGanda(pilihanGandas.get(sessionManagement.getNoPg()-1));
+                    binding.tvNoSoalPg.setText(String.valueOf(soalCTPilihanGanda.getNumber()));
+                    binding.tvSoalCtPgMhs.setText(soalCTPilihanGanda.getQuestion());
+                    binding.rbPilihanA.setText(soalCTPilihanGanda.getA());
+                    binding.rbPilihanB.setText(soalCTPilihanGanda.getB());
+                    binding.rbPilihanC.setText(soalCTPilihanGanda.getC());
+                    binding.rbPilihanD.setText(soalCTPilihanGanda.getD());
+                    binding.rbPilihanE.setText(soalCTPilihanGanda.getE());
+                    binding.btnBack.setEnabled(false);
+                    if(sessionManagement.getJumlahSoalIsian() > 0 && sessionManagement.getNoPg().equals(pilihanGandas.size())){
+                        binding.btnNext.setText("Soal Isian >");
+                    }
+                    // soal terakhir dan isian ga ada
+                    else if(sessionManagement.getJumlahSoalIsian() < 1 && sessionManagement.getNoPg().equals(sessionManagement.getJumlahSoalPg())){
+                        // kalo soal isian ga ada langsung di disabled button nextnya
+                        binding.btnNext.setEnabled(false);
+                    }
                 }
             }
         }
-    }
 
+        if(getArguments() != null && getArguments().containsKey("ket")){
+            ArrayList<SoalCTPilihanGanda> pilihanGandas = new ArrayList<SoalCTPilihanGanda>(sessionManagement.getSoalCTPg());
+            SoalCTPilihanGanda soalCTPilihanGanda = new SoalCTPilihanGanda(pilihanGandas.get(sessionManagement.getNoPg()-1));
+            binding.tvNoSoalPg.setText(String.valueOf(soalCTPilihanGanda.getNumber()));
+            binding.tvSoalCtPgMhs.setText(soalCTPilihanGanda.getQuestion());
+            binding.rbPilihanA.setText(soalCTPilihanGanda.getA());
+            binding.rbPilihanB.setText(soalCTPilihanGanda.getB());
+            binding.rbPilihanC.setText(soalCTPilihanGanda.getC());
+            binding.rbPilihanD.setText(soalCTPilihanGanda.getD());
+            binding.rbPilihanE.setText(soalCTPilihanGanda.getE());
+            binding.btnNext.setText("Soal Isian >");
+            if(sessionManagement.getNoPg().equals(1)){
+                binding.btnBack.setEnabled(false);
+            }
+        }
+    }
 }
