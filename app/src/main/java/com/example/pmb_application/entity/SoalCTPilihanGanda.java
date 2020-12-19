@@ -13,8 +13,12 @@ public class SoalCTPilihanGanda implements Parcelable {
     private String D;
     private String E;
     private String key;
+    // buat jawaban per siswa
+    private String jawaban;
+    private String user_id;
+    private int cts_id;
 
-    public SoalCTPilihanGanda(int id, int number, String question, String a, String b, String c, String d, String e, String key) {
+    public SoalCTPilihanGanda(int id, int number, String question, String a, String b, String c, String d, String e, String key, String jawaban, String user_id, int cts_id) {
         this.id = id;
         this.number = number;
         this.question = question;
@@ -24,6 +28,9 @@ public class SoalCTPilihanGanda implements Parcelable {
         D = d;
         E = e;
         this.key = key;
+        this.jawaban = jawaban;
+        this.user_id = user_id;
+        this.cts_id = cts_id;
     }
 
     public SoalCTPilihanGanda(SoalCTPilihanGanda pg) {
@@ -36,6 +43,9 @@ public class SoalCTPilihanGanda implements Parcelable {
         D = pg.D;
         E = pg.E;
         this.key = pg.key;
+        this.jawaban = pg.jawaban;
+        this.user_id = pg.user_id;
+        this.cts_id = pg.cts_id;
     }
 
     protected SoalCTPilihanGanda(Parcel in) {
@@ -48,6 +58,9 @@ public class SoalCTPilihanGanda implements Parcelable {
         D = in.readString();
         E = in.readString();
         key = in.readString();
+        jawaban = in.readString();
+        user_id = in.readString();
+        cts_id = in.readInt();
     }
 
     public static final Creator<SoalCTPilihanGanda> CREATOR = new Creator<SoalCTPilihanGanda>() {
@@ -78,6 +91,9 @@ public class SoalCTPilihanGanda implements Parcelable {
         dest.writeString(D);
         dest.writeString(E);
         dest.writeString(key);
+        dest.writeString(jawaban);
+        dest.writeString(user_id);
+        dest.writeInt(cts_id);
     }
 
     public int getId() {
@@ -150,5 +166,29 @@ public class SoalCTPilihanGanda implements Parcelable {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getJawaban() {
+        return jawaban;
+    }
+
+    public void setJawaban(String jawaban) {
+        this.jawaban = jawaban;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
+
+    public int getCts_id() {
+        return cts_id;
+    }
+
+    public void setCts_id(int cts_id) {
+        this.cts_id = cts_id;
     }
 }

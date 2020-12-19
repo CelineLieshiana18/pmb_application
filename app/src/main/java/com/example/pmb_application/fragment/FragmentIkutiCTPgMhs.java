@@ -1,5 +1,6 @@
 package com.example.pmb_application.fragment;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -78,6 +79,10 @@ public class FragmentIkutiCTPgMhs extends Fragment {
 
     private void initComponents() {
         binding.btnNext.setOnClickListener(v -> {
+            if(sessionManagement.getNoPg().equals(sessionManagement.getJumlahSoalPg()-1) && sessionManagement.getNoIsian().equals(-1)){
+                //kalo di soal pg terakhir dan ga ad soal isian
+                binding.btnKumpulkan.setVisibility(View.VISIBLE);
+            }
             if(sessionManagement.getNoPg().equals(sessionManagement.getJumlahSoalPg())){
                 // no terakhir langsung cek isian
                 if(sessionManagement.getJumlahSoalIsian() > 0){
@@ -88,7 +93,9 @@ public class FragmentIkutiCTPgMhs extends Fragment {
                     transaction.addToBackStack(null);
                     transaction.commit();
                 }
-            }else{
+            }
+            else{
+                binding.btnBack.setEnabled(true);
                 int currnumber = sessionManagement.getNoIsian();
                 sessionManagement.setNoPg(currnumber+1);
 
@@ -103,24 +110,46 @@ public class FragmentIkutiCTPgMhs extends Fragment {
                 binding.rbPilihanE.setText(soalCTPilihanGanda.getE());
 
                 if(sessionManagement.getJumlahSoalIsian() > 0 && sessionManagement.getNoPg().equals(sessionManagement.getJumlahSoalPg())){
-                    binding.btnNext.setText("Soal Isian >");
+                    binding.btnNext.setText("Soal Isian");
                 }
                 // soal terakhir dan isian ga ada
                 else if(sessionManagement.getJumlahSoalIsian() < 1 && sessionManagement.getNoPg().equals(sessionManagement.getJumlahSoalPg())){
                     // kalo soal isian ga ada langsung di disabled button nextnya
                     binding.btnNext.setEnabled(false);
                 }
+                String jwb = soalCTPilihanGanda.getJawaban();
+                System.out.println("jawaban : "+jwb);
+                if(jwb != null){
+                    if(jwb.equalsIgnoreCase("A")){
+                        binding.rbPilihanA.setChecked(true);
+                    } else if(jwb.equalsIgnoreCase("B")){
+                        binding.rbPilihanB.setChecked(true);
+                    } else if(jwb.equalsIgnoreCase("C")){
+                        binding.rbPilihanC.setChecked(true);
+                    } else if(jwb.equalsIgnoreCase("D")){
+                        binding.rbPilihanD.setChecked(true);
+                    } else if(jwb.equalsIgnoreCase("E")){
+                        binding.rbPilihanE.setChecked(true);
+                    }
+                } else{
+                    binding.rbPilihanA.setChecked(false);
+                    binding.rbPilihanB.setChecked(false);
+                    binding.rbPilihanC.setChecked(false);
+                    binding.rbPilihanD.setChecked(false);
+                    binding.rbPilihanE.setChecked(false);
+                }
             }
         });
         binding.btnBack.setOnClickListener(v -> {
-//            if(sessionManagement.getNoPg().equals(1)){
-//                binding.btnBack.setEnabled(false);
-//            }else{
+            binding.btnNext.setText("Soal Berikutnya");
+            System.out.println("no pg sekarang di btn back: "+ sessionManagement.getNoPg());
             int currnumber = sessionManagement.getNoPg();
             sessionManagement.setNoPg(currnumber-1);
             if(sessionManagement.getNoPg().equals(1)){
                 binding.btnBack.setEnabled(false);
             }
+
+            System.out.println(sessionManagement.getNoPg());
 
             ArrayList<SoalCTPilihanGanda> pilihanGandas = new ArrayList<SoalCTPilihanGanda>(sessionManagement.getSoalCTPg());
             SoalCTPilihanGanda soalCTPilihanGanda = new SoalCTPilihanGanda(pilihanGandas.get(sessionManagement.getNoPg()-1));
@@ -131,13 +160,49 @@ public class FragmentIkutiCTPgMhs extends Fragment {
             binding.rbPilihanC.setText(soalCTPilihanGanda.getC());
             binding.rbPilihanD.setText(soalCTPilihanGanda.getD());
             binding.rbPilihanE.setText(soalCTPilihanGanda.getE());
+            String jwb = soalCTPilihanGanda.getJawaban();
+            System.out.println("Jawaban "+ jwb + " no : "+ sessionManagement.getNoPg());
+            if(jwb != null){
+                if(jwb.equalsIgnoreCase("A")){
+                    binding.rbPilihanA.setChecked(true);
+                } else if(jwb.equalsIgnoreCase("B")){
+                    binding.rbPilihanB.setChecked(true);
+                } else if(jwb.equalsIgnoreCase("C")){
+                    binding.rbPilihanC.setChecked(true);
+                } else if(jwb.equalsIgnoreCase("D")){
+                    binding.rbPilihanD.setChecked(true);
+                } else if(jwb.equalsIgnoreCase("E")){
+                    binding.rbPilihanE.setChecked(true);
+                }
+            }else{
+                binding.rbPilihanA.setChecked(false);
+                binding.rbPilihanB.setChecked(false);
+                binding.rbPilihanC.setChecked(false);
+                binding.rbPilihanD.setChecked(false);
+                binding.rbPilihanE.setChecked(false);
+            }
         });
         binding.btnSubmit.setOnClickListener(v -> {
-//            if(binding.txtNomor.getText() == null || binding.txtSoal.getText() == null || binding.txtScore.getText() == null){
-//                Toast.makeText(getActivity(),"Gagal ditambahkan, Semua data harus terisi",Toast.LENGTH_LONG).show();
-//            } else{
-//                addSoalIsian();
-//            }
+            String jawaban = "A";
+            if(binding.rbPilihanB.isChecked()){
+                jawaban = "B";
+            } else if(binding.rbPilihanC.isChecked()){
+                jawaban = "C";
+            } else if(binding.rbPilihanD.isChecked()){
+                jawaban = "D";
+            } else if(binding.rbPilihanE.isChecked()){
+                jawaban = "E";
+            }
+            ArrayList<SoalCTPilihanGanda> pilihanGandas = new ArrayList<SoalCTPilihanGanda>(sessionManagement.getSoalCTPg());
+            SoalCTPilihanGanda soalCTPilihanGanda = new SoalCTPilihanGanda(pilihanGandas.get(sessionManagement.getNoPg()-1));
+            System.out.println("no pg sekarang : "+ sessionManagement.getNoPg());
+            soalCTPilihanGanda.setJawaban(jawaban);
+            soalCTPilihanGanda.setUser_id(sessionManagement.getId());
+            pilihanGandas.set(sessionManagement.getNoPg()-1,soalCTPilihanGanda);
+            sessionManagement.setSoalPg(pilihanGandas);
+            System.out.println("no pg sekarang ke 2: "+ sessionManagement.getNoPg());
+            String toastmessage = "Jawaban "+jawaban+" telah dipilih";
+            Toast.makeText(getActivity(), toastmessage, Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -154,24 +219,75 @@ public class FragmentIkutiCTPgMhs extends Fragment {
                 System.out.println("objek"+ weatherResponse);
 
                 //simpen di session
-                ArrayList<SoalCTPilihanGanda> pilihanGandas = new ArrayList<SoalCTPilihanGanda>(weatherResponse.getData());
-                sessionManagement.setSoalPg(pilihanGandas);
-                System.out.println("masuk load soal data");
+                ArrayList<SoalCTPilihanGanda> pilihanGandas2 = new ArrayList<SoalCTPilihanGanda>(weatherResponse.getData());
+                System.out.println("masuk load soal data PG");
+                if(sessionManagement.getSoalCTPg()==null){
+                    sessionManagement.setSoalPg(pilihanGandas2);
+                    sessionManagement.setNoPg(1);
+                }else{
+                    sessionManagement.setNoPg(1);
+                }
                 //end
 
-                if(pilihanGandas.size() == 0){
+                if(pilihanGandas2.size() == 0){
                     soalpg =0;
                 } else{
-                    int jml = pilihanGandas.size();
+                    int jml = pilihanGandas2.size();
                     sessionManagement.setJumlahSoalPg(jml);
                 }
+
+                // kalo di simpen d bwh load di onstart kaya diprosesnya sejalan sama load data jadi error karna blm keload dr server data soal nya
+                if(soalpg == 1){
+                    // soal pg ada
+                    sessionManagement.setKeteranganSoal("pilihanganda");
+//                    System.out.println("no pg : "+sessionManagement.getNoPg());
+
+                    ArrayList<SoalCTPilihanGanda> pilihanGandas = new ArrayList<SoalCTPilihanGanda>(sessionManagement.getSoalCTPg());
+                    SoalCTPilihanGanda soalCTPilihanGanda = new SoalCTPilihanGanda(pilihanGandas.get(sessionManagement.getNoPg()-1));
+                    binding.tvNoSoalPg.setText(String.valueOf(soalCTPilihanGanda.getNumber()));
+                    binding.tvSoalCtPgMhs.setText(soalCTPilihanGanda.getQuestion());
+                    binding.rbPilihanA.setText(soalCTPilihanGanda.getA());
+                    binding.rbPilihanB.setText(soalCTPilihanGanda.getB());
+                    binding.rbPilihanC.setText(soalCTPilihanGanda.getC());
+                    binding.rbPilihanD.setText(soalCTPilihanGanda.getD());
+                    binding.rbPilihanE.setText(soalCTPilihanGanda.getE());
+                    String jwb = soalCTPilihanGanda.getJawaban();
+                    if(jwb != null){
+                        if(jwb.equalsIgnoreCase("A")){
+                            binding.rbPilihanA.setChecked(true);
+                        } else if(jwb.equalsIgnoreCase("B")){
+                            binding.rbPilihanB.setChecked(true);
+                        } else if(jwb.equalsIgnoreCase("C")){
+                            binding.rbPilihanC.setChecked(true);
+                        } else if(jwb.equalsIgnoreCase("D")){
+                            binding.rbPilihanD.setChecked(true);
+                        } else if(jwb.equalsIgnoreCase("E")){
+                            binding.rbPilihanE.setChecked(true);
+                        }
+                    }
+                    binding.btnBack.setEnabled(false);
+                    int no = soalCTPilihanGanda.getNumber();
+                    System.out.println("no skrg : "+ no + " ,size : "+ pilihanGandas.size());
+
+                    //error
+                    System.out.println("jumlah soal isian : "+  sessionManagement.getJumlahSoalIsian());
+                    Integer jml = sessionManagement.getJumlahSoalIsian();
+                    if(jml > 0 && no == pilihanGandas.size()){
+                        binding.btnNext.setText("Soal Isian");
+                    }
+//                     soal terakhir dan isian ga ada
+                    else if(sessionManagement.getJumlahSoalIsian() < 1 && sessionManagement.getNoPg().equals(sessionManagement.getJumlahSoalPg())){
+                        // kalo soal isian ga ada langsung di disabled button nextnya
+                        binding.btnNext.setEnabled(false);
+                    }
+                }
+
                 Toast.makeText(getActivity(), "berhasil", Toast.LENGTH_SHORT).show();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }, error -> {
             Toast.makeText(getActivity(),"error", Toast.LENGTH_SHORT).show();
-            System.out.println("error nii");
             error.printStackTrace();
         });
         queue.add(request);
@@ -185,15 +301,16 @@ public class FragmentIkutiCTPgMhs extends Fragment {
             try {
                 JSONObject object = new JSONObject(response);
                 Gson gson = new Gson();
-//                System.out.println("kegiatan");
-//                System.out.println(object);
                 WSResponseSoalCTIsian weatherResponse = gson.fromJson(object.toString(), WSResponseSoalCTIsian.class);
 
                 //simpen di session
                 ArrayList<SoalCTIsian> isians = new ArrayList<SoalCTIsian>(weatherResponse.getData());
-                sessionManagement.setSoalIsian(isians);
+                if(sessionManagement.getSoalCTIsian()==null){
+                    sessionManagement.setSoalIsian(isians);
+                }else{
+                    sessionManagement.setNoIsian(1);
+                }
                 //end
-
                 if(isians.size() == 0){
                     soalisian = 0;
                 }else{
@@ -219,11 +336,12 @@ public class FragmentIkutiCTPgMhs extends Fragment {
         if(getArguments() != null && getArguments().containsKey("CT")){
             CT ct = getArguments().getParcelable("CT");
             if (ct!=null){
+                binding.btnKumpulkan.setVisibility(View.GONE);
                 binding.tvJudulCt.setText(ct.getName());
 
                 id = ct.getId();
-                URLGETIsian = URLGETIsian + id;
-                URLGETPg = URLGETPg + id;
+                URLGETIsian = URLGETIsian + id + "/" + sessionManagement.getId();
+                URLGETPg = URLGETPg + id + "/" + sessionManagement.getId();
 
                 loadSoalDataPG();
                 loadSoalDataIsian();
@@ -241,33 +359,11 @@ public class FragmentIkutiCTPgMhs extends Fragment {
                     transaction.replace(R.id.frame_layout,getDaftarct());
                     transaction.addToBackStack(null);
                     transaction.commit();
-                } else{
-                    // soal pg ada
-                    sessionManagement.setKeteranganSoal("pilihanganda");
-                    System.out.println("no pg : "+sessionManagement.getNoPg());
-
-                    ArrayList<SoalCTPilihanGanda> pilihanGandas = new ArrayList<SoalCTPilihanGanda>(sessionManagement.getSoalCTPg());
-                    SoalCTPilihanGanda soalCTPilihanGanda = new SoalCTPilihanGanda(pilihanGandas.get(sessionManagement.getNoPg()-1));
-                    binding.tvNoSoalPg.setText(String.valueOf(soalCTPilihanGanda.getNumber()));
-                    binding.tvSoalCtPgMhs.setText(soalCTPilihanGanda.getQuestion());
-                    binding.rbPilihanA.setText(soalCTPilihanGanda.getA());
-                    binding.rbPilihanB.setText(soalCTPilihanGanda.getB());
-                    binding.rbPilihanC.setText(soalCTPilihanGanda.getC());
-                    binding.rbPilihanD.setText(soalCTPilihanGanda.getD());
-                    binding.rbPilihanE.setText(soalCTPilihanGanda.getE());
-                    binding.btnBack.setEnabled(false);
-                    if(sessionManagement.getJumlahSoalIsian() > 0 && sessionManagement.getNoPg().equals(pilihanGandas.size())){
-                        binding.btnNext.setText("Soal Isian >");
-                    }
-                    // soal terakhir dan isian ga ada
-                    else if(sessionManagement.getJumlahSoalIsian() < 1 && sessionManagement.getNoPg().equals(sessionManagement.getJumlahSoalPg())){
-                        // kalo soal isian ga ada langsung di disabled button nextnya
-                        binding.btnNext.setEnabled(false);
-                    }
                 }
             }
         }
 
+        // dari isian ke PG
         if(getArguments() != null && getArguments().containsKey("ket")){
             ArrayList<SoalCTPilihanGanda> pilihanGandas = new ArrayList<SoalCTPilihanGanda>(sessionManagement.getSoalCTPg());
             SoalCTPilihanGanda soalCTPilihanGanda = new SoalCTPilihanGanda(pilihanGandas.get(sessionManagement.getNoPg()-1));
@@ -278,8 +374,30 @@ public class FragmentIkutiCTPgMhs extends Fragment {
             binding.rbPilihanC.setText(soalCTPilihanGanda.getC());
             binding.rbPilihanD.setText(soalCTPilihanGanda.getD());
             binding.rbPilihanE.setText(soalCTPilihanGanda.getE());
-            binding.btnNext.setText("Soal Isian >");
-            if(sessionManagement.getNoPg().equals(1)){
+            String jwb = soalCTPilihanGanda.getJawaban();
+            if(jwb != null){
+                if(jwb.equalsIgnoreCase("A")){
+                    binding.rbPilihanA.setChecked(true);
+                } else if(jwb.equalsIgnoreCase("B")){
+                    binding.rbPilihanB.setChecked(true);
+                } else if(jwb.equalsIgnoreCase("C")){
+                    binding.rbPilihanC.setChecked(true);
+                } else if(jwb.equalsIgnoreCase("D")){
+                    binding.rbPilihanD.setChecked(true);
+                } else if(jwb.equalsIgnoreCase("E")){
+                    binding.rbPilihanE.setChecked(true);
+                }
+            }else{
+                binding.rbPilihanA.setChecked(false);
+                binding.rbPilihanB.setChecked(false);
+                binding.rbPilihanC.setChecked(false);
+                binding.rbPilihanD.setChecked(false);
+                binding.rbPilihanE.setChecked(false);
+            }
+            binding.btnNext.setText("Soal Isian");
+            binding.btnBack.setText("Soal Sebelumnya");
+            binding.btnKumpulkan.setVisibility(View.GONE);
+            if(soalCTPilihanGanda.getNumber()==1){
                 binding.btnBack.setEnabled(false);
             }
         }

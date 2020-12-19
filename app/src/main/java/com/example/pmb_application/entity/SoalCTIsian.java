@@ -8,12 +8,19 @@ public class SoalCTIsian implements Parcelable {
     private int number;
     private String question;
     private String score;
+    //buat nanti jawaban siswa
+    private String jawaban;
+    private String user_id;
+    private int cts_id;
 
-    public SoalCTIsian(int id, int number, String question, String score) {
+    public SoalCTIsian(int id, int number, String question, String score, String jawaban, String user_id, int cts_id) {
         this.id = id;
         this.number = number;
         this.question = question;
         this.score = score;
+        this.jawaban = jawaban;
+        this.user_id = user_id;
+        this.cts_id = cts_id;
     }
 
     public SoalCTIsian(SoalCTIsian isian) {
@@ -21,6 +28,9 @@ public class SoalCTIsian implements Parcelable {
         this.number = isian.number;
         this.question = isian.question;
         this.score = isian.score;
+        this.jawaban = isian.jawaban;
+        this.user_id = isian.user_id;
+        this.cts_id = isian.cts_id;
     }
 
     protected SoalCTIsian(Parcel in) {
@@ -28,6 +38,9 @@ public class SoalCTIsian implements Parcelable {
         number = in.readInt();
         question = in.readString();
         score = in.readString();
+        jawaban = in.readString();
+        user_id = in.readString();
+        cts_id = in.readInt();
     }
 
     public static final Creator<SoalCTIsian> CREATOR = new Creator<SoalCTIsian>() {
@@ -53,6 +66,9 @@ public class SoalCTIsian implements Parcelable {
         dest.writeInt(number);
         dest.writeString(question);
         dest.writeString(score);
+        dest.writeString(jawaban);
+        dest.writeString(user_id);
+        dest.writeInt(cts_id);
     }
 
     public int getId() {
@@ -85,5 +101,29 @@ public class SoalCTIsian implements Parcelable {
 
     public void setScore(String score) {
         this.score = score;
+    }
+
+    public String getJawaban() {
+        return jawaban;
+    }
+
+    public void setJawaban(String jawaban) {
+        this.jawaban = jawaban;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
+
+    public int getCts_id() {
+        return cts_id;
+    }
+
+    public void setCts_id(int cts_id) {
+        this.cts_id = cts_id;
     }
 }

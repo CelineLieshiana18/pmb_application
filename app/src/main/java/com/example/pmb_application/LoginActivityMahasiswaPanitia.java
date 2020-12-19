@@ -82,11 +82,14 @@ public class LoginActivityMahasiswaPanitia extends AppCompatActivity {
                                 System.out.println(student.getRoles_name());
                                 if(student.getRoles_name().equals("Panitia")){
                                     openProfilePanitia();
-                                }else{
+                                }else if(student.getRoles_name().equals("Mahasiswa")){
                                     openProfileMhs();
+                                }else{
+                                    openProfileAdmin();
                                 }
                                 SessionManagement sessionManagement = new SessionManagement(LoginActivityMahasiswaPanitia.this);
                                 sessionManagement.saveSession(student.getNrp(),String.valueOf(student.getId()),student.getName(), student.getRoles_name());
+//                                System.out.println(" soal pg : "+sessionManagement.getJumlahSoalPg()+" soal isian : "+sessionManagement.getJumlahSoalIsian());
 //                                System.out.println("nama user : "+ sessionManagement.getName() + sessionManagement.getJabatan());
 
                                 System.out.println(object.get("data"));
@@ -124,6 +127,11 @@ public class LoginActivityMahasiswaPanitia extends AppCompatActivity {
     }
     private void openProfilePanitia(){
         Intent intent = new Intent(this, MainActivityDosenPanitia.class);
+//        intent.putExtra(K, username);
+        startActivity(intent);
+    }
+    private void openProfileAdmin(){
+        Intent intent = new Intent(this, MainActivityAdmin.class);
 //        intent.putExtra(K, username);
         startActivity(intent);
     }

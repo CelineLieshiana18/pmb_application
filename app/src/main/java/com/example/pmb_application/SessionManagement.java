@@ -1,5 +1,6 @@
 package com.example.pmb_application;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -25,9 +26,10 @@ public class SessionManagement {
     String NO_PG = "no_pg";
     String NO_ISIAN = "no_isian";
     String KETERANGAN_SOAL = "keterangan_soal";
-    String JUMLAH_SOAL_ISIAN = "jumlah_soal_isian";
-    String JUMLAH_SOAL_PG = "jumlah_soal_pg";
+    int JUMLAH_SOAL_ISIAN = 0;
+    int JUMLAH_SOAL_PG = 0;
 
+    @SuppressLint("CommitPrefEdits")
     public SessionManagement(Context context) {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -53,13 +55,22 @@ public class SessionManagement {
 
     public void clearSession(){
         editor.putString(SESSION_KEY,"false").commit();
+        editor.putString(SOAL_ISIAN,"").commit();
+        editor.putString(SOAL_PG,"").commit();
+        editor.putInt(NO_ISIAN,-1).commit();
+        editor.putInt(NO_PG,-1).commit();
+        editor.putString(SESSION_ID,"").commit();
+        editor.putString(SESSION_NAME,"").commit();
+        editor.putString(SESSION_Jabatan,"").commit();
+        editor.putInt(String.valueOf(JUMLAH_SOAL_ISIAN),-1).commit();
+        editor.putInt(String.valueOf(JUMLAH_SOAL_PG),-1).commit();
+        editor.putString(KETERANGAN_SOAL,"").commit();
     }
 
     public void setSoalIsian(ArrayList<SoalCTIsian> soalIsian){
         Gson gson = new Gson();
         String jsonString = gson.toJson(soalIsian);
         editor.putString(SOAL_ISIAN,jsonString).commit();
-        editor.putInt(NO_ISIAN,1).commit();
     }
 
     public void setSoalPg(ArrayList<SoalCTPilihanGanda> soalPg){
@@ -67,15 +78,14 @@ public class SessionManagement {
         String jsonString = gson.toJson(soalPg);
         System.out.println("masuk set soal pg ");
         editor.putString(SOAL_PG,jsonString).commit();
-        editor.putInt(NO_PG,1).commit();
     }
-    public Integer getJumlahSoalPg(){return sharedPreferences.getInt(JUMLAH_SOAL_PG,-1);}
-    public Integer getJumlahSoalIsian(){return sharedPreferences.getInt(JUMLAH_SOAL_ISIAN,-1);}
+    public int getJumlahSoalPg(){return sharedPreferences.getInt(String.valueOf(JUMLAH_SOAL_PG),-1);}
+    public int getJumlahSoalIsian(){return sharedPreferences.getInt(String.valueOf(JUMLAH_SOAL_ISIAN),-1);}
     public void setJumlahSoalPg(Integer jml){
-        editor.putInt(JUMLAH_SOAL_PG,jml).commit();
+        editor.putInt(String.valueOf(JUMLAH_SOAL_PG),jml).commit();
     }
     public void setJumlahSoalIsian(Integer jml){
-        editor.putInt(JUMLAH_SOAL_ISIAN,jml).commit();
+        editor.putInt(String.valueOf(JUMLAH_SOAL_ISIAN),jml).commit();
     }
     public void setNoIsian(Integer jml){
         editor.putInt(NO_ISIAN,jml).commit();

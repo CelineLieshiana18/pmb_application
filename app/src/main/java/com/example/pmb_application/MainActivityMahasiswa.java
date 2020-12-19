@@ -18,7 +18,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.pmb_application.fragment.FragmentAugmentedRealityMhs;
+import com.example.pmb_application.fragment.FragmentDenah;
 import com.example.pmb_application.fragment.FragmentCtMhs;
 import com.example.pmb_application.fragment.FragmentDaftarPenggunaMhs;
 import com.example.pmb_application.fragment.FragmentForumMhs;
@@ -90,7 +90,7 @@ public class MainActivityMahasiswa extends AppCompatActivity {
                             selected = new FragmentForumMhs();
                             break;
                         case R.id.nav_augmentedRealityMhs:
-                            selected = new FragmentAugmentedRealityMhs();
+                            selected = new FragmentDenah();
                             break;
 
                     }

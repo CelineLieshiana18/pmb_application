@@ -12,9 +12,9 @@
         tools:layout="@layout/fragment_home_mhs" />
     <fragment
         android:id="@+id/augmentedRealityMhs"
-        android:name="com.example.pmb_application.fragment.FragmentAugmentedRealityMhs"
+        android:name="com.example.pmb_application.fragment.FragmentDenah"
         android:label="fragment_augmented_reality_mhs"
-        tools:layout="@layout/fragment_augmented_reality_mhs" />
+        tools:layout="@layout/fragment_denah" />
     <fragment
         android:id="@+id/ctMhs"
         android:name="com.example.pmb_application.fragment.FragmentCtMhs"
