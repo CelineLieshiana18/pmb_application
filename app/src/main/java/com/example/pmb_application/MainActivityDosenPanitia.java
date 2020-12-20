@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.widget.Spinner;
 
 import com.example.pmb_application.fragment.FragmentDaftarPenggunaMhs;
+import com.example.pmb_application.fragment.FragmentDenah;
 import com.example.pmb_application.fragment.FragmentHomeDosenPanitia;
 import com.example.pmb_application.fragment.FragmentKegiatanPengumumanForumDosen;
 import com.example.pmb_application.fragment.FragmentKelolaCTDosenPanitia;
@@ -91,7 +92,7 @@ public class MainActivityDosenPanitia extends AppCompatActivity {
                             }
                             break;
                         case R.id.nav_augmentedRealityDosenPanitia:
-                            selected = new FragmentAugmentedRealityDosenPanitia();
+                            selected = new FragmentDenah();
                             break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout_dosen_panitia,

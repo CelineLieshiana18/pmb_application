@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.FragmentDoneQuiz">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Selamat Telah Selesai"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mengerjakan Soal Ujian Ini !"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:layout_marginBottom="20dp"
+            android:textStyle="bold"/>
+
+
+        <TextView
+            android:id="@+id/tv_kataPG"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total Benar Soal Pilihan Ganda"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tv_scorePG"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#008000"
+            android:text="2"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tv_kataIsian"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total Benar Soal Isian"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tv_scoreIsian"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#008000"
+            android:text="2"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/btnBackToCT"
+            android:layout_gravity="center"
+            android:background="@color/colorPrimary"
+            android:layout_width="wrap_content"
+            android:textColor="#ffffff"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="10sp"
+            android:layout_marginTop="10dp"
+            android:text="Kembali Ke Halaman CT"/>
+    </LinearLayout>
+
+</FrameLayout>

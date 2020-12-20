@@ -29,6 +29,7 @@ import com.example.pmb_application.entity.Dosen;
 import com.example.pmb_application.entity.CT;
 import com.example.pmb_application.entity.SoalCTIsian;
 import com.example.pmb_application.entity.SoalCTPilihanGanda;
+import com.example.pmb_application.entity.WSResponseScorePG;
 import com.example.pmb_application.entity.WSResponseSoalCTIsian;
 import com.example.pmb_application.entity.WSResponseSoalCTPilihanGanda;
 import com.google.gson.Gson;
@@ -47,6 +48,9 @@ public class FragmentIkutiCTPgMhs extends Fragment {
     //belom
     String URLGETIsian = VariabelGlobal.link_ip + "api/soalIsians/getAllSoalIsianByIdCT/";
     String URLGETPg = VariabelGlobal.link_ip + "api/soalPgs/getAllSoalPgsByIdCT/";
+    String URLGETAnswerIsian = VariabelGlobal.link_ip + "api/soalPgs/storeAnswerIsianGet/";
+    String URLGETAnswerPG = VariabelGlobal.link_ip + "api/soalPgs/storeAnswerPGGet/";
+    String URLGetScore = VariabelGlobal.link_ip + "api/soalPgs/getScorePG/";
     int soalpg = 1;
     int soalisian = 1;
 
@@ -118,7 +122,7 @@ public class FragmentIkutiCTPgMhs extends Fragment {
                     binding.btnNext.setEnabled(false);
                 }
                 String jwb = soalCTPilihanGanda.getJawaban();
-                System.out.println("jawaban : "+jwb);
+                System.out.println("jawaban hehe : "+soalCTPilihanGanda.getJawaban());
                 if(jwb != null){
                     if(jwb.equalsIgnoreCase("A")){
                         binding.rbPilihanA.setChecked(true);
@@ -195,14 +199,16 @@ public class FragmentIkutiCTPgMhs extends Fragment {
             }
             ArrayList<SoalCTPilihanGanda> pilihanGandas = new ArrayList<SoalCTPilihanGanda>(sessionManagement.getSoalCTPg());
             SoalCTPilihanGanda soalCTPilihanGanda = new SoalCTPilihanGanda(pilihanGandas.get(sessionManagement.getNoPg()-1));
-            System.out.println("no pg sekarang : "+ sessionManagement.getNoPg());
             soalCTPilihanGanda.setJawaban(jawaban);
             soalCTPilihanGanda.setUser_id(sessionManagement.getId());
             pilihanGandas.set(sessionManagement.getNoPg()-1,soalCTPilihanGanda);
             sessionManagement.setSoalPg(pilihanGandas);
-            System.out.println("no pg sekarang ke 2: "+ sessionManagement.getNoPg());
             String toastmessage = "Jawaban "+jawaban+" telah dipilih";
             Toast.makeText(getActivity(), toastmessage, Toast.LENGTH_SHORT).show();
+        });
+        binding.btnKumpulkan.setOnClickListener(v -> {
+            addSoalPGGet();
+            addSoalIsianGet();
         });
     }
 
@@ -402,4 +408,93 @@ public class FragmentIkutiCTPgMhs extends Fragment {
             }
         }
     }
+
+
+    public void addSoalPGGet(){
+        ArrayList<SoalCTPilihanGanda> list = new ArrayList<SoalCTPilihanGanda>(sessionManagement.getSoalCTPg());
+        Object[] objArray = list.toArray();
+        Gson gsons = new Gson();
+        String jsonString = gsons.toJson(objArray);
+        String URL = URLGETAnswerPG + jsonString;
+        System.out.println("URL PG Answer : "+ URL);
+
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        Uri uri = Uri.parse(URL).buildUpon().build();
+        StringRequest request = new StringRequest(Request.Method.GET, uri.toString(), response -> {
+            try {
+                JSONObject object = new JSONObject(response);
+                Gson gson = new Gson();
+                WSResponseSoalCTPilihanGanda weatherResponse = gson.fromJson(object.toString(), WSResponseSoalCTPilihanGanda.class);
+                Toast.makeText(getActivity(), "berhasil di tambahkan", Toast.LENGTH_SHORT).show();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> {
+            Toast.makeText(getActivity(),"error", Toast.LENGTH_SHORT).show();
+            error.printStackTrace();
+        });
+        queue.add(request);
+    }
+
+
+    public void addSoalIsianGet(){
+        ArrayList<SoalCTIsian> list = new ArrayList<SoalCTIsian>(sessionManagement.getSoalCTIsian());
+        Object[] objArray = list.toArray();
+        Gson gsons = new Gson();
+        String jsonString = gsons.toJson(objArray);
+        String URL = URLGETAnswerIsian + jsonString;
+        System.out.println("URL Isian Answer : "+ URL);
+
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        Uri uri = Uri.parse(URL).buildUpon().build();
+        StringRequest request = new StringRequest(Request.Method.GET, uri.toString(), response -> {
+            try {
+                JSONObject object = new JSONObject(response);
+                Gson gson = new Gson();
+                WSResponseSoalCTIsian weatherResponse = gson.fromJson(object.toString(), WSResponseSoalCTIsian.class);
+                Toast.makeText(getActivity(), "berhasil di tambahkan", Toast.LENGTH_SHORT).show();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> {
+            Toast.makeText(getActivity(),"error", Toast.LENGTH_SHORT).show();
+            error.printStackTrace();
+        });
+        queue.add(request);
+    }
+
+
+    private void loadScorePG() {
+        URLGetScore = URLGetScore + id + "/" + sessionManagement.getId();
+        System.out.println("URL Get Score : "+ URLGetScore);
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        Uri uri = Uri.parse(URLGetScore).buildUpon().build();
+        StringRequest request = new StringRequest(Request.Method.GET, uri.toString(), response -> {
+            try {
+                JSONObject object = new JSONObject(response);
+                Gson gson = new Gson();
+                WSResponseScorePG weatherResponse = gson.fromJson(object.toString(), WSResponseScorePG.class);
+                ArrayList<Integer> arrayList = new ArrayList<>(weatherResponse.getData());
+
+                //to done
+                Fragment fragment = new FragmentDoneQuiz();
+                Bundle bundle = new Bundle();
+                bundle.putInt("Score",arrayList.get(0));
+                fragment.setArguments(bundle);
+                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_layout,fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+                Toast.makeText(getActivity(), "berhasil", Toast.LENGTH_SHORT).show();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> {
+            Toast.makeText(getActivity(),"error", Toast.LENGTH_SHORT).show();
+            error.printStackTrace();
+        });
+        queue.add(request);
+    }
+
 }

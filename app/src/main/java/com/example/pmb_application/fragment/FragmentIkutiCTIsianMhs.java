@@ -1,5 +1,6 @@
 package com.example.pmb_application.fragment;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -24,12 +25,16 @@ import com.example.pmb_application.databinding.FragmentIkutiCtIsianMhsBinding;
 import com.example.pmb_application.databinding.FragmentIkutiCtPgMhsBinding;
 import com.example.pmb_application.entity.SoalCTIsian;
 import com.example.pmb_application.entity.SoalCTPilihanGanda;
+import com.example.pmb_application.entity.WSResponseSoalCTIsian;
+import com.example.pmb_application.entity.WSResponseSoalCTPilihanGanda;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,6 +44,8 @@ public class FragmentIkutiCTIsianMhs extends Fragment {
     SessionManagement sessionManagement;
     String URLADDCTPG = VariabelGlobal.link_ip + "api/soalPgs/storeAnswerPG";
     String URLADDCTIsian = VariabelGlobal.link_ip + "api/soalPgs/storeAnswerIsian";
+    String URLGETAnswerIsian = VariabelGlobal.link_ip + "api/soalPgs/storeAnswerIsianGet/";
+    String URLGETAnswerPG = VariabelGlobal.link_ip + "api/soalPgs/storeAnswerPGGet/";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -138,8 +145,8 @@ public class FragmentIkutiCTIsianMhs extends Fragment {
             }
         });
         binding.btnKumpulkan.setOnClickListener(v -> {
-            addCTPG();
-            addCTIsian();
+            addSoalPGGet();
+            addSoalIsianGet();
         });
     }
 
@@ -163,85 +170,201 @@ public class FragmentIkutiCTIsianMhs extends Fragment {
         }
     }
 
-    private void addCTPG() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLADDCTPG,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject object = new JSONObject(response);
-                            if(object.get("status").equals("Success")){
-                                Toast.makeText(getActivity(),"Jawaban CT Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
-                            } else{
-                                Toast.makeText(getActivity(),"Tidak Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
-                            }
-                        } catch (JSONException e) {
-                            Toast.makeText(getActivity(),"masuk catch",Toast.LENGTH_LONG).show();
-                        }
-                    }
 
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(),"Gagal Ditambahkan",Toast.LENGTH_LONG).show();
-                    }
-                }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                ArrayList<SoalCTPilihanGanda> list = new ArrayList<SoalCTPilihanGanda>(sessionManagement.getSoalCTPg());
-                Object[] objArray = list.toArray();
+    public void addSoalPGGet(){
+        ArrayList<SoalCTPilihanGanda> list = new ArrayList<SoalCTPilihanGanda>(sessionManagement.getSoalCTPg());
+        Object[] objArray = list.toArray();
+        Gson gsons = new Gson();
+        String jsonString = gsons.toJson(objArray);
+        String URL = URLGETAnswerPG + jsonString;
+        System.out.println("URL PG Answer : "+ URL);
+
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        Uri uri = Uri.parse(URL).buildUpon().build();
+        StringRequest request = new StringRequest(Request.Method.GET, uri.toString(), response -> {
+            try {
+                JSONObject object = new JSONObject(response);
                 Gson gson = new Gson();
-                String jsonString = gson.toJson(objArray);
-
-                Map<String,String> map = new HashMap<String,String>();
-                map.put("data",jsonString);
-                System.out.println("Soal CT Isian"+map);
-                return map;
+                WSResponseSoalCTPilihanGanda weatherResponse = gson.fromJson(object.toString(), WSResponseSoalCTPilihanGanda.class);
+                Toast.makeText(getActivity(), "berhasil di tambahkan", Toast.LENGTH_SHORT).show();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        requestQueue.add(stringRequest);
+        }, error -> {
+            Toast.makeText(getActivity(),"error", Toast.LENGTH_SHORT).show();
+            error.printStackTrace();
+        });
+        queue.add(request);
     }
 
 
-    private void addCTIsian() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLADDCTIsian,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject object = new JSONObject(response);
-                            if(object.get("status").equals("Success")){
-                                Toast.makeText(getActivity(),"Jawaban CT Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
-                            } else{
-                                Toast.makeText(getActivity(),"Tidak Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
-                            }
-                        } catch (JSONException e) {
-                            Toast.makeText(getActivity(),"masuk catch",Toast.LENGTH_LONG).show();
-                        }
-                    }
+    public void addSoalIsianGet(){
+        ArrayList<SoalCTIsian> list = new ArrayList<SoalCTIsian>(sessionManagement.getSoalCTIsian());
+        Object[] objArray = list.toArray();
+        Gson gsons = new Gson();
+        String jsonString = gsons.toJson(objArray);
+        String URL = URLGETAnswerIsian + jsonString;
+        System.out.println("URL Isian Answer : "+ URL);
 
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(),"Gagal Ditambahkan",Toast.LENGTH_LONG).show();
-                    }
-                }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                ArrayList<SoalCTIsian> list = new ArrayList<SoalCTIsian>(sessionManagement.getSoalCTIsian());
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        Uri uri = Uri.parse(URL).buildUpon().build();
+        StringRequest request = new StringRequest(Request.Method.GET, uri.toString(), response -> {
+            try {
+                JSONObject object = new JSONObject(response);
                 Gson gson = new Gson();
-                String jsonString = gson.toJson(list);
-
-                Map<String,String> map = new HashMap<String,String>();
-                map.put("data",jsonString);
-                System.out.println("Soal CT PG : "+map);
-                return map;
+                WSResponseSoalCTIsian weatherResponse = gson.fromJson(object.toString(), WSResponseSoalCTIsian.class);
+                Toast.makeText(getActivity(), "berhasil di tambahkan", Toast.LENGTH_SHORT).show();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        requestQueue.add(stringRequest);
+        }, error -> {
+            Toast.makeText(getActivity(),"error", Toast.LENGTH_SHORT).show();
+            error.printStackTrace();
+        });
+        queue.add(request);
     }
+
+//    private void addCTPG() {
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLADDCTPG,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        try {
+//                            JSONObject object = new JSONObject(response);
+//                            if(object.get("status").equals("Success")){
+//                                Toast.makeText(getActivity(),"Jawaban CT Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
+//                            } else{
+//                                Toast.makeText(getActivity(),"Tidak Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
+//                            }
+//                        } catch (JSONException e) {
+//                            Toast.makeText(getActivity(),"masuk catch",Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+//
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(getActivity(),"Gagal Ditambahkan",Toast.LENGTH_LONG).show();
+//                    }
+//                }){
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                ArrayList<SoalCTPilihanGanda> list = new ArrayList<SoalCTPilihanGanda>(sessionManagement.getSoalCTPg());
+//                Object[] objArray = list.toArray();
+//                Gson gson = new Gson();
+//                String jsonString = gson.toJson(objArray);
+//
+//                Map<String,String> map = new HashMap<String,String>();
+//                map.put("data",jsonString);
+//                System.out.println("Soal CT PG"+map);
+//                return map;
+//            }
+//        };
+//        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+//        requestQueue.add(stringRequest);
+//    }
+
+
+//    private void addCTIsian() {
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLADDCTIsian,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        try {
+//                            JSONObject object = new JSONObject(response);
+//                            System.out.println("tau" + object);
+//                            if(object.get("status").equals("Success")){
+//                                Toast.makeText(getActivity(),"Jawaban CT Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
+//                            } else{
+//                                Toast.makeText(getActivity(),"Tidak Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
+//                            }
+//                        } catch (JSONException e) {
+//                            Toast.makeText(getActivity(),"masuk catch",Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+//
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(getActivity(),"Gagal Ditambahkan",Toast.LENGTH_LONG).show();
+//                    }
+//                }){
+//
+//            @Override
+//            public String getBodyContentType() {
+//                return "appication/json";
+//            }
+//
+//            @Override
+//            public byte[] getBody() throws AuthFailureError {
+//                ArrayList<SoalCTIsian> list = new ArrayList<SoalCTIsian>(sessionManagement.getSoalCTIsian());
+//                Gson gson = new Gson();
+//                String jsonString = gson.toJson(list);
+//                try {
+//                    System.out.println("di get body : "+jsonString.getBytes("utf-8"));
+//                    return jsonString == null ? null :jsonString.getBytes("utf-8");
+//                } catch (UnsupportedEncodingException e) {
+//                    e.printStackTrace();
+//                    return null;
+//                }
+//            }
+//        };
+//        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+//        requestQueue.add(stringRequest);
+//    }
+
+
+//    private void addCTIsian() {
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLADDCTIsian,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        try {
+//                            JSONObject object = new JSONObject(response);
+//                            System.out.println("tau" + object);
+//                            System.out.println("Soal CT Isian di onResponse : "+response);
+//                            if(object.get("status").equals("Success")){
+//                                Toast.makeText(getActivity(),"Jawaban CT Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
+//                            } else{
+//                                Toast.makeText(getActivity(),"Tidak Berhasil Ditambahkan",Toast.LENGTH_LONG).show();
+//                            }
+//                        } catch (JSONException e) {
+//                            Toast.makeText(getActivity(),"masuk catch",Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+//
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(getActivity(),"Gagal Ditambahkan",Toast.LENGTH_LONG).show();
+//                    }
+//                }){
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                ArrayList<SoalCTIsian> list = new ArrayList<SoalCTIsian>(sessionManagement.getSoalCTIsian());
+//                Gson gson = new Gson();
+//                String jsonString = gson.toJson(list);
+//
+//                Map<String,String> map = new HashMap<String,String>();
+//                map.put("data",jsonString);
+//                System.out.println("Soal CT Isian : "+map);
+//                System.out.println("Soal CT json : "+jsonString);
+//
+//                return map;
+//            }
+//
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//
+//                Map<String,String> map = new HashMap<String,String>();
+//                map.put("Content-type","application/x-www-form-urlencode");
+//                return map;
+//            }
+//        };
+//        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+//        requestQueue.add(stringRequest);
+//    }
 }
